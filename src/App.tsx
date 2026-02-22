@@ -2,7 +2,8 @@ import { useState } from 'react';
 import {
   Menu, X, Fish, Sun, Sprout, Target, Quote,
   MapPin, Mail, ArrowRight, ShieldCheck,
-  Building, Globe, BriefcaseBusiness, Map, TrendingUp, ArrowUpRight
+  Building, Globe, BriefcaseBusiness, Map, TrendingUp, ArrowUpRight,
+  Linkedin, Download, CalendarCheck
 } from 'lucide-react';
 import './App.css';
 
@@ -13,6 +14,7 @@ const CONTENT = {
   fr: {
     nav: {
       about: 'Notre Mission',
+      team: "L'Équipe",
       sectors: 'Secteurs',
       map: 'Écosystèmes',
       services: 'Services',
@@ -28,6 +30,15 @@ const CONTENT = {
     about: {
       title: "À propos de nous",
       desc: "À l'horizon 2030, le Maroc s'affirme comme le carrefour incontournable entre l'Europe et l'Afrique. MIA a été créée pour offrir aux investisseurs étrangers une interface agile, indépendante et experte. Notre mission est simple : transformer la complexité administrative en opportunités fluides et sécuriser votre déploiement opérationnel dans un marché en pleine explosion."
+    },
+    team: {
+      title: "Le Conseil d'Administration",
+      subtitle: "Des experts de haut niveau dédiés à la réussite de votre implantation.",
+      members: [
+        { name: "Youssef Alaoui", role: "Président & Expert Financier", exp: "15 ans en Banque d'Affaires" },
+        { name: "Sarah K.", role: "Directrice des Opérations", exp: "Ex-Directrice Stratégie CFC" },
+        { name: "Mehdi R.", role: "Responsable Partenariats", exp: "Spécialiste Charte Investissement" }
+      ]
     },
     objective2030: {
       title: "Objectif 2030",
@@ -118,12 +129,20 @@ const CONTENT = {
       role: "CEO d'une multinationale européenne"
     },
     contact: {
-      title: "Contactez-nous",
+      title: "Rencontrons-nous",
+      subtitle: "Réservez une évaluation vidéo de 15 min avec un expert ou laissez-nous un message.",
+      calendlyBtn: "Réserver un créneau (Calendly)",
       name: "Nom complet",
       email: "Adresse Email",
       sector: "Secteur d'activité",
       message: "Votre message",
       submit: "Envoyer ma demande"
+    },
+    leadMagnet: {
+      title: "Prêt à conquérir le marché marocain ?",
+      subtitle: "Téléchargez notre Guide Ultime de l'Investisseur 2026 (GRATUIT)",
+      placeholder: "Votre adresse email professionnelle...",
+      button: "Obtenir le PDF Secteurs & Subventions"
     },
     footer: {
       addressLabel: "Adresse",
@@ -136,6 +155,7 @@ const CONTENT = {
   en: {
     nav: {
       about: 'About Us',
+      team: 'Team',
       sectors: 'Sectors',
       map: 'Ecosystems',
       services: 'Services',
@@ -151,6 +171,15 @@ const CONTENT = {
     about: {
       title: "Our Mission",
       desc: "Looking ahead to 2030, Morocco is asserting itself as the essential crossroads between Europe and Africa. MIA was created to offer foreign investors an agile, independent, and expert interface. Our mission is simple: transform administrative complexity into smooth opportunities and secure your operational deployment in a rapidly booming market."
+    },
+    team: {
+      title: "Board of Directors",
+      subtitle: "High-level experts dedicated to the success of your establishment.",
+      members: [
+        { name: "Youssef Alaoui", role: "President & Financial Expert", exp: "15 years in Investment Banking" },
+        { name: "Sarah K.", role: "Director of Operations", exp: "Ex-Strategy Director CFC" },
+        { name: "Mehdi R.", role: "Head of Public Partnerships", exp: "Investment Charter Specialist" }
+      ]
     },
     objective2030: {
       title: "Objective 2030",
@@ -241,12 +270,20 @@ const CONTENT = {
       role: "CEO of a European multinational"
     },
     contact: {
-      title: "Contact Us",
+      title: "Let's Meet",
+      subtitle: "Book a 15-min video assessment with an expert or leave us a message.",
+      calendlyBtn: "Book a meeting (Calendly)",
       name: "Full Name",
       email: "Email Address",
       sector: "Business Sector",
       message: "Your Message",
       submit: "Send Request"
+    },
+    leadMagnet: {
+      title: "Ready to conquer the Moroccan market?",
+      subtitle: "Download our Ultimate Investor Guide 2026 (FREE)",
+      placeholder: "Your professional email address...",
+      button: "Get the Sectors & Subsidies PDF"
     },
     footer: {
       addressLabel: "Address",
@@ -276,6 +313,7 @@ function App() {
           {/* Desktop Menu */}
           <div className="nav-links">
             <a href="#about" className="nav-link">{t.nav.about}</a>
+            <a href="#team" className="nav-link">{t.nav.team}</a>
             <a href="#sectors" className="nav-link">{t.nav.sectors}</a>
             <a href="#map" className="nav-link">{t.nav.map}</a>
             <a href="#services" className="nav-link">{t.nav.services}</a>
@@ -304,6 +342,7 @@ function App() {
         {isMenuOpen && (
           <div className="mobile-menu">
             <a href="#about" onClick={() => setIsMenuOpen(false)}>{t.nav.about}</a>
+            <a href="#team" onClick={() => setIsMenuOpen(false)}>{t.nav.team}</a>
             <a href="#sectors" onClick={() => setIsMenuOpen(false)}>{t.nav.sectors}</a>
             <a href="#map" onClick={() => setIsMenuOpen(false)}>{t.nav.map}</a>
             <a href="#services" onClick={() => setIsMenuOpen(false)}>{t.nav.services}</a>
@@ -345,6 +384,31 @@ function App() {
               <h3>{t.objective2030.title}</h3>
               <p>{t.objective2030.desc}</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="team" className="team-section">
+        <div className="container">
+          <h2 className="section-title">{t.team.title}</h2>
+          <p className="section-subtitle">{t.team.subtitle}</p>
+
+          <div className="team-grid">
+            {t.team.members.map((member, idx) => (
+              <div className="team-card hover-card" key={idx}>
+                <div className="team-avatar">
+                  {/* Placeholder for real headshot */}
+                </div>
+                <div className="team-info">
+                  <h3>{member.name}</h3>
+                  <p className="team-role">{member.role}</p>
+                  <p className="team-exp">{member.exp}</p>
+                  <a href="#linkedin" className="team-social">
+                    <Linkedin size={20} /> LinkedIn
+                  </a>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -497,35 +561,69 @@ function App() {
         </div>
       </section>
 
+      <section id="lead-magnet" className="lead-magnet-section">
+        <div className="container">
+          <div className="lead-magnet-box">
+            <div className="lead-magnet-content">
+              <h2>{t.leadMagnet.title}</h2>
+              <p>{t.leadMagnet.subtitle}</p>
+              <form className="lead-magnet-form" onSubmit={(e) => e.preventDefault()}>
+                <input type="email" placeholder={t.leadMagnet.placeholder} required />
+                <button type="submit" className="btn btn-primary">
+                  <Download size={18} className="mr-2" style={{ marginRight: '8px' }} /> {t.leadMagnet.button}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="contact" className="contact-section">
         <div className="container contact-container">
           <div className="contact-form-wrapper">
-            <h2 className="section-title text-left">{t.contact.title}</h2>
-            <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
-              <div className="form-group">
-                <label>{t.contact.name}</label>
-                <input type="text" placeholder={t.contact.name} />
+            <div className="contact-header">
+              <h2 className="section-title text-left">{t.contact.title}</h2>
+              <p className="section-subtitle text-left mb-5" style={{ marginInline: 0 }}>{t.contact.subtitle}</p>
+            </div>
+
+            <div className="contact-split">
+              {/* Calendly booking CTA mock */}
+              <div className="calendly-box">
+                <CalendarCheck size={48} color="var(--sand-gold)" style={{ marginBottom: '1rem' }} />
+                <h3>Fast Track</h3>
+                <p>Gagnez du temps et discutez directement de vos enjeux avec nos experts locaux.</p>
+                <a href="#calendly" className="btn btn-primary w-full mt-4" style={{ marginTop: '1.5rem' }}>
+                  {t.contact.calendlyBtn}
+                </a>
               </div>
-              <div className="form-group">
-                <label>{t.contact.email}</label>
-                <input type="email" placeholder={t.contact.email} />
-              </div>
-              <div className="form-group">
-                <label>{t.contact.sector}</label>
-                <select>
-                  <option value="">Sélectionnez / Select</option>
-                  <option value="energie">Énergies Renouvelables</option>
-                  <option value="peche">Économie Bleue & Pêche</option>
-                  <option value="agritech">AgriTech & Industrie</option>
-                  <option value="autre">Autre / Other</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label>{t.contact.message}</label>
-                <textarea rows={4} placeholder={t.contact.message}></textarea>
-              </div>
-              <button type="submit" className="btn btn-primary w-full">{t.contact.submit}</button>
-            </form>
+
+              {/* Standard Form */}
+              <form className="contact-form shadow-form" onSubmit={(e) => e.preventDefault()}>
+                <div className="form-group">
+                  <label>{t.contact.name}</label>
+                  <input type="text" placeholder={t.contact.name} />
+                </div>
+                <div className="form-group">
+                  <label>{t.contact.email}</label>
+                  <input type="email" placeholder={t.contact.email} />
+                </div>
+                <div className="form-group">
+                  <label>{t.contact.sector}</label>
+                  <select>
+                    <option value="">Sélectionnez / Select</option>
+                    <option value="energie">Énergies Renouvelables</option>
+                    <option value="peche">Économie Bleue & Pêche</option>
+                    <option value="agritech">AgriTech & Industrie</option>
+                    <option value="autre">Autre / Other</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>{t.contact.message}</label>
+                  <textarea rows={4} placeholder={t.contact.message}></textarea>
+                </div>
+                <button type="submit" className="btn btn-outline w-full">{t.contact.submit}</button>
+              </form>
+            </div>
           </div>
         </div>
       </section>
