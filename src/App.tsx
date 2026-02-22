@@ -2,17 +2,19 @@ import { useState } from 'react';
 import {
   Menu, X, Fish, Sun, Sprout, Target, Quote,
   MapPin, Mail, ArrowRight, ShieldCheck,
-  Building, Globe, BriefcaseBusiness
+  Building, Globe, BriefcaseBusiness, Map
 } from 'lucide-react';
 import './App.css';
 
 type Language = 'fr' | 'en';
+type Region = 'tanger' | 'kenitra' | 'casablanca' | 'ouarzazate' | 'dakhla';
 
 const CONTENT = {
   fr: {
     nav: {
       about: 'Notre Mission',
       sectors: 'Secteurs',
+      map: 'Écosystèmes',
       services: 'Services',
       testimonials: 'Témoignages',
       contact: 'Contact',
@@ -47,6 +49,19 @@ const CONTENT = {
           desc: "Face aux défis climatiques, le Maroc investit massivement dans l'innovation agricole. Nous connectons les entreprises de la Tech mondiale avec les grands domaines agricoles et les zones industrielles de nouvelle génération (Kénitra, Tanger, Jorf Lasfar).",
         }
       ]
+    },
+    map: {
+      title: "Carte Interactive des Écosystèmes",
+      subtitle: "Visualisez les pôles stratégiques et les opportunités territoriales du Royaume.",
+      regions: {
+        tanger: { name: "Tanger Med", focus: "Logistique & Industrie 4.0", desc: "Trait d'union entre l'Europe et l'Afrique, Tanger abrite le premier port de la Méditerranée et un hub automobile mondial de classe exceptionnelle." },
+        kenitra: { name: "Kénitra", focus: "Mobilité Électrique", desc: "Berceau de la nouvelle Giga-factory de batteries et des équipementiers, offrant un écosystème ultra-connecté pour l'industrie de demain." },
+        casablanca: { name: "Casablanca", focus: "Finance & Tech", desc: "Avec Casablanca Finance City, c'est la première place financière d'Afrique et le cœur névralgique de l'innovation et des startups." },
+        ouarzazate: { name: "Ouarzazate", focus: "Énergies Renouvelables", desc: "Capitale mondiale du solaire abritant le méga-complexe Noor, un site de choix pour l'ingénierie verte et l'auto-production industrielle." },
+        dakhla: { name: "Dakhla", focus: "Économie Bleue & Hub Vert", desc: "Le nouveau grand port Atlantique crée d'immenses opportunités pour l'aquaculture durable et les complexes de dessalement et d'hydrogène." },
+      },
+      selectPrompt: "Sélectionnez un pôle stratégique sur la carte pour découvrir son écosystème.",
+      btnIncentives: "Découvrir les subventions"
     },
     services: {
       title: "Nos Services",
@@ -96,6 +111,7 @@ const CONTENT = {
     nav: {
       about: 'About Us',
       sectors: 'Sectors',
+      map: 'Ecosystems',
       services: 'Services',
       testimonials: 'Testimonials',
       contact: 'Contact',
@@ -130,6 +146,19 @@ const CONTENT = {
           desc: "Facing climate challenges, Morocco is heavily investing in agricultural innovation. We connect global Tech companies with large agricultural estates and new-generation industrial zones (Kenitra, Tangier, Jorf Lasfar).",
         }
       ]
+    },
+    map: {
+      title: "Interactive Ecosystem Map",
+      subtitle: "Visualize the strategic hubs and territorial opportunities of the Kingdom.",
+      regions: {
+        tanger: { name: "Tangier Med", focus: "Logistics & Industry 4.0", desc: "The link between Europe and Africa, Tangier hosts the leading Mediterranean port and a world-class automotive hub." },
+        kenitra: { name: "Kenitra", focus: "Electric Mobility", desc: "Cradle of the new battery Gigafactory and auto parts manufacturers, offering an ultra-connected ecosystem for tomorrow's industry." },
+        casablanca: { name: "Casablanca", focus: "Finance & Tech", desc: "With Casablanca Finance City, it constitutes Africa's leading financial center and the nerve center for innovation and startups." },
+        ouarzazate: { name: "Ouarzazate", focus: "Renewable Energies", desc: "Global solar capital housing the Noor mega-complex, a prime location for green engineering and industrial self-production." },
+        dakhla: { name: "Dakhla", focus: "Blue Economy & Green Hub", desc: "The new major Atlantic port creates immense opportunities for sustainable aquaculture and desalination & hydrogen plants." },
+      },
+      selectPrompt: "Select a strategic hub on the map to discover its ecosystem.",
+      btnIncentives: "Discover incentives"
     },
     services: {
       title: "Our Services",
@@ -180,6 +209,8 @@ const CONTENT = {
 function App() {
   const [lang, setLang] = useState<Language>('fr');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeRegion, setActiveRegion] = useState<Region | null>(null);
+
   const t = CONTENT[lang];
 
   return (
@@ -194,6 +225,7 @@ function App() {
           <div className="nav-links">
             <a href="#about" className="nav-link">{t.nav.about}</a>
             <a href="#sectors" className="nav-link">{t.nav.sectors}</a>
+            <a href="#map" className="nav-link">{t.nav.map}</a>
             <a href="#services" className="nav-link">{t.nav.services}</a>
             <a href="#testimonial" className="nav-link">{t.nav.testimonials}</a>
             <a href="#contact" className="nav-link">{t.nav.contact}</a>
@@ -220,6 +252,7 @@ function App() {
           <div className="mobile-menu">
             <a href="#about" onClick={() => setIsMenuOpen(false)}>{t.nav.about}</a>
             <a href="#sectors" onClick={() => setIsMenuOpen(false)}>{t.nav.sectors}</a>
+            <a href="#map" onClick={() => setIsMenuOpen(false)}>{t.nav.map}</a>
             <a href="#services" onClick={() => setIsMenuOpen(false)}>{t.nav.services}</a>
             <a href="#testimonial" onClick={() => setIsMenuOpen(false)}>{t.nav.testimonials}</a>
             <a href="#contact" onClick={() => setIsMenuOpen(false)}>{t.nav.contact}</a>
@@ -288,6 +321,50 @@ function App() {
                 <h3>{t.sectors.cards[2].title}</h3>
                 <p>{t.sectors.cards[2].desc}</p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="map" className="map-section">
+        <div className="container">
+          <h2 className="section-title text-light">{t.map.title}</h2>
+          <p className="section-subtitle text-light" style={{ opacity: 0.8 }}>{t.map.subtitle}</p>
+
+          <div className="map-container">
+            <div className="map-visual">
+              <div className="map-abstract-bg">
+                <Map size={250} strokeWidth={1} />
+              </div>
+
+              {(Object.keys(t.map.regions) as Region[]).map((key) => (
+                <div
+                  key={key}
+                  className={`map-pin pin-${key} ${activeRegion === key ? 'active' : ''}`}
+                  onClick={() => setActiveRegion(key)}
+                >
+                  <div className="map-pin-icon"></div>
+                  <div className="map-pin-label">{t.map.regions[key].name}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="map-info">
+              {activeRegion ? (
+                <div className="map-info-card animate-fade-in" key={activeRegion}>
+                  <h3>{t.map.regions[activeRegion].name}</h3>
+                  <div className="map-info-focus">{t.map.regions[activeRegion].focus}</div>
+                  <p className="map-info-desc">{t.map.regions[activeRegion].desc}</p>
+                  <a href="#contact" className="btn btn-outline" style={{ width: '100%' }}>
+                    {t.map.btnIncentives}
+                  </a>
+                </div>
+              ) : (
+                <div className="map-empty-state">
+                  <MapPin size={48} color="var(--royal-blue-light)" opacity={0.3} />
+                  <p>{t.map.selectPrompt}</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

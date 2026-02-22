@@ -659,3 +659,194 @@ section {
     padding: 2rem;
   }
 }
+
+/* Map Section */
+.map-section {
+  padding: 6rem 2rem;
+  background-color: var(--royal-blue-dark);
+  color: white;
+}
+
+.map-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+@media (min-width: 992px) {
+  .map-container {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+.map-visual {
+  flex: 1.2;
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  min-height: 450px;
+  background-image: radial-gradient(circle at center, rgba(203, 160, 82, 0.05) 0%, transparent 70%);
+  overflow: hidden;
+}
+
+.map-abstract-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.map-pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.map-pin:hover {
+  z-index: 20;
+}
+
+.map-pin-icon {
+  width: 20px;
+  height: 20px;
+  background: var(--sand-gold);
+  border-radius: 50%;
+  border: 4px solid var(--royal-blue-dark);
+  box-shadow: 0 0 10px rgba(203, 160, 82, 0.4);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.map-pin.active .map-pin-icon {
+  width: 28px;
+  height: 28px;
+  background: white;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 0 4px rgba(203, 160, 82, 0.3);
+  border-color: var(--sand-gold);
+}
+
+.map-pin:hover .map-pin-icon:not(.active) {
+  transform: scale(1.2);
+}
+
+.map-pin-label {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(5, 20, 38, 0.8);
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.map-pin.active .map-pin-label,
+.map-pin:hover .map-pin-label {
+  color: white;
+  background: var(--sand-gold);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Strategic Coordinates Approximation */
+.pin-tanger {
+  top: 15%;
+  left: 55%;
+}
+
+.pin-kenitra {
+  top: 25%;
+  left: 52%;
+}
+
+.pin-casablanca {
+  top: 38%;
+  left: 45%;
+}
+
+.pin-ouarzazate {
+  top: 55%;
+  left: 60%;
+}
+
+.pin-dakhla {
+  top: 85%;
+  left: 25%;
+}
+
+.map-info {
+  flex: 1;
+  background: white;
+  border-radius: 12px;
+  padding: 3rem;
+  color: var(--royal-blue-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 450px;
+}
+
+.map-empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.map-empty-state p {
+  font-size: 1.1rem;
+  max-width: 250px;
+  margin: 0 auto;
+}
+
+.map-info-card h3 {
+  font-size: 2.2rem;
+  color: var(--royal-blue);
+  margin-bottom: 0.8rem;
+}
+
+.map-info-focus {
+  display: inline-block;
+  background: var(--bg-alt);
+  color: var(--sand-gold-dark);
+  padding: 0.6rem 1.2rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.map-info-desc {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: var(--text-main);
+  margin-bottom: 2.5rem;
+}
+
+.btn-outline {
+  border: 2px solid var(--royal-blue);
+  color: var(--royal-blue);
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background: var(--royal-blue);
+  color: white;
+}
