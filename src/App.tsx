@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {
-  Menu, X, Fish, Sun, Sprout, Target, Quote, Key,
-  MapPin, Mail, ArrowRight, ShieldCheck, Briefcase,
+  Menu, X, Fish, Sun, Sprout, Target, Quote,
+  MapPin, Mail, ArrowRight, ShieldCheck,
   Building, Globe, BriefcaseBusiness
 } from 'lucide-react';
 import './App.css';
