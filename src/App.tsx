@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {
   Menu, X, Fish, Sun, Sprout, Target, Quote,
   MapPin, Mail, ArrowRight, ShieldCheck,
-  Building, Globe, BriefcaseBusiness, Map
+  Building, Globe, BriefcaseBusiness, Map, TrendingUp, ArrowUpRight
 } from 'lucide-react';
 import './App.css';
 
@@ -16,6 +16,7 @@ const CONTENT = {
       sectors: 'Secteurs',
       map: 'Écosystèmes',
       services: 'Services',
+      news: 'Insights',
       testimonials: 'Témoignages',
       contact: 'Contact',
     },
@@ -85,6 +86,31 @@ const CONTENT = {
         }
       ]
     },
+    news: {
+      title: "Centre d'Intelligence Économique",
+      subtitle: "Dernières analyses et décryptages pour éclairer vos décisions d'investissement.",
+      btnSub: "S'abonner à la Newsletter",
+      articles: [
+        {
+          category: "Réglementation",
+          title: "Nouvelle Charte de l'Investissement : Les primes territoriales décryptées",
+          date: "15 Oct 2026",
+          readTime: "5 min de lecture",
+        },
+        {
+          category: "Industrie 4.0",
+          title: "Comment la Giga-factory de Kénitra redessine la supply chain automobile",
+          date: "02 Oct 2026",
+          readTime: "8 min de lecture",
+        },
+        {
+          category: "Énergies Vertes",
+          title: "L'hydrogène vert à Dakhla : Le nouveau hub de l'Afrique de l'Ouest",
+          date: "28 Sep 2026",
+          readTime: "6 min de lecture",
+        }
+      ]
+    },
     testimonial: {
       title: "Ils nous font confiance",
       quote: "Grâce à l'association, nous avons réduit notre temps d'implantation de 6 mois. Leur connaissance des rouages locaux dans le secteur solaire a été le facteur clé de notre réussite à Ouarzazate.",
@@ -113,6 +139,7 @@ const CONTENT = {
       sectors: 'Sectors',
       map: 'Ecosystems',
       services: 'Services',
+      news: 'Insights',
       testimonials: 'Testimonials',
       contact: 'Contact',
     },
@@ -182,6 +209,31 @@ const CONTENT = {
         }
       ]
     },
+    news: {
+      title: "Market Intelligence Center",
+      subtitle: "Latest analysis and insights to illuminate your investment decisions.",
+      btnSub: "Subscribe to Newsletter",
+      articles: [
+        {
+          category: "Regulation",
+          title: "New Investment Charter: Decoding territorial subsidies",
+          date: "Oct 15, 2026",
+          readTime: "5 min read",
+        },
+        {
+          category: "Industry 4.0",
+          title: "How Kenitra's Gigafactory is reshaping the automotive supply chain",
+          date: "Oct 02, 2026",
+          readTime: "8 min read",
+        },
+        {
+          category: "Green Energies",
+          title: "Green hydrogen in Dakhla: West Africa's new hub",
+          date: "Sep 28, 2026",
+          readTime: "6 min read",
+        }
+      ]
+    },
     testimonial: {
       title: "They Trust Us",
       quote: "Thanks to the association, we reduced our setup time by 6 months. Their knowledge of the local processes in the solar sector was the key factor to our success in Ouarzazate.",
@@ -227,6 +279,7 @@ function App() {
             <a href="#sectors" className="nav-link">{t.nav.sectors}</a>
             <a href="#map" className="nav-link">{t.nav.map}</a>
             <a href="#services" className="nav-link">{t.nav.services}</a>
+            <a href="#news" className="nav-link">{t.nav.news}</a>
             <a href="#testimonial" className="nav-link">{t.nav.testimonials}</a>
             <a href="#contact" className="nav-link">{t.nav.contact}</a>
             <div className="lang-switcher">
@@ -254,6 +307,7 @@ function App() {
             <a href="#sectors" onClick={() => setIsMenuOpen(false)}>{t.nav.sectors}</a>
             <a href="#map" onClick={() => setIsMenuOpen(false)}>{t.nav.map}</a>
             <a href="#services" onClick={() => setIsMenuOpen(false)}>{t.nav.services}</a>
+            <a href="#news" onClick={() => setIsMenuOpen(false)}>{t.nav.news}</a>
             <a href="#testimonial" onClick={() => setIsMenuOpen(false)}>{t.nav.testimonials}</a>
             <a href="#contact" onClick={() => setIsMenuOpen(false)}>{t.nav.contact}</a>
             <div className="mobile-lang">
@@ -396,6 +450,39 @@ function App() {
               <h4>{t.services.list[3].title}</h4>
               <p>{t.services.list[3].desc}</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="news" className="news-section">
+        <div className="container">
+          <div className="news-header">
+            <div>
+              <h2 className="section-title text-left">{t.news.title}</h2>
+              <p className="section-subtitle text-left mb-5" style={{ marginInline: 0 }}>{t.news.subtitle}</p>
+            </div>
+            <a href="#contact" className="btn btn-outline desk-only">{t.news.btnSub}</a>
+          </div>
+
+          <div className="news-grid">
+            {t.news.articles.map((article, idx) => (
+              <a href="#contact" className="news-card hover-card" key={idx}>
+                <div className="news-image-placeholder">
+                  <TrendingUp size={40} color="var(--royal-blue-light)" opacity={0.5} />
+                </div>
+                <div className="news-content">
+                  <div className="news-meta">
+                    <span className="news-category">{article.category}</span>
+                    <span className="news-date">{article.date}</span>
+                  </div>
+                  <h3 className="news-title">{article.title}</h3>
+                  <div className="news-read-more">
+                    <span>{article.readTime}</span>
+                    <ArrowUpRight size={20} className="arrow-icon" />
+                  </div>
+                </div>
+              </a>
+            ))}
           </div>
         </div>
       </section>

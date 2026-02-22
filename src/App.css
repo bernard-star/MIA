@@ -850,3 +850,132 @@ section {
   background: var(--royal-blue);
   color: white;
 }
+
+/* News / Insights Section */
+.news-section {
+  padding: 6rem 2rem;
+  background-color: var(--bg-color);
+}
+
+.news-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.desk-only {
+  display: flex;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.news-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.news-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(10, 35, 66, 0.1);
+  border-color: var(--sand-gold);
+}
+
+.news-image-placeholder {
+  height: 200px;
+  background-color: var(--bg-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.news-card:hover .news-image-placeholder {
+  background-color: rgba(203, 160, 82, 0.1);
+}
+
+.news-card:hover .news-image-placeholder svg {
+  color: var(--sand-gold);
+  opacity: 1;
+}
+
+.news-content {
+  padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.news-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.news-category {
+  color: var(--sand-gold-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.news-date {
+  color: var(--text-muted);
+}
+
+.news-title {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  color: var(--royal-blue);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.news-read-more {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--royal-blue-light);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  transition: color 0.3s ease;
+}
+
+.news-card:hover .news-read-more {
+  color: var(--sand-gold);
+}
+
+.arrow-icon {
+  transition: transform 0.3s ease;
+}
+
+.news-card:hover .arrow-icon {
+  transform: translate(3px, -3px);
+}
+
+@media (max-width: 768px) {
+  .news-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .desk-only {
+    display: none;
+  }
+}
