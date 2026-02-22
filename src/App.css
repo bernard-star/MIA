@@ -1149,3 +1149,62 @@ section {
 .shadow-form {
   margin-top: 0;
 }
+
+/* RTL Support for Arabic */
+.arabic-text {
+  font-family: inherit;
+}
+
+.arabic-text .nav-links {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.arabic-text .hero-content {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.arabic-text .section-title.text-left,
+.arabic-text .section-subtitle.text-left {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.arabic-text .section-title.text-left::after {
+  left: auto;
+  right: 0;
+}
+
+.arabic-text .news-header {
+  flex-direction: row-reverse;
+}
+
+.arabic-text .news-read-more {
+  flex-direction: row-reverse;
+}
+
+.arabic-text .arrow-icon {
+  transform: scaleX(-1);
+}
+
+.arabic-text .news-card:hover .arrow-icon {
+  transform: scaleX(-1) translate(3px, -3px);
+}
+
+.arabic-text .map-info-card {
+  text-align: right;
+}
+
+.arabic-text button .mr-2 {
+  margin-right: 0 !important;
+  margin-left: 8px !important;
+}
+
+.arabic-text .contact-split {
+  text-align: right;
+}
+
+.arabic-text .contact-header {
+  text-align: right;
+}

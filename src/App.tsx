@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import './App.css';
 
-type Language = 'fr' | 'en';
+type Language = 'fr' | 'en' | 'es' | 'ar';
 type Region = 'tanger' | 'kenitra' | 'casablanca' | 'ouarzazate' | 'dakhla';
 
 const CONTENT = {
@@ -292,6 +292,288 @@ const CONTENT = {
       contactValue: "contact@mia.ma",
       legal: "Non-profit association governed by the Dahir of 1958."
     }
+  },
+  es: {
+    nav: {
+      about: 'Nuestra Misión',
+      team: 'Equipo',
+      sectors: 'Sectores',
+      map: 'Ecosistemas',
+      services: 'Servicios',
+      news: 'Noticias',
+      testimonials: 'Testimonios',
+      contact: 'Contacto',
+    },
+    hero: {
+      title: "Invertir en Marruecos: Su visión, nuestro arraigo.",
+      subtitle: "La asociación líder que facilita el establecimiento y crecimiento de empresas internacionales en los sectores estratégicos del Reino.",
+      cta: "Iniciar Mi Proyecto",
+    },
+    about: {
+      title: "Nuestra Misión",
+      desc: "De cara a 2030, Marruecos se afianza como la encrucijada ineludible entre Europa y África. MIA fue creada para ofrecer a los inversores extranjeros una interfaz ágil, independiente y experta. Nuestra misión es simple: transformar la complejidad administrativa en oportunidades fluidas y asegurar su despliegue operativo en un mercado en plena expansión."
+    },
+    team: {
+      title: "Junta Directiva",
+      subtitle: "Expertos de alto nivel dedicados al éxito de su implantación.",
+      members: [
+        { name: "Youssef Alaoui", role: "Presidente & Experto Financiero", exp: "15 años en Banca de Inversión" },
+        { name: "Sarah K.", role: "Directora de Operaciones", exp: "Ex-Directora de Estrategia CFC" },
+        { name: "Mehdi R.", role: "Resp. de Asociaciones Públicas", exp: "Especialista Ley de Inversiones" }
+      ]
+    },
+    objective2030: {
+      title: "Objetivo 2030",
+      desc: "La asociación ayuda específicamente a las empresas extranjeras a posicionarse en mercados relacionados con la construcción de infraestructuras para la Copa del Mundo 2030."
+    },
+    sectors: {
+      title: "Nuestros Sectores de Especialización",
+      subtitle: "Importantes oportunidades de inversión para la internacionalización de sus actividades.",
+      cards: [
+        {
+          title: "Economía Azul y Pesca",
+          desc: "Marruecos cuenta con un litoral excepcional y una industria de transformación en plena mutación tecnológica. Le ayudamos a navegar por las nuevas normativas de 2026, el acceso a las cuotas de pesca y el desarrollo de unidades de acuicultura sostenible.",
+        },
+        {
+          title: "Energías Renovables y Solar",
+          desc: "Líder mundial en energía solar, Marruecos abre ahora su red a productores privados. Ya sea que su proyecto trate de autoproducción industrial o de la exportación de energía verde, facilitamos su conexión y el acceso a terrenos estratégicos.",
+        },
+        {
+          title: "AgriTech & Industria 4.0",
+          desc: "Frente a los desafíos climáticos, Marruecos invierte fuertemente en innovación agrícola. Conectamos empresas tecnológicas globales con grandes fincas agrícolas y zonas industriales de nueva generación (Kenitra, Tánger, Jorf Lasfar).",
+        }
+      ]
+    },
+    map: {
+      title: "Mapa Interactivo de Ecosistemas",
+      subtitle: "Visualice los centros estratégicos y las oportunidades territoriales del Reino.",
+      regions: {
+        tanger: { name: "Tánger Med", focus: "Logística e Industria 4.0", desc: "El enlace entre Europa y África, Tánger alberga el puerto principal del Mediterráneo y un centro automotriz de clase mundial." },
+        kenitra: { name: "Kenitra", focus: "Movilidad Eléctrica", desc: "Cuna de la nueva Gigafactoría de baterías y fabricantes de piezas de automóviles, ofreciendo un ecosistema ultraconectado para la industria del mañana." },
+        casablanca: { name: "Casablanca", focus: "Finanzas y Tech", desc: "Con Casablanca Finance City, constituye el principal centro financiero de África y el centro neurálgico para la innovación y las startups." },
+        ouarzazate: { name: "Ouarzazate", focus: "Energías Renovables", desc: "Capital solar mundial que alberga el megacomplejo Noor, una ubicación privilegiada para la ingeniería verde y la autoproducción industrial." },
+        dakhla: { name: "Dakhla", focus: "Economía Azul y Centro Verde", desc: "El nuevo gran puerto atlántico crea inmensas oportunidades para la acuicultura sostenible y las plantas de desalinización e hidrógeno." },
+      },
+      selectPrompt: "Seleccione un centro estratégico en el mapa para descubrir su ecosistema.",
+      btnIncentives: "Descubrir subvenciones"
+    },
+    services: {
+      title: "Nuestros Servicios",
+      subtitle: "El valor añadido de nuestra asociación para su instalación en Marruecos.",
+      list: [
+        {
+          title: 'Soporte "Soft-Landing"',
+          desc: "Asistencia integral para su instalación (logística, visados de negocios, búsqueda de locales y domiciliación)."
+        },
+        {
+          title: "Ingeniería Administrativa",
+          desc: "Orientación personalizada para beneficiarse de los incentivos de la nueva Carta de Inversiones."
+        },
+        {
+          title: "Red de Socios",
+          desc: "Acceso directo a un ecosistema de banqueros, abogados corporativos y subcontratistas locales certificados."
+        },
+        {
+          title: "Inteligencia de Mercado",
+          desc: "Informes sectoriales actualizados y seguimiento normativo en tiempo real."
+        }
+      ]
+    },
+    news: {
+      title: "Centro de Inteligencia Económica",
+      subtitle: "Últimos análisis y perspectivas para iluminar sus decisiones de inversión.",
+      btnSub: "Suscribirse al Boletín",
+      articles: [
+        {
+          category: "Regulación",
+          title: "Nueva Carta de Inversiones: Decodificando los subsidios territoriales",
+          date: "15 Oct 2026",
+          readTime: "5 min lect.",
+        },
+        {
+          category: "Industria 4.0",
+          title: "Cómo la Gigafactoría de Kenitra está remodelando la cadena de suministro automotriz",
+          date: "02 Oct 2026",
+          readTime: "8 min lect.",
+        },
+        {
+          category: "Energías Verdes",
+          title: "Hidrógeno verde en Dakhla: El nuevo centro de África Occidental",
+          date: "28 Sep 2026",
+          readTime: "6 min lect.",
+        }
+      ]
+    },
+    testimonial: {
+      title: "Ellos Confían en Nosotros",
+      quote: "Gracias a la asociación, hemos reducido nuestro tiempo de implantación en 6 meses. Su conocimiento de los engranajes locales en el sector solar ha sido el factor clave de nuestro éxito en Ouarzazate.",
+      author: "Marc D.",
+      role: "CEO de una multinacional europea"
+    },
+    contact: {
+      title: "Reunámonos",
+      subtitle: "Reserve una evaluación por video de 15 min con un experto o déjenos un mensaje.",
+      calendlyBtn: "Reservar una cita (Calendly)",
+      name: "Nombre Completo",
+      email: "Correo Electrónico",
+      sector: "Sector de Actividad",
+      message: "Su Mensaje",
+      submit: "Enviar Solicitud"
+    },
+    leadMagnet: {
+      title: "¿Listo para conquistar el mercado marroquí?",
+      subtitle: "Descargue nuestra Guía Definitiva para Inversores 2026 (GRATIS)",
+      placeholder: "Su correo profesional...",
+      button: "Obtener PDF de Sectores y Subvenciones"
+    },
+    footer: {
+      addressLabel: "Dirección",
+      addressValue: "Casablanca, Marruecos",
+      contactLabel: "Contacto",
+      contactValue: "contact@mia.ma",
+      legal: "Asociación sin ánimo de lucro regida por el Dahir de 1958."
+    }
+  },
+  ar: {
+    nav: {
+      about: 'مهمتنا',
+      team: 'فريقنا',
+      sectors: 'قطاعاتنا',
+      map: 'الأنظمة البيئية',
+      services: 'خدماتنا',
+      news: 'رؤى',
+      testimonials: 'الشهادات',
+      contact: 'اتصل بنا',
+    },
+    hero: {
+      title: "الاستثمار في المغرب: رؤيتكم، انطلاقتنا.",
+      subtitle: "الجمعية الرائدة في تسهيل تأسيس ونمو الشركات الدولية في القطاعات الاستراتيجية بالمملكة.",
+      cta: "ابدأ مشروعي الآن",
+    },
+    about: {
+      title: "حول مهمتنا",
+      desc: "في أفق عام 2030، يرسخ المغرب مكانته كملتقى طرق أساسي بين أوروبا وإفريقيا. تم إنشاء جمعيتنا لتوفير واجهة مرنة ومستقلة وخبيرة للمستثمرين الأجانب. مهمتنا بسيطة: تحويل التعقيد الإداري إلى فرص سلسة وتأمين انتشاركم التشغيلي في سوق مزدهر للغاية."
+    },
+    team: {
+      title: "مجلس الإدارة",
+      subtitle: "خبراء رفيعو المستوى مكرسون لنجاح مشروعكم.",
+      members: [
+        { name: "يوسف العلوي", role: "رئيس وخبير مالي", exp: "15 عاماً في الخدمات المصرفية الاستثمارية" },
+        { name: "سارة ك.", role: "مديرة العمليات", exp: "المديرة السابقة للاستراتيجية (CFC)" },
+        { name: "مهدي ر.", role: "رئيس الشراكات العامة", exp: "متخصص في ميثاق الاستثمار" }
+      ]
+    },
+    objective2030: {
+      title: "هدف 2030",
+      desc: "تساعد الجمعية على وجه التحديد الشركات الأجنبية على التموضع في الأسواق المتعلقة ببناء البنية التحتية لكأس العالم 2030."
+    },
+    sectors: {
+      title: "قطاعات خبراتنا",
+      subtitle: "فرص استثمارية رئيسية لتدويل أنشطتكم.",
+      cards: [
+        {
+          title: "الاقتصاد الأزرق والصيد",
+          desc: "يتمتع المغرب بشريط ساحلي استثنائي وصناعة تحويلية في خضم تطور تكنولوجي كامل. نحن ندعمك في تجاوز اللوائح الجديدة لعام 2026، والوصول إلى حصص الصيد وتطوير وحدات تربية الأحياء المائية المستدامة.",
+        },
+        {
+          title: "الطاقات المتجددة والطاقة الشمسية",
+          desc: "رائدة عالمياً في مجال الطاقة الشمسية، يفتح المغرب الآن شبكته للمنتجين الخاصين. سواء كان مشروعك يتعلق بالإنتاج الذاتي الصناعي أو تصدير الطاقة الخضراء، فإننا نسهل اتصالك والوصول إلى الأراضي الاستراتيجية.",
+        },
+        {
+          title: "الزراعة الذكية والصناعة 4.0",
+          desc: "لمواجهة التحديات المناخية، يستثمر المغرب بكثافة في الابتكار الزراعي. نحن نربط شركات التكنولوجيا العالمية بالعقارات الزراعية الكبيرة والمناطق الصناعية من الجيل الجديد.",
+        }
+      ]
+    },
+    map: {
+      title: "خريطة النظم البيئية التفاعلية",
+      subtitle: "تصور المراكز الاستراتيجية والفرص الإقليمية في المملكة.",
+      regions: {
+        tanger: { name: "طنجة المتوسط", focus: "الخدمات اللوجستية", desc: "الرابط بين أوروبا وإفريقيا، تضم طنجة ميناء البحر الأبيض المتوسط الرائد ومركزاً للسيارات ذو مستوى عالمي." },
+        kenitra: { name: "القنيطرة", focus: "التنقل الكهربائي", desc: "مهد مصنع البطاريات الضخم الجديد، يقدم نظاماً بيئياً فائق الاتصال لصناعة الغد." },
+        casablanca: { name: "الدار البيضاء", focus: "المالية والتكنولوجيا", desc: "تعتبر المركز المالي والتكنولوجي الأول في إفريقيا والمركز العصبي للابتكار والشركات الناشئة." },
+        ouarzazate: { name: "ورزازات", focus: "الطاقات المتجددة", desc: "عاصمة الطاقة الشمسية العالمية، موقع رئيسي للهندسة الخضراء والإنتاج الذاتي الصناعي." },
+        dakhla: { name: "الداخلة", focus: "الاقتصاد الأزرق", desc: "يخلق الميناء الأطلسي الكبير الجديد فرصاً هائلة للاستزراع المائي المستدام ومحطات تحلية المياه." },
+      },
+      selectPrompt: "حدد مركزاً استراتيجياً على الخريطة لاكتشاف نظامه البيئي.",
+      btnIncentives: "اكتشف الدعم"
+    },
+    services: {
+      title: "خدماتنا",
+      subtitle: "القيمة المضافة لجمعيتنا لتأسيسك في المغرب.",
+      list: [
+        {
+          title: "دعم الهبوط السلس",
+          desc: "مساعدة شاملة لتثبيتك (الخدمات اللوجستية، وتأشيرات العمل، والبحث عن المقرات)."
+        },
+        {
+          title: "الهندسة الإدارية",
+          desc: "توجيه شخصي للاستفادة من دعم ميثاق الاستثمار الجديد."
+        },
+        {
+          title: "شبكة الشركاء",
+          desc: "الوصول المباشر إلى نظام بيئي من المصرفيين المحليين المعتمدين ومحامي الشركات."
+        },
+        {
+          title: "استخبارات السوق",
+          desc: "تقارير قطاعية محدثة ومراقبة تنظيمية في الوقت الفعلي."
+        }
+      ]
+    },
+    news: {
+      title: "مركز استخبارات السوق",
+      subtitle: "أحدث التحليلات والرؤى لإلقاء الضوء على قراراتك الاستثمارية.",
+      btnSub: "اشترك في النشرة الإخبارية",
+      articles: [
+        {
+          category: "تنظيم",
+          title: "ميثاق الاستثمار الجديد: فك رموز الدعم الإقليمي",
+          date: "15 أكتوبر 2026",
+          readTime: "5 دقائق",
+        },
+        {
+          category: "الصناعة 4.0",
+          title: "كيف يعيد مصنع القنيطرة تشكيل سلسلة توريد السيارات",
+          date: "02 أكتوبر 2026",
+          readTime: "8 دقائق",
+        },
+        {
+          category: "الطاقات الخضراء",
+          title: "الهيدروجين الأخضر في الداخلة: المركز الجديد لغرب إفريقيا",
+          date: "28 سبتمبر 2026",
+          readTime: "6 دقائق",
+        }
+      ]
+    },
+    testimonial: {
+      title: "هم يثقون بنا",
+      quote: "بفضل الجمعية، خفضنا وقت التأسيس لدينا بمقدار 6 أشهر. كانت معرفتهم بالتروس المحلية في قطاع الطاقة الشمسية عاملاً رئيسياً لنجاحنا في ورزازات.",
+      author: "مارك د.",
+      role: "مدير تنفيذي لشركة أوروبية متعددة الجنسيات"
+    },
+    contact: {
+      title: "دعونا نلتقي",
+      subtitle: "احجز جلسة تقييم فيديو لمدة 15 دقيقة مع خبير أو اترك لنا رسالة.",
+      calendlyBtn: "احجز موعداً",
+      name: "الاسم الكامل",
+      email: "البريد الإلكتروني",
+      sector: "قطاع الأعمال",
+      message: "رسالتك",
+      submit: "إرسال الطلب"
+    },
+    leadMagnet: {
+      title: "هل أنت مستعد لغزو السوق المغربي؟",
+      subtitle: "قم بتنزيل الدليل النهائي للمستثمر 2026 (مجانًا)",
+      placeholder: "بريدك الإلكتروني المهني...",
+      button: "احصل على الدليل بصيغة PDF"
+    },
+    footer: {
+      addressLabel: "العنوان",
+      addressValue: "الدار البيضاء، المغرب",
+      contactLabel: "اتصل بنا",
+      contactValue: "contact@mia.ma",
+      legal: "جمعية غير ربحية تخضع لظهير 1958."
+    }
   }
 };
 
@@ -301,6 +583,7 @@ function App() {
   const [activeRegion, setActiveRegion] = useState<Region | null>(null);
 
   const t = CONTENT[lang];
+  const isRTL = lang === 'ar';
 
   return (
     <>
@@ -330,6 +613,16 @@ function App() {
                 className={`lang-switch ${lang === 'en' ? 'active' : ''}`}
                 onClick={() => setLang('en')}
               >EN</span>
+              <span style={{ color: 'var(--text-muted)' }}>|</span>
+              <span
+                className={`lang-switch ${lang === 'es' ? 'active' : ''}`}
+                onClick={() => setLang('es')}
+              >ES</span>
+              <span style={{ color: 'var(--text-muted)' }}>|</span>
+              <span
+                className={`lang-switch ${lang === 'ar' ? 'active' : ''}`}
+                onClick={() => setLang('ar')}
+              >AR</span>
             </div>
           </div>
 
@@ -353,314 +646,320 @@ function App() {
               <span className={lang === 'fr' ? 'active' : ''} onClick={() => { setLang('fr'); setIsMenuOpen(false); }}>FR</span>
               <span>|</span>
               <span className={lang === 'en' ? 'active' : ''} onClick={() => { setLang('en'); setIsMenuOpen(false); }}>EN</span>
+              <span>|</span>
+              <span className={lang === 'es' ? 'active' : ''} onClick={() => { setLang('es'); setIsMenuOpen(false); }}>ES</span>
+              <span>|</span>
+              <span className={lang === 'ar' ? 'active' : ''} onClick={() => { setLang('ar'); setIsMenuOpen(false); }}>AR</span>
             </div>
           </div>
         )}
       </nav>
 
-      <section id="hero" className="hero-section">
-        <div className="hero-overlay"></div>
-        <div className="container hero-content animate-fade-in">
-          <h1>{t.hero.title}</h1>
-          <p className="hero-subtitle">{t.hero.subtitle}</p>
-          <a href="#contact" className="btn btn-primary hero-btn">
-            {t.hero.cta} <ArrowRight className="ml-2" size={20} />
-          </a>
-        </div>
-      </section>
-
-      <section id="about" className="about-section bg-light">
-        <div className="container">
-          <div className="about-content">
-            <h2 className="section-title">{t.about.title}</h2>
-            <p className="about-desc">{t.about.desc}</p>
+      <div dir={isRTL ? "rtl" : "ltr"} className={isRTL ? "arabic-text" : ""}>
+        <section id="hero" className="hero-section">
+          <div className="hero-overlay"></div>
+          <div className="container hero-content animate-fade-in">
+            <h1>{t.hero.title}</h1>
+            <p className="hero-subtitle">{t.hero.subtitle}</p>
+            <a href="#contact" className="btn btn-primary hero-btn">
+              {t.hero.cta} <ArrowRight className="ml-2" size={20} />
+            </a>
           </div>
+        </section>
 
-          <div className="objective-banner">
-            <div className="objective-icon">
-              <Target size={48} color="var(--royal-blue-dark)" />
+        <section id="about" className="about-section bg-light">
+          <div className="container">
+            <div className="about-content">
+              <h2 className="section-title">{t.about.title}</h2>
+              <p className="about-desc">{t.about.desc}</p>
             </div>
-            <div>
-              <h3>{t.objective2030.title}</h3>
-              <p>{t.objective2030.desc}</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section id="team" className="team-section">
-        <div className="container">
-          <h2 className="section-title">{t.team.title}</h2>
-          <p className="section-subtitle">{t.team.subtitle}</p>
-
-          <div className="team-grid">
-            {t.team.members.map((member, idx) => (
-              <div className="team-card hover-card" key={idx}>
-                <div className="team-avatar">
-                  {/* Placeholder for real headshot */}
-                </div>
-                <div className="team-info">
-                  <h3>{member.name}</h3>
-                  <p className="team-role">{member.role}</p>
-                  <p className="team-exp">{member.exp}</p>
-                  <a href="#linkedin" className="team-social">
-                    <Linkedin size={20} /> LinkedIn
-                  </a>
-                </div>
+            <div className="objective-banner">
+              <div className="objective-icon">
+                <Target size={48} color="var(--royal-blue-dark)" />
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="sectors" className="sectors-section">
-        <div className="container">
-          <h2 className="section-title">{t.sectors.title}</h2>
-          <p className="section-subtitle">{t.sectors.subtitle}</p>
-
-          <div className="sectors-grid">
-            <div className="sector-card hover-card">
-              <Fish size={48} className="sector-icon" />
-              <div className="sector-content">
-                <h3>{t.sectors.cards[0].title}</h3>
-                <p>{t.sectors.cards[0].desc}</p>
-              </div>
-            </div>
-            <div className="sector-card hover-card">
-              <Sun size={48} className="sector-icon" />
-              <div className="sector-content">
-                <h3>{t.sectors.cards[1].title}</h3>
-                <p>{t.sectors.cards[1].desc}</p>
-              </div>
-            </div>
-            <div className="sector-card hover-card">
-              <Sprout size={48} className="sector-icon" />
-              <div className="sector-content">
-                <h3>{t.sectors.cards[2].title}</h3>
-                <p>{t.sectors.cards[2].desc}</p>
+              <div>
+                <h3>{t.objective2030.title}</h3>
+                <p>{t.objective2030.desc}</p>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="map" className="map-section">
-        <div className="container">
-          <h2 className="section-title text-light">{t.map.title}</h2>
-          <p className="section-subtitle text-light" style={{ opacity: 0.8 }}>{t.map.subtitle}</p>
+        <section id="team" className="team-section">
+          <div className="container">
+            <h2 className="section-title">{t.team.title}</h2>
+            <p className="section-subtitle">{t.team.subtitle}</p>
 
-          <div className="map-container">
-            <div className="map-visual">
-              <div className="map-abstract-bg">
-                <Map size={250} strokeWidth={1} />
-              </div>
-
-              {(Object.keys(t.map.regions) as Region[]).map((key) => (
-                <div
-                  key={key}
-                  className={`map-pin pin-${key} ${activeRegion === key ? 'active' : ''}`}
-                  onClick={() => setActiveRegion(key)}
-                >
-                  <div className="map-pin-icon"></div>
-                  <div className="map-pin-label">{t.map.regions[key].name}</div>
+            <div className="team-grid">
+              {t.team.members.map((member, idx) => (
+                <div className="team-card hover-card" key={idx}>
+                  <div className="team-avatar">
+                    {/* Placeholder for real headshot */}
+                  </div>
+                  <div className="team-info">
+                    <h3>{member.name}</h3>
+                    <p className="team-role">{member.role}</p>
+                    <p className="team-exp">{member.exp}</p>
+                    <a href="#linkedin" className="team-social">
+                      <Linkedin size={20} /> LinkedIn
+                    </a>
+                  </div>
                 </div>
               ))}
             </div>
+          </div>
+        </section>
 
-            <div className="map-info">
-              {activeRegion ? (
-                <div className="map-info-card animate-fade-in" key={activeRegion}>
-                  <h3>{t.map.regions[activeRegion].name}</h3>
-                  <div className="map-info-focus">{t.map.regions[activeRegion].focus}</div>
-                  <p className="map-info-desc">{t.map.regions[activeRegion].desc}</p>
-                  <a href="#contact" className="btn btn-outline" style={{ width: '100%' }}>
-                    {t.map.btnIncentives}
+        <section id="sectors" className="sectors-section">
+          <div className="container">
+            <h2 className="section-title">{t.sectors.title}</h2>
+            <p className="section-subtitle">{t.sectors.subtitle}</p>
+
+            <div className="sectors-grid">
+              <div className="sector-card hover-card">
+                <Fish size={48} className="sector-icon" />
+                <div className="sector-content">
+                  <h3>{t.sectors.cards[0].title}</h3>
+                  <p>{t.sectors.cards[0].desc}</p>
+                </div>
+              </div>
+              <div className="sector-card hover-card">
+                <Sun size={48} className="sector-icon" />
+                <div className="sector-content">
+                  <h3>{t.sectors.cards[1].title}</h3>
+                  <p>{t.sectors.cards[1].desc}</p>
+                </div>
+              </div>
+              <div className="sector-card hover-card">
+                <Sprout size={48} className="sector-icon" />
+                <div className="sector-content">
+                  <h3>{t.sectors.cards[2].title}</h3>
+                  <p>{t.sectors.cards[2].desc}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="map" className="map-section">
+          <div className="container">
+            <h2 className="section-title text-light">{t.map.title}</h2>
+            <p className="section-subtitle text-light" style={{ opacity: 0.8 }}>{t.map.subtitle}</p>
+
+            <div className="map-container">
+              <div className="map-visual">
+                <div className="map-abstract-bg">
+                  <Map size={250} strokeWidth={1} />
+                </div>
+
+                {(Object.keys(t.map.regions) as Region[]).map((key) => (
+                  <div
+                    key={key}
+                    className={`map-pin pin-${key} ${activeRegion === key ? 'active' : ''}`}
+                    onClick={() => setActiveRegion(key)}
+                  >
+                    <div className="map-pin-icon"></div>
+                    <div className="map-pin-label">{t.map.regions[key].name}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="map-info">
+                {activeRegion ? (
+                  <div className="map-info-card animate-fade-in" key={activeRegion}>
+                    <h3>{t.map.regions[activeRegion].name}</h3>
+                    <div className="map-info-focus">{t.map.regions[activeRegion].focus}</div>
+                    <p className="map-info-desc">{t.map.regions[activeRegion].desc}</p>
+                    <a href="#contact" className="btn btn-outline" style={{ width: '100%' }}>
+                      {t.map.btnIncentives}
+                    </a>
+                  </div>
+                ) : (
+                  <div className="map-empty-state">
+                    <MapPin size={48} color="var(--royal-blue-light)" opacity={0.3} />
+                    <p>{t.map.selectPrompt}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="services" className="services-section bg-alt">
+          <div className="container">
+            <h2 className="section-title text-center">{t.services.title}</h2>
+            <p className="section-subtitle text-center mb-5">{t.services.subtitle}</p>
+
+            <div className="services-grid">
+              <div className="service-card hover-card">
+                <div className="service-icon"><Building /></div>
+                <h4>{t.services.list[0].title}</h4>
+                <p>{t.services.list[0].desc}</p>
+              </div>
+              <div className="service-card hover-card">
+                <div className="service-icon"><ShieldCheck /></div>
+                <h4>{t.services.list[1].title}</h4>
+                <p>{t.services.list[1].desc}</p>
+              </div>
+              <div className="service-card hover-card">
+                <div className="service-icon"><BriefcaseBusiness /></div>
+                <h4>{t.services.list[2].title}</h4>
+                <p>{t.services.list[2].desc}</p>
+              </div>
+              <div className="service-card hover-card">
+                <div className="service-icon"><Globe /></div>
+                <h4>{t.services.list[3].title}</h4>
+                <p>{t.services.list[3].desc}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="news" className="news-section">
+          <div className="container">
+            <div className="news-header">
+              <div>
+                <h2 className="section-title text-left">{t.news.title}</h2>
+                <p className="section-subtitle text-left mb-5" style={{ marginInline: 0 }}>{t.news.subtitle}</p>
+              </div>
+              <a href="#contact" className="btn btn-outline desk-only">{t.news.btnSub}</a>
+            </div>
+
+            <div className="news-grid">
+              {t.news.articles.map((article, idx) => (
+                <a href="#contact" className="news-card hover-card" key={idx}>
+                  <div className="news-image-placeholder">
+                    <TrendingUp size={40} color="var(--royal-blue-light)" opacity={0.5} />
+                  </div>
+                  <div className="news-content">
+                    <div className="news-meta">
+                      <span className="news-category">{article.category}</span>
+                      <span className="news-date">{article.date}</span>
+                    </div>
+                    <h3 className="news-title">{article.title}</h3>
+                    <div className="news-read-more">
+                      <span>{article.readTime}</span>
+                      <ArrowUpRight size={20} className="arrow-icon" />
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="testimonial" className="testimonial-section">
+          <div className="container testimonial-container">
+            <h2 className="section-title text-light">{t.testimonial.title}</h2>
+            <Quote size={60} className="quote-icon mx-auto" />
+            <p className="testimonial-quote">"{t.testimonial.quote}"</p>
+            <div className="testimonial-author">{t.testimonial.author}</div>
+            <div className="testimonial-role">{t.testimonial.role}</div>
+          </div>
+        </section>
+
+        <section id="lead-magnet" className="lead-magnet-section">
+          <div className="container">
+            <div className="lead-magnet-box">
+              <div className="lead-magnet-content">
+                <h2>{t.leadMagnet.title}</h2>
+                <p>{t.leadMagnet.subtitle}</p>
+                <form className="lead-magnet-form" onSubmit={(e) => e.preventDefault()}>
+                  <input type="email" placeholder={t.leadMagnet.placeholder} required />
+                  <button type="submit" className="btn btn-primary">
+                    <Download size={18} className="mr-2" style={{ marginRight: '8px' }} /> {t.leadMagnet.button}
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="contact-section">
+          <div className="container contact-container">
+            <div className="contact-form-wrapper">
+              <div className="contact-header">
+                <h2 className="section-title text-left">{t.contact.title}</h2>
+                <p className="section-subtitle text-left mb-5" style={{ marginInline: 0 }}>{t.contact.subtitle}</p>
+              </div>
+
+              <div className="contact-split">
+                {/* Calendly booking CTA mock */}
+                <div className="calendly-box">
+                  <CalendarCheck size={48} color="var(--sand-gold)" style={{ marginBottom: '1rem' }} />
+                  <h3>Fast Track</h3>
+                  <p>Gagnez du temps et discutez directement de vos enjeux avec nos experts locaux.</p>
+                  <a href="#calendly" className="btn btn-primary w-full mt-4" style={{ marginTop: '1.5rem' }}>
+                    {t.contact.calendlyBtn}
                   </a>
                 </div>
-              ) : (
-                <div className="map-empty-state">
-                  <MapPin size={48} color="var(--royal-blue-light)" opacity={0.3} />
-                  <p>{t.map.selectPrompt}</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section id="services" className="services-section bg-alt">
-        <div className="container">
-          <h2 className="section-title text-center">{t.services.title}</h2>
-          <p className="section-subtitle text-center mb-5">{t.services.subtitle}</p>
-
-          <div className="services-grid">
-            <div className="service-card hover-card">
-              <div className="service-icon"><Building /></div>
-              <h4>{t.services.list[0].title}</h4>
-              <p>{t.services.list[0].desc}</p>
-            </div>
-            <div className="service-card hover-card">
-              <div className="service-icon"><ShieldCheck /></div>
-              <h4>{t.services.list[1].title}</h4>
-              <p>{t.services.list[1].desc}</p>
-            </div>
-            <div className="service-card hover-card">
-              <div className="service-icon"><BriefcaseBusiness /></div>
-              <h4>{t.services.list[2].title}</h4>
-              <p>{t.services.list[2].desc}</p>
-            </div>
-            <div className="service-card hover-card">
-              <div className="service-icon"><Globe /></div>
-              <h4>{t.services.list[3].title}</h4>
-              <p>{t.services.list[3].desc}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="news" className="news-section">
-        <div className="container">
-          <div className="news-header">
-            <div>
-              <h2 className="section-title text-left">{t.news.title}</h2>
-              <p className="section-subtitle text-left mb-5" style={{ marginInline: 0 }}>{t.news.subtitle}</p>
-            </div>
-            <a href="#contact" className="btn btn-outline desk-only">{t.news.btnSub}</a>
-          </div>
-
-          <div className="news-grid">
-            {t.news.articles.map((article, idx) => (
-              <a href="#contact" className="news-card hover-card" key={idx}>
-                <div className="news-image-placeholder">
-                  <TrendingUp size={40} color="var(--royal-blue-light)" opacity={0.5} />
-                </div>
-                <div className="news-content">
-                  <div className="news-meta">
-                    <span className="news-category">{article.category}</span>
-                    <span className="news-date">{article.date}</span>
+                {/* Standard Form */}
+                <form className="contact-form shadow-form" onSubmit={(e) => e.preventDefault()}>
+                  <div className="form-group">
+                    <label>{t.contact.name}</label>
+                    <input type="text" placeholder={t.contact.name} />
                   </div>
-                  <h3 className="news-title">{article.title}</h3>
-                  <div className="news-read-more">
-                    <span>{article.readTime}</span>
-                    <ArrowUpRight size={20} className="arrow-icon" />
+                  <div className="form-group">
+                    <label>{t.contact.email}</label>
+                    <input type="email" placeholder={t.contact.email} />
                   </div>
+                  <div className="form-group">
+                    <label>{t.contact.sector}</label>
+                    <select>
+                      <option value="">Sélectionnez / Select</option>
+                      <option value="energie">Énergies Renouvelables</option>
+                      <option value="peche">Économie Bleue & Pêche</option>
+                      <option value="agritech">AgriTech & Industrie</option>
+                      <option value="autre">Autre / Other</option>
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label>{t.contact.message}</label>
+                    <textarea rows={4} placeholder={t.contact.message}></textarea>
+                  </div>
+                  <button type="submit" className="btn btn-outline w-full">{t.contact.submit}</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <footer className="footer">
+          <div className="container">
+            <div className="footer-content">
+              <div className="footer-brand">
+                <div className="brand" style={{ fontSize: '2rem', marginBottom: '1rem', color: 'white' }}>
+                  MIA<span style={{ color: 'var(--sand-gold)' }}>.</span>
                 </div>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="testimonial" className="testimonial-section">
-        <div className="container testimonial-container">
-          <h2 className="section-title text-light">{t.testimonial.title}</h2>
-          <Quote size={60} className="quote-icon mx-auto" />
-          <p className="testimonial-quote">"{t.testimonial.quote}"</p>
-          <div className="testimonial-author">{t.testimonial.author}</div>
-          <div className="testimonial-role">{t.testimonial.role}</div>
-        </div>
-      </section>
-
-      <section id="lead-magnet" className="lead-magnet-section">
-        <div className="container">
-          <div className="lead-magnet-box">
-            <div className="lead-magnet-content">
-              <h2>{t.leadMagnet.title}</h2>
-              <p>{t.leadMagnet.subtitle}</p>
-              <form className="lead-magnet-form" onSubmit={(e) => e.preventDefault()}>
-                <input type="email" placeholder={t.leadMagnet.placeholder} required />
-                <button type="submit" className="btn btn-primary">
-                  <Download size={18} className="mr-2" style={{ marginRight: '8px' }} /> {t.leadMagnet.button}
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" className="contact-section">
-        <div className="container contact-container">
-          <div className="contact-form-wrapper">
-            <div className="contact-header">
-              <h2 className="section-title text-left">{t.contact.title}</h2>
-              <p className="section-subtitle text-left mb-5" style={{ marginInline: 0 }}>{t.contact.subtitle}</p>
-            </div>
-
-            <div className="contact-split">
-              {/* Calendly booking CTA mock */}
-              <div className="calendly-box">
-                <CalendarCheck size={48} color="var(--sand-gold)" style={{ marginBottom: '1rem' }} />
-                <h3>Fast Track</h3>
-                <p>Gagnez du temps et discutez directement de vos enjeux avec nos experts locaux.</p>
-                <a href="#calendly" className="btn btn-primary w-full mt-4" style={{ marginTop: '1.5rem' }}>
-                  {t.contact.calendlyBtn}
-                </a>
+                <p style={{ maxWidth: '300px', opacity: 0.8 }}>
+                  The leading association facilitating international investment in Morocco.
+                </p>
               </div>
 
-              {/* Standard Form */}
-              <form className="contact-form shadow-form" onSubmit={(e) => e.preventDefault()}>
-                <div className="form-group">
-                  <label>{t.contact.name}</label>
-                  <input type="text" placeholder={t.contact.name} />
-                </div>
-                <div className="form-group">
-                  <label>{t.contact.email}</label>
-                  <input type="email" placeholder={t.contact.email} />
-                </div>
-                <div className="form-group">
-                  <label>{t.contact.sector}</label>
-                  <select>
-                    <option value="">Sélectionnez / Select</option>
-                    <option value="energie">Énergies Renouvelables</option>
-                    <option value="peche">Économie Bleue & Pêche</option>
-                    <option value="agritech">AgriTech & Industrie</option>
-                    <option value="autre">Autre / Other</option>
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>{t.contact.message}</label>
-                  <textarea rows={4} placeholder={t.contact.message}></textarea>
-                </div>
-                <button type="submit" className="btn btn-outline w-full">{t.contact.submit}</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <footer className="footer">
-        <div className="container">
-          <div className="footer-content">
-            <div className="footer-brand">
-              <div className="brand" style={{ fontSize: '2rem', marginBottom: '1rem', color: 'white' }}>
-                MIA<span style={{ color: 'var(--sand-gold)' }}>.</span>
+              <div className="footer-section">
+                <h4>{t.footer.addressLabel}</h4>
+                <p className="flex items-center gap-2" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <MapPin size={18} color="var(--sand-gold)" /> {t.footer.addressValue}
+                </p>
               </div>
-              <p style={{ maxWidth: '300px', opacity: 0.8 }}>
-                The leading association facilitating international investment in Morocco.
-              </p>
+
+              <div className="footer-section">
+                <h4>{t.footer.contactLabel}</h4>
+                <p className="flex items-center gap-2" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Mail size={18} color="var(--sand-gold)" /> {t.footer.contactValue}
+                </p>
+              </div>
             </div>
 
-            <div className="footer-section">
-              <h4>{t.footer.addressLabel}</h4>
-              <p className="flex items-center gap-2" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <MapPin size={18} color="var(--sand-gold)" /> {t.footer.addressValue}
-              </p>
-            </div>
-
-            <div className="footer-section">
-              <h4>{t.footer.contactLabel}</h4>
-              <p className="flex items-center gap-2" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Mail size={18} color="var(--sand-gold)" /> {t.footer.contactValue}
-              </p>
+            <div className="footer-bottom">
+              <p>© 2026 MIA - Moroccan Investment Association.</p>
+              <p>{t.footer.legal}</p>
             </div>
           </div>
-
-          <div className="footer-bottom">
-            <p>© 2026 MIA - Moroccan Investment Association.</p>
-            <p>{t.footer.legal}</p>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </>
   )
 }
