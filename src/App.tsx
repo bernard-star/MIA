@@ -709,7 +709,7 @@ function App() {
   useEffect(() => {
     const handlePop = () => {
       const p = window.location.pathname;
-      setCurrentPath(['/', '/association', '/expertise', '/opportunites', '/insights', '/contact'].includes(p) ? p : '/');
+      setCurrentPath(p);
     };
     window.addEventListener('popstate', handlePop);
     return () => window.removeEventListener('popstate', handlePop);
@@ -767,38 +767,38 @@ function App() {
             <div className="nav-item">
               <a href="/association" className="nav-link" onClick={(e) => { e.preventDefault(); navigateTo('/association'); }}>{t.nav.association} <ChevronDown size={14} /></a>
               <div className="dropdown-menu">
-                <a href="#about" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/association', 'about'); }}>{t.nav.about}</a>
-                <a href="#team" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/association', 'team'); }}>{t.nav.team}</a>
-                <a href="#testimonial" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/association', 'testimonial'); }}>{t.nav.testimonials}</a>
+                <a href="/association/about" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/association/about'); }}>{t.nav.about}</a>
+                <a href="/association/team" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/association/team'); }}>{t.nav.team}</a>
+                <a href="/association/testimonial" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/association/testimonial'); }}>{t.nav.testimonials}</a>
               </div>
             </div>
 
             <div className="nav-item">
               <a href="/expertise" className="nav-link" onClick={(e) => { e.preventDefault(); navigateTo('/expertise'); }}>{t.nav.expertise} <ChevronDown size={14} /></a>
               <div className="dropdown-menu">
-                <a href="#sectors" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/expertise', 'sectors'); }}>{t.nav.sectors}</a>
-                <a href="#map" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/expertise', 'map'); }}>{t.nav.map}</a>
-                <a href="#services" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/expertise', 'services'); }}>{t.nav.services}</a>
+                <a href="/expertise/sectors" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/expertise/sectors'); }}>{t.nav.sectors}</a>
+                <a href="/expertise/map" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/expertise/map'); }}>{t.nav.map}</a>
+                <a href="/expertise/services" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/expertise/services'); }}>{t.nav.services}</a>
               </div>
             </div>
 
             <div className="nav-item">
               <a href="/opportunites" className="nav-link" onClick={(e) => { e.preventDefault(); navigateTo('/opportunites'); }}>{t.nav.opportunites} <ChevronDown size={14} /></a>
               <div className="dropdown-menu">
-                <a href="#exchange" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/opportunites', 'exchange'); }}>{t.nav.exchange}</a>
-                <a href="#votreprojet" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/opportunites', 'votreprojet'); }}>{t.nav.votreProjet}</a>
+                <a href="/opportunites/exchange" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/opportunites/exchange'); }}>{t.nav.exchange}</a>
+                <a href="/opportunites/votreprojet" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/opportunites/votreprojet'); }}>{t.nav.votreProjet}</a>
               </div>
             </div>
 
             <div className="nav-item">
               <a href="/insights" className="nav-link" onClick={(e) => { e.preventDefault(); navigateTo('/insights'); }}>{t.nav.insightsMain} <ChevronDown size={14} /></a>
               <div className="dropdown-menu">
-                <a href="#news" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/insights', 'news'); }}>{t.nav.news}</a>
+                <a href="/insights/news" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/insights/news'); }}>{t.nav.news}</a>
               </div>
             </div>
 
             <div className="nav-item">
-              <a href="#contact" className="nav-link" onClick={(e) => { e.preventDefault(); navigateTo('/contact', 'contact'); }}>{t.nav.contact}</a>
+              <a href="/contact" className="nav-link" onClick={(e) => { e.preventDefault(); navigateTo('/contact'); }}>{t.nav.contact}</a>
             </div>
 
             <div className="nav-item lang-switcher" style={{ cursor: 'pointer' }}>
@@ -816,10 +816,10 @@ function App() {
             <div className="nav-item" style={{ marginLeft: '1rem', display: 'flex', gap: '0.5rem' }}>
               {!session ? (
                 <>
-                  <a href="#" className="btn btn-outline" style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }} onClick={(e) => { e.preventDefault(); navigateTo('/opportunites', 'votreprojet'); }}>
+                  <a href="/opportunites/votreprojet" className="btn btn-outline" style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }} onClick={(e) => { e.preventDefault(); navigateTo('/opportunites/votreprojet'); }}>
                     <LogIn size={14} className="mr-1" style={{ marginRight: '4px' }} /> {t.nav.login}
                   </a>
-                  <a href="#" className="btn btn-primary" style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }} onClick={(e) => { e.preventDefault(); navigateTo('/opportunites', 'votreprojet'); }}>
+                  <a href="/opportunites/votreprojet" className="btn btn-primary" style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }} onClick={(e) => { e.preventDefault(); navigateTo('/opportunites/votreprojet'); }}>
                     <UserPlus size={14} className="mr-1" style={{ marginRight: '4px' }} /> {t.nav.signup}
                   </a>
                 </>
@@ -840,24 +840,24 @@ function App() {
         {isMenuOpen && (
           <div className="mobile-menu">
             <div style={{ fontWeight: 800, color: 'var(--royal-blue)', padding: '0.5rem 0', marginTop: '0.5rem' }}>{t.nav.association}</div>
-            <a href="#about" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/association', 'about'); }}>- {t.nav.about}</a>
-            <a href="#team" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/association', 'team'); }}>- {t.nav.team}</a>
-            <a href="#testimonial" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/association', 'testimonial'); }}>- {t.nav.testimonials}</a>
+            <a href="/association/about" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/association/about'); }}>- {t.nav.about}</a>
+            <a href="/association/team" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/association/team'); }}>- {t.nav.team}</a>
+            <a href="/association/testimonial" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/association/testimonial'); }}>- {t.nav.testimonials}</a>
 
             <div style={{ fontWeight: 800, color: 'var(--royal-blue)', padding: '0.5rem 0', marginTop: '0.5rem' }}>{t.nav.expertise}</div>
-            <a href="#sectors" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/expertise', 'sectors'); }}>- {t.nav.sectors}</a>
-            <a href="#map" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/expertise', 'map'); }}>- {t.nav.map}</a>
-            <a href="#services" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/expertise', 'services'); }}>- {t.nav.services}</a>
+            <a href="/expertise/sectors" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/expertise/sectors'); }}>- {t.nav.sectors}</a>
+            <a href="/expertise/map" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/expertise/map'); }}>- {t.nav.map}</a>
+            <a href="/expertise/services" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/expertise/services'); }}>- {t.nav.services}</a>
 
             <div style={{ fontWeight: 800, color: 'var(--royal-blue)', padding: '0.5rem 0', marginTop: '0.5rem' }}>{t.nav.opportunites}</div>
-            <a href="#exchange" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/opportunites', 'exchange'); setIsMenuOpen(false); }}>- {t.nav.exchange}</a>
-            <a href="#votreprojet" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/opportunites', 'votreprojet'); setIsMenuOpen(false); }}>- {t.nav.votreProjet}</a>
+            <a href="/opportunites/exchange" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/opportunites/exchange'); setIsMenuOpen(false); }}>- {t.nav.exchange}</a>
+            <a href="/opportunites/votreprojet" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/opportunites/votreprojet'); setIsMenuOpen(false); }}>- {t.nav.votreProjet}</a>
 
             <div style={{ fontWeight: 800, color: 'var(--royal-blue)', padding: '0.5rem 0', marginTop: '0.5rem' }}>{t.nav.insightsMain}</div>
-            <a href="#news" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/insights', 'news'); }}>- {t.nav.news}</a>
+            <a href="/insights/news" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/insights/news'); }}>- {t.nav.news}</a>
 
             <div style={{ fontWeight: 800, color: 'var(--royal-blue)', padding: '0.5rem 0', marginTop: '0.5rem' }}>{t.nav.contact}</div>
-            <a href="#contact" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/contact', 'contact'); }}>- {t.nav.contact}</a>
+            <a href="/contact" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/contact'); }}>- {t.nav.contact}</a>
 
             <div className="mobile-lang">
               <span className={lang === 'fr' ? 'active' : ''} onClick={() => { setLang('fr'); setIsMenuOpen(false); }}>FR</span>
@@ -886,171 +886,174 @@ function App() {
           </section>
         )}
 
-        {(currentPath === '/' || currentPath === '/association') && (
-          <>
-            <section id="about" className="about-section bg-light">
-              <div className="container">
-                <div className="about-content">
-                  <h2 className="section-title">{t.about.title}</h2>
-                  <p className="about-desc">{t.about.desc}</p>
-                </div>
+        {(currentPath === '/' || currentPath === '/association' || currentPath === '/association/about') && (
+          <section id="about" className="about-section bg-light">
+            <div className="container">
+              <div className="about-content">
+                <h2 className="section-title">{t.about.title}</h2>
+                <p className="about-desc">{t.about.desc}</p>
+              </div>
 
-                <div className="objective-banner">
-                  <div className="objective-icon">
-                    <Target size={48} color="var(--royal-blue-dark)" />
+              <div className="objective-banner">
+                <div className="objective-icon">
+                  <Target size={48} color="var(--royal-blue-dark)" />
+                </div>
+                <div>
+                  <h3>{t.objective2030.title}</h3>
+                  <p>{t.objective2030.desc}</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {(currentPath === '/' || currentPath === '/association' || currentPath === '/association/team') && (
+          <section id="team" className="team-section">
+            <div className="container">
+              <h2 className="section-title">{t.team.title}</h2>
+              <p className="section-subtitle">{t.team.subtitle}</p>
+
+              <div className="team-grid">
+                {t.team.members.map((member, idx) => (
+                  <div className="team-card hover-card" key={idx}>
+                    <div className="team-avatar">
+                      {/* Placeholder for real headshot */}
+                    </div>
+                    <div className="team-info">
+                      <h3>{member.name}</h3>
+                      <p className="team-role">{member.role}</p>
+                      <p className="team-exp">{member.exp}</p>
+                      <a href="#linkedin" className="team-social">
+                        <Linkedin size={20} /> LinkedIn
+                      </a>
+                    </div>
                   </div>
-                  <div>
-                    <h3>{t.objective2030.title}</h3>
-                    <p>{t.objective2030.desc}</p>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {(currentPath === '/' || currentPath === '/expertise' || currentPath === '/expertise/sectors') && (
+          <section id="sectors" className="sectors-section">
+            <div className="container">
+              <h2 className="section-title">{t.sectors.title}</h2>
+              <p className="section-subtitle">{t.sectors.subtitle}</p>
+
+              <div className="sectors-grid">
+                <div className="sector-card hover-card">
+                  <Fish size={48} className="sector-icon" />
+                  <div className="sector-content">
+                    <h3>{t.sectors.cards[0].title}</h3>
+                    <p>{t.sectors.cards[0].desc}</p>
+                  </div>
+                </div>
+                <div className="sector-card hover-card">
+                  <Sun size={48} className="sector-icon" />
+                  <div className="sector-content">
+                    <h3>{t.sectors.cards[1].title}</h3>
+                    <p>{t.sectors.cards[1].desc}</p>
+                  </div>
+                </div>
+                <div className="sector-card hover-card">
+                  <Sprout size={48} className="sector-icon" />
+                  <div className="sector-content">
+                    <h3>{t.sectors.cards[2].title}</h3>
+                    <p>{t.sectors.cards[2].desc}</p>
                   </div>
                 </div>
               </div>
-            </section>
+            </div>
+          </section>
+        )}
 
-            <section id="team" className="team-section">
-              <div className="container">
-                <h2 className="section-title">{t.team.title}</h2>
-                <p className="section-subtitle">{t.team.subtitle}</p>
+        {(currentPath === '/' || currentPath === '/expertise' || currentPath === '/expertise/map') && (
+          <section id="map" className="map-section">
+            <div className="container">
+              <h2 className="section-title text-light">{t.map.title}</h2>
+              <p className="section-subtitle text-light" style={{ opacity: 0.8 }}>{t.map.subtitle}</p>
 
-                <div className="team-grid">
-                  {t.team.members.map((member, idx) => (
-                    <div className="team-card hover-card" key={idx}>
-                      <div className="team-avatar">
-                        {/* Placeholder for real headshot */}
-                      </div>
-                      <div className="team-info">
-                        <h3>{member.name}</h3>
-                        <p className="team-role">{member.role}</p>
-                        <p className="team-exp">{member.exp}</p>
-                        <a href="#linkedin" className="team-social">
-                          <Linkedin size={20} /> LinkedIn
-                        </a>
-                      </div>
+              <div className="map-container">
+                <div className="map-visual">
+                  <div className="map-abstract-bg">
+                    <Map size={250} strokeWidth={1} />
+                  </div>
+
+                  {(Object.keys(t.map.regions) as Region[]).map((key) => (
+                    <div
+                      key={key}
+                      className={`map-pin pin-${key} ${activeRegion === key ? 'active' : ''}`}
+                      onClick={() => setActiveRegion(key)}
+                    >
+                      <div className="map-pin-icon"></div>
+                      <div className="map-pin-label">{t.map.regions[key].name}</div>
                     </div>
                   ))}
                 </div>
-              </div>
-            </section>
-          </>
-        )}
 
-        {(currentPath === '/' || currentPath === '/expertise') && (
-          <>
-            <section id="sectors" className="sectors-section">
-              <div className="container">
-                <h2 className="section-title">{t.sectors.title}</h2>
-                <p className="section-subtitle">{t.sectors.subtitle}</p>
-
-                <div className="sectors-grid">
-                  <div className="sector-card hover-card">
-                    <Fish size={48} className="sector-icon" />
-                    <div className="sector-content">
-                      <h3>{t.sectors.cards[0].title}</h3>
-                      <p>{t.sectors.cards[0].desc}</p>
+                <div className="map-info">
+                  {activeRegion ? (
+                    <div className="map-info-card animate-fade-in" key={activeRegion}>
+                      <h3>{t.map.regions[activeRegion].name}</h3>
+                      <div className="map-info-focus">{t.map.regions[activeRegion].focus}</div>
+                      <p className="map-info-desc">{t.map.regions[activeRegion].desc}</p>
+                      <a href="#contact" className="btn btn-outline" style={{ width: '100%' }}>
+                        {t.map.btnIncentives}
+                      </a>
                     </div>
-                  </div>
-                  <div className="sector-card hover-card">
-                    <Sun size={48} className="sector-icon" />
-                    <div className="sector-content">
-                      <h3>{t.sectors.cards[1].title}</h3>
-                      <p>{t.sectors.cards[1].desc}</p>
+                  ) : (
+                    <div className="map-empty-state">
+                      <MapPin size={48} color="var(--royal-blue-light)" opacity={0.3} />
+                      <p>{t.map.selectPrompt}</p>
                     </div>
-                  </div>
-                  <div className="sector-card hover-card">
-                    <Sprout size={48} className="sector-icon" />
-                    <div className="sector-content">
-                      <h3>{t.sectors.cards[2].title}</h3>
-                      <p>{t.sectors.cards[2].desc}</p>
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
-            </section>
-
-            <section id="map" className="map-section">
-              <div className="container">
-                <h2 className="section-title text-light">{t.map.title}</h2>
-                <p className="section-subtitle text-light" style={{ opacity: 0.8 }}>{t.map.subtitle}</p>
-
-                <div className="map-container">
-                  <div className="map-visual">
-                    <div className="map-abstract-bg">
-                      <Map size={250} strokeWidth={1} />
-                    </div>
-
-                    {(Object.keys(t.map.regions) as Region[]).map((key) => (
-                      <div
-                        key={key}
-                        className={`map-pin pin-${key} ${activeRegion === key ? 'active' : ''}`}
-                        onClick={() => setActiveRegion(key)}
-                      >
-                        <div className="map-pin-icon"></div>
-                        <div className="map-pin-label">{t.map.regions[key].name}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="map-info">
-                    {activeRegion ? (
-                      <div className="map-info-card animate-fade-in" key={activeRegion}>
-                        <h3>{t.map.regions[activeRegion].name}</h3>
-                        <div className="map-info-focus">{t.map.regions[activeRegion].focus}</div>
-                        <p className="map-info-desc">{t.map.regions[activeRegion].desc}</p>
-                        <a href="#contact" className="btn btn-outline" style={{ width: '100%' }}>
-                          {t.map.btnIncentives}
-                        </a>
-                      </div>
-                    ) : (
-                      <div className="map-empty-state">
-                        <MapPin size={48} color="var(--royal-blue-light)" opacity={0.3} />
-                        <p>{t.map.selectPrompt}</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section id="services" className="services-section bg-alt">
-              <div className="container">
-                <h2 className="section-title text-center">{t.services.title}</h2>
-                <p className="section-subtitle text-center mb-5">{t.services.subtitle}</p>
-
-                <div className="services-grid">
-                  <div className="service-card hover-card">
-                    <div className="service-icon"><Building /></div>
-                    <h4>{t.services.list[0].title}</h4>
-                    <p>{t.services.list[0].desc}</p>
-                  </div>
-                  <div className="service-card hover-card">
-                    <div className="service-icon"><ShieldCheck /></div>
-                    <h4>{t.services.list[1].title}</h4>
-                    <p>{t.services.list[1].desc}</p>
-                  </div>
-                  <div className="service-card hover-card">
-                    <div className="service-icon"><BriefcaseBusiness /></div>
-                    <h4>{t.services.list[2].title}</h4>
-                    <p>{t.services.list[2].desc}</p>
-                  </div>
-                  <div className="service-card hover-card">
-                    <div className="service-icon"><Globe /></div>
-                    <h4>{t.services.list[3].title}</h4>
-                    <p>{t.services.list[3].desc}</p>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </>
+            </div>
+          </section>
         )}
 
-        {(currentPath === '/' || currentPath === '/opportunites') && (
-          <>
-            <ProjectExchange lang={lang} onBack={() => { }} />
-            <VotreProjet lang={lang} />
-          </>
+        {(currentPath === '/' || currentPath === '/expertise' || currentPath === '/expertise/services') && (
+          <section id="services" className="services-section bg-alt">
+            <div className="container">
+              <h2 className="section-title text-center">{t.services.title}</h2>
+              <p className="section-subtitle text-center mb-5">{t.services.subtitle}</p>
+
+              <div className="services-grid">
+                <div className="service-card hover-card">
+                  <div className="service-icon"><Building /></div>
+                  <h4>{t.services.list[0].title}</h4>
+                  <p>{t.services.list[0].desc}</p>
+                </div>
+                <div className="service-card hover-card">
+                  <div className="service-icon"><ShieldCheck /></div>
+                  <h4>{t.services.list[1].title}</h4>
+                  <p>{t.services.list[1].desc}</p>
+                </div>
+                <div className="service-card hover-card">
+                  <div className="service-icon"><BriefcaseBusiness /></div>
+                  <h4>{t.services.list[2].title}</h4>
+                  <p>{t.services.list[2].desc}</p>
+                </div>
+                <div className="service-card hover-card">
+                  <div className="service-icon"><Globe /></div>
+                  <h4>{t.services.list[3].title}</h4>
+                  <p>{t.services.list[3].desc}</p>
+                </div>
+              </div>
+            </div>
+          </section>
         )}
 
-        {(currentPath === '/' || currentPath === '/insights') && currentPage === 'home' && (
+        {(currentPath === '/' || currentPath === '/opportunites' || currentPath === '/opportunites/exchange') && (
+          <ProjectExchange lang={lang} onBack={() => { }} />
+        )}
+
+        {(currentPath === '/' || currentPath === '/opportunites' || currentPath === '/opportunites/votreprojet') && (
+          <VotreProjet lang={lang} />
+        )}
+
+        {(currentPath === '/' || currentPath === '/insights' || currentPath === '/insights/news') && currentPage === 'home' && (
           <section id="news" className="news-section">
             <div className="container">
               <div className="news-header">
@@ -1116,7 +1119,7 @@ function App() {
           <HydrogeneDakhla lang={lang} onBack={() => { setCurrentPage('home'); window.scrollTo(0, 0); }} />
         )}
 
-        {(currentPath === '/' || currentPath === '/association') && (
+        {(currentPath === '/' || currentPath === '/association' || currentPath === '/association/testimonial') && (
           <section id="testimonial" className="testimonial-section">
             <div className="container testimonial-container">
               <h2 className="section-title text-light">{t.testimonial.title}</h2>
