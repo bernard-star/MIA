@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from './lib/supabase';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
-import { Rocket, FolderPlus, List, PlusCircle } from 'lucide-react';
+import { Rocket, FolderPlus, List, PlusCircle, Edit, Trash2 } from 'lucide-react';
 import CurrencyInput from 'react-currency-input-field';
 import './App.css';
 
@@ -40,7 +40,11 @@ const CONTENT = {
         interactions: "Interactions",
         date: "Date de dépôt",
         statusLabel: "Statut",
-        cancel: "Annuler"
+        cancel: "Annuler",
+        edit: "Modifier",
+        delete: "Supprimer",
+        confirmDelete: "Êtes-vous sûr de vouloir supprimer ce projet ?",
+        saveChanges: "Enregistrer les modifications"
     },
     en: {
         back: "Back to Home",
@@ -70,7 +74,11 @@ const CONTENT = {
         interactions: "Interactions",
         date: "Submission Date",
         statusLabel: "Status",
-        cancel: "Cancel"
+        cancel: "Cancel",
+        edit: "Edit",
+        delete: "Delete",
+        confirmDelete: "Are you sure you want to delete this project?",
+        saveChanges: "Save Changes"
     },
     es: {
         back: "Volver al inicio",
@@ -100,7 +108,11 @@ const CONTENT = {
         interactions: "Interacciones",
         date: "Fecha de Envío",
         statusLabel: "Estado",
-        cancel: "Cancelar"
+        cancel: "Cancelar",
+        edit: "Editar",
+        delete: "Eliminar",
+        confirmDelete: "¿Estás seguro de que quieres eliminar este proyecto?",
+        saveChanges: "Guardar Cambios"
     },
     ar: {
         back: "العودة إلى الرئيسية",
@@ -130,7 +142,11 @@ const CONTENT = {
         interactions: "التفاعلات",
         date: "تاريخ التقديم",
         statusLabel: "الحالة",
-        cancel: "إلغاء"
+        cancel: "إلغاء",
+        edit: "تعديل",
+        delete: "حذف",
+        confirmDelete: "هل أنت متأكد أنك تريد حذف هذا المشروع؟",
+        saveChanges: "حفظ التغييرات"
     }
 };
 
@@ -141,6 +157,7 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
     const [sectors, setSectors] = useState<{ id: string, label_fr: string, label_en: string, label_ar: string }[]>([]);
     const [view, setView] = useState<'list' | 'form'>('list');
     const [userProjects, setUserProjects] = useState<any[]>([]);
+    const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
     const [formState, setFormState] = useState({
         contact_email: '', contact_phone: '', organization: '', project_size: '', project_sector: '',
         funding_needed: '', partner_needs: '', expected_yields: '', description: '', location: '',
@@ -177,17 +194,52 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
         }
     };
 
+    const handleEditProject = (project: any) => {
+        setFormState({
+            contact_email: project.contact_email || '',
+            contact_phone: project.contact_phone || '',
+            organization: project.organization || '',
+            project_size: project.project_size || '',
+            project_sector: project.project_sector || '',
+            funding_needed: project.funding_needed || '',
+            partner_needs: project.partner_needs || '',
+            expected_yields: project.expected_yields || '',
+            description: project.description || '',
+            location: project.location || '',
+            visibility: project.visibility || 'public',
+            display_mode: project.display_mode || 'full'
+        });
+        setEditingProjectId(project.id);
+        setView('form');
+    };
+
+    const handleDeleteProject = async (id: string) => {
+        if (window.confirm(t.confirmDelete)) {
+            await supabase.from('project_requests').delete().eq('id', id);
+            if (session?.user?.email) fetchUserProjects(session.user.email);
+        }
+    };
+
     const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setFormStatus('loading');
 
         try {
-            const { error } = await supabase.from('project_requests').insert({
+            const payload = {
                 ...formState,
                 // Assign to user if they are logged in. (Or link email if wanted)
                 contact_email: session?.user?.email || formState.contact_email,
                 contact_name: formState.organization || 'Contact', // Added default to bypass NOT NULL constraint
-            });
+            };
+
+            let error;
+            if (editingProjectId) {
+                const { error: updateError } = await supabase.from('project_requests').update(payload).eq('id', editingProjectId);
+                error = updateError;
+            } else {
+                const { error: insertError } = await supabase.from('project_requests').insert(payload);
+                error = insertError;
+            }
 
             if (error) {
                 console.error(error);
@@ -199,6 +251,7 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
                     funding_needed: '', partner_needs: '', expected_yields: '', description: '', location: '',
                     visibility: 'public', display_mode: 'full'
                 });
+                setEditingProjectId(null);
                 if (session?.user?.email) fetchUserProjects(session.user.email);
                 setTimeout(() => setView('list'), 2000);
             }
@@ -242,7 +295,15 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
                             {userProjects.length === 0 ? (
                                 <div style={{ textAlign: 'center', padding: '3rem', background: '#fff', borderRadius: '16px', border: '1px dashed #ccc' }}>
                                     <p style={{ color: '#666' }}>{t.noProjects}</p>
-                                    <button className="btn btn-primary mt-3" onClick={() => setView('form')}>{t.newProject}</button>
+                                    <button className="btn btn-primary mt-3" onClick={() => {
+                                        setEditingProjectId(null);
+                                        setFormState({
+                                            contact_email: '', contact_phone: '', organization: '', project_size: '', project_sector: '',
+                                            funding_needed: '', partner_needs: '', expected_yields: '', description: '', location: '',
+                                            visibility: 'public', display_mode: 'full'
+                                        });
+                                        setView('form');
+                                    }}>{t.newProject}</button>
                                 </div>
                             ) : (
                                 <div className="projects-grid" style={{ display: 'grid', gap: '1.5rem' }}>
@@ -254,9 +315,18 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
                                             </div>
                                             <p style={{ margin: '0 0 1rem', color: '#555', fontSize: '0.95rem' }}>{p.description}</p>
 
-                                            <div style={{ display: 'flex', gap: '2rem', fontSize: '0.9rem' }}>
+                                            <div style={{ display: 'flex', gap: '2rem', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
                                                 <div><strong>{t.statusLabel}:</strong> <span style={{ color: 'var(--royal-blue)', background: 'rgba(30, 60, 114, 0.1)', padding: '2px 8px', borderRadius: '4px' }}>{t.visibilityOptions[p.visibility as 'public' | 'private']}</span></div>
                                                 <div><strong>{t.interactions}:</strong> <span style={{ color: '#666' }}>0</span></div>
+                                            </div>
+
+                                            <div style={{ display: 'flex', gap: '1rem' }}>
+                                                <button onClick={() => handleEditProject(p)} style={{ display: 'flex', alignItems: 'center', background: 'transparent', border: '1px solid #ddd', padding: '0.4rem 0.8rem', borderRadius: '6px', color: 'var(--charcoal)', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 500, transition: 'all 0.2s' }} className="hover-bg-light">
+                                                    <Edit size={14} style={{ marginRight: '6px' }} /> {t.edit}
+                                                </button>
+                                                <button onClick={() => handleDeleteProject(p.id)} style={{ display: 'flex', alignItems: 'center', background: 'transparent', border: '1px solid #ffd4d4', padding: '0.4rem 0.8rem', borderRadius: '6px', color: '#e53e3e', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 500, transition: 'all 0.2s' }} className="hover-bg-red">
+                                                    <Trash2 size={14} style={{ marginRight: '6px' }} /> {t.delete}
+                                                </button>
                                             </div>
                                         </div>
                                     ))}
@@ -266,7 +336,15 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
                     ) : (
                         <div className="shadow-form" style={{ background: '#fff', padding: '3rem', borderRadius: '16px', borderTop: '4px solid var(--sand-gold)' }}>
                             <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
-                                <button onClick={() => setView('list')} style={{ background: 'none', border: 'none', color: '#666', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                                <button onClick={() => {
+                                    setEditingProjectId(null);
+                                    setFormState({
+                                        contact_email: '', contact_phone: '', organization: '', project_size: '', project_sector: '',
+                                        funding_needed: '', partner_needs: '', expected_yields: '', description: '', location: '',
+                                        visibility: 'public', display_mode: 'full'
+                                    });
+                                    setView('list');
+                                }} style={{ background: 'none', border: 'none', color: '#666', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
                                     {t.cancel}
                                 </button>
                             </div>
@@ -359,7 +437,7 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
                                 </div>
 
                                 <button className="btn btn-primary w-full" type="submit" disabled={formStatus === 'loading'} style={{ marginTop: '2rem' }}>
-                                    <Rocket size={20} className="mr-2" style={{ marginRight: '8px' }} /> {formStatus === 'loading' ? '...' : t.submit}
+                                    <Rocket size={20} className="mr-2" style={{ marginRight: '8px' }} /> {formStatus === 'loading' ? '...' : editingProjectId ? t.saveChanges : t.submit}
                                 </button>
                             </form>
                         </div>
