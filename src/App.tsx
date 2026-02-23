@@ -11,6 +11,7 @@ import GigaFactory from './GigaFactory';
 import HydrogeneDakhla from './HydrogeneDakhla';
 import ProjectExchange from './ProjectExchange';
 import VotreProjet from './VotreProjet';
+import Inscription from './Inscription';
 import { supabase } from './lib/supabase';
 
 type Language = 'fr' | 'en' | 'es' | 'ar';
@@ -677,12 +678,12 @@ function App() {
   const [activeRegion, setActiveRegion] = useState<Region | null>(null);
   const [currentPath, setCurrentPath] = useState(() => {
     const p = typeof window !== 'undefined' ? window.location.pathname : '/';
-    if (['/', '/association', '/expertise', '/opportunites', '/insights', '/contact'].includes(p)) {
+    if (['/', '/association', '/expertise', '/opportunites', '/insights', '/contact', '/inscription'].includes(p)) {
       return p;
     }
     return '/';
   });
-  const [currentPage, setCurrentPage] = useState<'home' | 'charte' | 'gigafactory' | 'hydrogene' | 'exchange'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'charte' | 'gigafactory' | 'hydrogene' | 'exchange' | 'inscription'>('home');
 
   const [formState, setFormState] = useState({
     contact_name: '', contact_email: '', contact_phone: '', organization: '', location: '',
@@ -816,10 +817,10 @@ function App() {
             <div className="nav-item" style={{ marginLeft: '1rem', display: 'flex', gap: '0.5rem' }}>
               {!session ? (
                 <>
-                  <a href="/opportunites/votreprojet" className="btn btn-outline" style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }} onClick={(e) => { e.preventDefault(); navigateTo('/opportunites/votreprojet'); }}>
+                  <a href="/inscription?mode=login" className="btn btn-outline" style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }} onClick={(e) => { e.preventDefault(); navigateTo('/inscription?mode=login'); }}>
                     <LogIn size={14} className="mr-1" style={{ marginRight: '4px' }} /> {t.nav.login}
                   </a>
-                  <a href="/opportunites/votreprojet" className="btn btn-primary" style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }} onClick={(e) => { e.preventDefault(); navigateTo('/opportunites/votreprojet'); }}>
+                  <a href="/inscription" className="btn btn-primary" style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }} onClick={(e) => { e.preventDefault(); navigateTo('/inscription'); }}>
                     <UserPlus size={14} className="mr-1" style={{ marginRight: '4px' }} /> {t.nav.signup}
                   </a>
                 </>
@@ -1207,6 +1208,10 @@ function App() {
               </div>
             </section>
           </>
+        )}
+
+        {(currentPath === '/inscription') && (
+          <Inscription lang={lang} onBack={() => { navigateTo('/opportunites/votreprojet'); }} />
         )}
 
         <footer className="footer">
