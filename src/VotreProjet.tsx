@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from './lib/supabase';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
-import { Rocket, FolderPlus } from 'lucide-react';
+import { Rocket, FolderPlus, List, PlusCircle } from 'lucide-react';
 import CurrencyInput from 'react-currency-input-field';
 import './App.css';
 
@@ -33,7 +33,14 @@ const CONTENT = {
         visibility: "Visibilité",
         visibilityOptions: { public: "Public (Apparaît dans la Bourse d'Échanges)", private: "Privé (A l'usage du réseau de partenaires MIA)" },
         display_mode: "Mode d'affichage",
-        displayModeOptions: { teaser: "Mode Teaser (Détails anonymisés)", full: "Complet" }
+        displayModeOptions: { teaser: "Mode Teaser (Détails anonymisés)", full: "Complet" },
+        myProjects: "Mes projets déposés",
+        newProject: "Déposer un nouveau projet",
+        noProjects: "Vous n'avez pas encore déposé de projet.",
+        interactions: "Interactions",
+        date: "Date de dépôt",
+        statusLabel: "Statut",
+        cancel: "Annuler"
     },
     en: {
         back: "Back to Home",
@@ -56,7 +63,14 @@ const CONTENT = {
         visibility: "Visibility",
         visibilityOptions: { public: "Public (Appears on the Exchange Board)", private: "Private (MIA internal partner network only)" },
         display_mode: "Display Mode",
-        displayModeOptions: { teaser: "Teaser Mode (Anonymized details)", full: "Full details" }
+        displayModeOptions: { teaser: "Teaser Mode (Anonymized details)", full: "Full details" },
+        myProjects: "My Submitted Projects",
+        newProject: "Submit a New Project",
+        noProjects: "You haven't submitted any projects yet.",
+        interactions: "Interactions",
+        date: "Submission Date",
+        statusLabel: "Status",
+        cancel: "Cancel"
     },
     es: {
         back: "Volver al inicio",
@@ -79,7 +93,14 @@ const CONTENT = {
         visibility: "Visibilidad",
         visibilityOptions: { public: "Público (Aparece en la Bolsa de Intercambio)", private: "Privado (Red interna de socios de MIA)" },
         display_mode: "Modo de visualización",
-        displayModeOptions: { teaser: "Modo Teaser (Detalles limitados)", full: "Detalles completos" }
+        displayModeOptions: { teaser: "Modo Teaser (Detalles limitados)", full: "Detalles completos" },
+        myProjects: "Mis Proyectos Enviados",
+        newProject: "Enviar un Nuevo Proyecto",
+        noProjects: "Aún no has enviado ningún proyecto.",
+        interactions: "Interacciones",
+        date: "Fecha de Envío",
+        statusLabel: "Estado",
+        cancel: "Cancelar"
     },
     ar: {
         back: "العودة إلى الرئيسية",
@@ -102,7 +123,14 @@ const CONTENT = {
         visibility: "الظهور",
         visibilityOptions: { public: "عام (يظهر في بورصة المشاريع)", private: "خاص (لشركاء MIA فقط)" },
         display_mode: "وضع العرض",
-        displayModeOptions: { teaser: "وضع تشويقي (تفاصيل مجهولة)", full: "تفاصيل كاملة" }
+        displayModeOptions: { teaser: "وضع تشويقي (تفاصيل مجهولة)", full: "تفاصيل كاملة" },
+        myProjects: "مشاريعي المقدمة",
+        newProject: "تقديم مشروع جديد",
+        noProjects: "لم تقم بتقديم أي مشاريع بعد.",
+        interactions: "التفاعلات",
+        date: "تاريخ التقديم",
+        statusLabel: "الحالة",
+        cancel: "إلغاء"
     }
 };
 
@@ -111,7 +139,8 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
     const isRTL = lang === 'ar';
     const [session, setSession] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
     const [sectors, setSectors] = useState<{ id: string, label_fr: string, label_en: string, label_ar: string }[]>([]);
-
+    const [view, setView] = useState<'list' | 'form'>('list');
+    const [userProjects, setUserProjects] = useState<any[]>([]);
     const [formState, setFormState] = useState({
         contact_email: '', contact_phone: '', organization: '', project_size: '', project_sector: '',
         funding_needed: '', partner_needs: '', expected_yields: '', description: '', location: '',
@@ -134,8 +163,19 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
             if (data) setSectors(data);
         });
 
+        if (session) {
+            fetchUserProjects(session.user.email);
+        }
+
         return () => subscription.unsubscribe();
-    }, []);
+    }, [session]);
+
+    const fetchUserProjects = async (email: string) => {
+        const { data, error } = await supabase.from('project_requests').select('*').eq('contact_email', email).order('created_at', { ascending: false });
+        if (data && !error) {
+            setUserProjects(data);
+        }
+    };
 
     const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -159,6 +199,8 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
                     funding_needed: '', partner_needs: '', expected_yields: '', description: '', location: '',
                     visibility: 'public', display_mode: 'full'
                 });
+                if (session?.user?.email) fetchUserProjects(session.user.email);
+                setTimeout(() => setView('list'), 2000);
             }
         } catch (err) {
             console.error(err);
@@ -188,8 +230,46 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
                                 redirectTo={typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}` : undefined}
                             />
                         </div>
+                    ) : view === 'list' ? (
+                        <div className="projects-list-view">
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+                                <h3><List size={24} style={{ display: 'inline-block', marginRight: '10px', verticalAlign: 'middle', color: 'var(--royal-blue)' }} /> {t.myProjects}</h3>
+                                <button className="btn btn-primary" onClick={() => setView('form')}>
+                                    <PlusCircle size={18} className="mr-2" style={{ marginRight: '8px' }} /> {t.newProject}
+                                </button>
+                            </div>
+
+                            {userProjects.length === 0 ? (
+                                <div style={{ textAlign: 'center', padding: '3rem', background: '#fff', borderRadius: '16px', border: '1px dashed #ccc' }}>
+                                    <p style={{ color: '#666' }}>{t.noProjects}</p>
+                                    <button className="btn btn-primary mt-3" onClick={() => setView('form')}>{t.newProject}</button>
+                                </div>
+                            ) : (
+                                <div className="projects-grid" style={{ display: 'grid', gap: '1.5rem' }}>
+                                    {userProjects.map((p) => (
+                                        <div key={p.id} style={{ background: '#fff', padding: '1.5rem', borderRadius: '12px', borderLeft: '4px solid var(--royal-blue)', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                                                <h4 style={{ margin: 0, fontWeight: 600, color: 'var(--charcoal)' }}>{p.organization} - {p.project_size}</h4>
+                                                <span style={{ fontSize: '0.85rem', color: '#888' }}>{new Date(p.created_at).toLocaleDateString()}</span>
+                                            </div>
+                                            <p style={{ margin: '0 0 1rem', color: '#555', fontSize: '0.95rem' }}>{p.description}</p>
+
+                                            <div style={{ display: 'flex', gap: '2rem', fontSize: '0.9rem' }}>
+                                                <div><strong>{t.statusLabel}:</strong> <span style={{ color: 'var(--royal-blue)', background: 'rgba(30, 60, 114, 0.1)', padding: '2px 8px', borderRadius: '4px' }}>{t.visibilityOptions[p.visibility as 'public' | 'private']}</span></div>
+                                                <div><strong>{t.interactions}:</strong> <span style={{ color: '#666' }}>0</span></div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     ) : (
                         <div className="shadow-form" style={{ background: '#fff', padding: '3rem', borderRadius: '16px', borderTop: '4px solid var(--sand-gold)' }}>
+                            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
+                                <button onClick={() => setView('list')} style={{ background: 'none', border: 'none', color: '#666', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                                    {t.cancel}
+                                </button>
+                            </div>
                             <form className="contact-form" onSubmit={handleFormSubmit}>
                                 {formStatus === 'success' && <div style={{ color: 'green', marginBottom: '1.5rem', fontWeight: 600, padding: '1rem', background: '#eafbf0', borderRadius: '8px' }}>{t.success}</div>}
                                 {formStatus === 'error' && <div style={{ color: 'red', marginBottom: '1.5rem', fontWeight: 600, padding: '1rem', background: '#ffebeb', borderRadius: '8px' }}>{t.error}</div>}
