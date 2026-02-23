@@ -6,6 +6,7 @@ import {
   Linkedin, Download, CalendarCheck
 } from 'lucide-react';
 import './App.css';
+import CharteInvestissement from './CharteInvestissement';
 
 type Language = 'fr' | 'en' | 'es' | 'ar';
 type Region = 'tanger' | 'kenitra' | 'casablanca' | 'ouarzazate' | 'dakhla';
@@ -581,9 +582,22 @@ function App() {
   const [lang, setLang] = useState<Language>('fr');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeRegion, setActiveRegion] = useState<Region | null>(null);
+  const [currentPage, setCurrentPage] = useState<'home' | 'charte'>('home');
 
   const t = CONTENT[lang];
   const isRTL = lang === 'ar';
+
+  if (currentPage === 'charte') {
+    return (
+      <CharteInvestissement
+        lang={lang}
+        onBack={() => {
+          setCurrentPage('home');
+          window.scrollTo(0, 0);
+        }}
+      />
+    );
+  }
 
   return (
     <>
@@ -828,7 +842,18 @@ function App() {
 
             <div className="news-grid">
               {t.news.articles.map((article, idx) => (
-                <a href="#contact" className="news-card hover-card" key={idx}>
+                <a
+                  href="#news"
+                  className="news-card hover-card"
+                  key={idx}
+                  onClick={(e) => {
+                    if (idx === 0) { // First article is the charter
+                      e.preventDefault();
+                      setCurrentPage('charte');
+                      window.scrollTo(0, 0);
+                    }
+                  }}
+                >
                   <div className="news-image-placeholder">
                     <TrendingUp size={40} color="var(--royal-blue-light)" opacity={0.5} />
                   </div>
