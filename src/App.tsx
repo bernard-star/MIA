@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import './App.css';
 import CharteInvestissement from './CharteInvestissement';
+import GigaFactory from './GigaFactory';
 
 type Language = 'fr' | 'en' | 'es' | 'ar';
 type Region = 'tanger' | 'kenitra' | 'casablanca' | 'ouarzazate' | 'dakhla';
@@ -582,7 +583,7 @@ function App() {
   const [lang, setLang] = useState<Language>('fr');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeRegion, setActiveRegion] = useState<Region | null>(null);
-  const [currentPage, setCurrentPage] = useState<'home' | 'charte'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'charte' | 'gigafactory'>('home');
 
   const t = CONTENT[lang];
   const isRTL = lang === 'ar';
@@ -590,6 +591,18 @@ function App() {
   if (currentPage === 'charte') {
     return (
       <CharteInvestissement
+        lang={lang}
+        onBack={() => {
+          setCurrentPage('home');
+          window.scrollTo(0, 0);
+        }}
+      />
+    );
+  }
+
+  if (currentPage === 'gigafactory') {
+    return (
+      <GigaFactory
         lang={lang}
         onBack={() => {
           setCurrentPage('home');
@@ -850,6 +863,10 @@ function App() {
                     if (idx === 0) { // First article is the charter
                       e.preventDefault();
                       setCurrentPage('charte');
+                      window.scrollTo(0, 0);
+                    } else if (idx === 1) { // Second article is the GigaFactory
+                      e.preventDefault();
+                      setCurrentPage('gigafactory');
                       window.scrollTo(0, 0);
                     }
                   }}
