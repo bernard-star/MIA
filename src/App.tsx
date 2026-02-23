@@ -9,6 +9,7 @@ import './App.css';
 import CharteInvestissement from './CharteInvestissement';
 import GigaFactory from './GigaFactory';
 import HydrogeneDakhla from './HydrogeneDakhla';
+import { supabase } from './lib/supabase';
 
 type Language = 'fr' | 'en' | 'es' | 'ar';
 type Region = 'tanger' | 'kenitra' | 'casablanca' | 'ouarzazate' | 'dakhla';
@@ -137,9 +138,17 @@ const CONTENT = {
       calendlyBtn: "Réserver un créneau (Calendly)",
       name: "Nom complet",
       email: "Adresse Email",
+      phone: "Téléphone",
+      organization: "Organisation / Entreprise",
       sector: "Secteur d'activité",
-      message: "Votre message",
-      submit: "Envoyer ma demande"
+      project_size: "Taille du projet (Investissement)",
+      funding: "Besoins de financement",
+      partners: "Partenaires recherchés",
+      yields: "Rendement attendu",
+      message: "Description du projet",
+      submit: "Soumettre le projet",
+      success: "Demande envoyée avec succès !",
+      error: "Une erreur est survenue."
     },
     leadMagnet: {
       title: "Prêt à conquérir le marché marocain ?",
@@ -278,9 +287,17 @@ const CONTENT = {
       calendlyBtn: "Book a meeting (Calendly)",
       name: "Full Name",
       email: "Email Address",
+      phone: "Phone Number",
+      organization: "Organization / Company",
       sector: "Business Sector",
-      message: "Your Message",
-      submit: "Send Request"
+      project_size: "Project Size (Investment)",
+      funding: "Funding Needed",
+      partners: "Partner Requirements",
+      yields: "Expected Yields",
+      message: "Project Description",
+      submit: "Submit Project",
+      success: "Request successfully sent!",
+      error: "An error occurred."
     },
     leadMagnet: {
       title: "Ready to conquer the Moroccan market?",
@@ -419,9 +436,17 @@ const CONTENT = {
       calendlyBtn: "Reservar una cita (Calendly)",
       name: "Nombre Completo",
       email: "Correo Electrónico",
+      phone: "Teléfono",
+      organization: "Organización / Empresa",
       sector: "Sector de Actividad",
-      message: "Su Mensaje",
-      submit: "Enviar Solicitud"
+      project_size: "Tamaño del proyecto",
+      funding: "Necesidad de financiamiento",
+      partners: "Socios requeridos",
+      yields: "Rendimiento esperado",
+      message: "Descripción del proyecto",
+      submit: "Enviar Solicitud",
+      success: "¡Solicitud enviada con éxito!",
+      error: "Ocurrió un error."
     },
     leadMagnet: {
       title: "¿Listo para conquistar el mercado marroquí?",
@@ -560,9 +585,17 @@ const CONTENT = {
       calendlyBtn: "احجز موعداً",
       name: "الاسم الكامل",
       email: "البريد الإلكتروني",
+      phone: "الهاتف",
+      organization: "المنظمة / الشركة",
       sector: "قطاع الأعمال",
-      message: "رسالتك",
-      submit: "إرسال الطلب"
+      project_size: "حجم المشروع (الاستثمار)",
+      funding: "التمويل المطلوب",
+      partners: "الشركاء المطلوبون",
+      yields: "العائد المتوقع",
+      message: "وصف المشروع",
+      submit: "إرسال الطلب",
+      success: "تم إرسال الطلب بنجاح!",
+      error: "حدث خطأ."
     },
     leadMagnet: {
       title: "هل أنت مستعد لغزو السوق المغربي؟",
@@ -585,6 +618,35 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeRegion, setActiveRegion] = useState<Region | null>(null);
   const [currentPage, setCurrentPage] = useState<'home' | 'charte' | 'gigafactory' | 'hydrogene'>('home');
+
+  const [formState, setFormState] = useState({
+    contact_name: '', contact_email: '', contact_phone: '', organization: '',
+    project_size: '', project_sector: '', funding_needed: '', partner_needs: '',
+    expected_yields: '', description: ''
+  });
+  const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormStatus('loading');
+
+    const { error } = await supabase
+      .from('project_requests')
+      .insert([formState]);
+
+    if (error) {
+      console.error(error);
+      setFormStatus('error');
+    } else {
+      setFormStatus('success');
+      setFormState({
+        contact_name: '', contact_email: '', contact_phone: '', organization: '',
+        project_size: '', project_sector: '', funding_needed: '', partner_needs: '',
+        expected_yields: '', description: ''
+      });
+      setTimeout(() => setFormStatus('idle'), 5000); // Reset after 5s
+    }
+  };
 
   const t = CONTENT[lang];
   const isRTL = lang === 'ar';
@@ -955,18 +1017,38 @@ function App() {
                 </div>
 
                 {/* Standard Form */}
-                <form className="contact-form shadow-form" onSubmit={(e) => e.preventDefault()}>
+                <form className="contact-form shadow-form" onSubmit={handleFormSubmit}>
+                  {formStatus === 'success' && <div style={{ color: 'green', marginBottom: '1rem', fontWeight: 600 }}>{t.contact.success || 'Success!'}</div>}
+                  {formStatus === 'error' && <div style={{ color: 'red', marginBottom: '1rem', fontWeight: 600 }}>{t.contact.error || 'Error!'}</div>}
+
                   <div className="form-group">
                     <label>{t.contact.name}</label>
-                    <input type="text" placeholder={t.contact.name} />
+                    <input type="text" placeholder={t.contact.name} required value={formState.contact_name} onChange={(e) => setFormState({ ...formState, contact_name: e.target.value })} />
                   </div>
-                  <div className="form-group">
-                    <label>{t.contact.email}</label>
-                    <input type="email" placeholder={t.contact.email} />
+                  <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                    <div>
+                      <label>{t.contact.email}</label>
+                      <input type="email" placeholder={t.contact.email} required value={formState.contact_email} onChange={(e) => setFormState({ ...formState, contact_email: e.target.value })} />
+                    </div>
+                    <div>
+                      <label>{t.contact.phone}</label>
+                      <input type="text" placeholder={t.contact.phone || 'Phone'} value={formState.contact_phone} onChange={(e) => setFormState({ ...formState, contact_phone: e.target.value })} />
+                    </div>
                   </div>
+                  <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                    <div>
+                      <label>{t.contact.organization}</label>
+                      <input type="text" placeholder={t.contact.organization || 'Company'} value={formState.organization} onChange={(e) => setFormState({ ...formState, organization: e.target.value })} />
+                    </div>
+                    <div>
+                      <label>{t.contact.project_size}</label>
+                      <input type="text" placeholder="ex: 50M MAD" value={formState.project_size} onChange={(e) => setFormState({ ...formState, project_size: e.target.value })} />
+                    </div>
+                  </div>
+
                   <div className="form-group">
                     <label>{t.contact.sector}</label>
-                    <select>
+                    <select required value={formState.project_sector} onChange={(e) => setFormState({ ...formState, project_sector: e.target.value })}>
                       <option value="">Sélectionnez / Select</option>
                       <option value="energie">Énergies Renouvelables</option>
                       <option value="peche">Économie Bleue & Pêche</option>
@@ -974,11 +1056,30 @@ function App() {
                       <option value="autre">Autre / Other</option>
                     </select>
                   </div>
+
+                  <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
+                    <div>
+                      <label>{t.contact.funding}</label>
+                      <input type="text" placeholder="ex: 80%" value={formState.funding_needed} onChange={(e) => setFormState({ ...formState, funding_needed: e.target.value })} />
+                    </div>
+                    <div>
+                      <label>{t.contact.partners}</label>
+                      <input type="text" placeholder="ex: Joint venture" value={formState.partner_needs} onChange={(e) => setFormState({ ...formState, partner_needs: e.target.value })} />
+                    </div>
+                    <div>
+                      <label>{t.contact.yields}</label>
+                      <input type="text" placeholder="ex: 12% IRR" value={formState.expected_yields} onChange={(e) => setFormState({ ...formState, expected_yields: e.target.value })} />
+                    </div>
+                  </div>
+
                   <div className="form-group">
                     <label>{t.contact.message}</label>
-                    <textarea rows={4} placeholder={t.contact.message}></textarea>
+                    <textarea rows={4} required placeholder={t.contact.message} value={formState.description} onChange={(e) => setFormState({ ...formState, description: e.target.value })}></textarea>
                   </div>
-                  <button type="submit" className="btn btn-outline w-full">{t.contact.submit}</button>
+
+                  <button className="btn btn-primary w-full" type="submit" disabled={formStatus === 'loading'}>
+                    <Mail size={18} className="mr-2" style={{ marginRight: '8px' }} /> {formStatus === 'loading' ? '...' : t.contact.submit}
+                  </button>
                 </form>
               </div>
             </div>
