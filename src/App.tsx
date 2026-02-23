@@ -8,6 +8,7 @@ import {
 import './App.css';
 import CharteInvestissement from './CharteInvestissement';
 import GigaFactory from './GigaFactory';
+import HydrogeneDakhla from './HydrogeneDakhla';
 
 type Language = 'fr' | 'en' | 'es' | 'ar';
 type Region = 'tanger' | 'kenitra' | 'casablanca' | 'ouarzazate' | 'dakhla';
@@ -583,7 +584,7 @@ function App() {
   const [lang, setLang] = useState<Language>('fr');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeRegion, setActiveRegion] = useState<Region | null>(null);
-  const [currentPage, setCurrentPage] = useState<'home' | 'charte' | 'gigafactory'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'charte' | 'gigafactory' | 'hydrogene'>('home');
 
   const t = CONTENT[lang];
   const isRTL = lang === 'ar';
@@ -603,6 +604,18 @@ function App() {
   if (currentPage === 'gigafactory') {
     return (
       <GigaFactory
+        lang={lang}
+        onBack={() => {
+          setCurrentPage('home');
+          window.scrollTo(0, 0);
+        }}
+      />
+    );
+  }
+
+  if (currentPage === 'hydrogene') {
+    return (
+      <HydrogeneDakhla
         lang={lang}
         onBack={() => {
           setCurrentPage('home');
@@ -867,6 +880,10 @@ function App() {
                     } else if (idx === 1) { // Second article is the GigaFactory
                       e.preventDefault();
                       setCurrentPage('gigafactory');
+                      window.scrollTo(0, 0);
+                    } else if (idx === 2) { // Third article is Hydrogen
+                      e.preventDefault();
+                      setCurrentPage('hydrogene');
                       window.scrollTo(0, 0);
                     }
                   }}
