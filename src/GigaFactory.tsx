@@ -155,20 +155,17 @@ export default function GigaFactory({ lang, onBack }: GigaFactoryProps) {
     }
 
     return (
-        <div className={`article-page ${isRTL ? 'arabic-text' : ''}`} dir={isRTL ? "rtl" : "ltr"}>
-            {/* Article Navigation */}
-            <nav className="article-nav">
-                <div className="container" style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                    <button onClick={onBack} className="back-btn" style={{
-                        background: 'none', border: 'none', color: 'var(--royal-blue)',
-                        cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px',
-                        fontWeight: 600, fontSize: '1rem', padding: 0
-                    }}>
-                        <ArrowLeft size={20} style={isRTL ? { transform: 'scaleX(-1)' } : {}} />
-                        {t.back}
-                    </button>
-                </div>
-            </nav>
+        <section id="gigafactory" className={`gigafactory-section ${isRTL ? 'arabic-text' : ''}`} dir={isRTL ? "rtl" : "ltr"} style={{ paddingBottom: '4rem' }}>
+            <div className="container" style={{ marginBottom: '2rem' }}>
+                <button onClick={onBack} className="back-btn" style={{
+                    background: 'none', border: 'none', color: 'var(--royal-blue)',
+                    cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px',
+                    fontWeight: 600, fontSize: '1rem', padding: '1rem 0'
+                }}>
+                    <ArrowLeft size={20} style={isRTL ? { transform: 'scaleX(-1)' } : {}} />
+                    {t.back}
+                </button>
+            </div>
 
             {/* Article Header */}
             <header className="article-header" style={{ background: 'linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%)' }}>
@@ -229,10 +226,6 @@ export default function GigaFactory({ lang, onBack }: GigaFactoryProps) {
                 </div>
             </main>
 
-            {/* Footer minimal */}
-            <footer className="footer" style={{ marginTop: '4rem', padding: '2rem 0', textAlign: 'center' }}>
-                <p>© 2026 MIA - Moroccan Investment Association.</p>
-            </footer>
-        </div>
+        </section>
     );
 }

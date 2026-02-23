@@ -725,41 +725,6 @@ function App() {
   const t = CONTENT[lang];
   const isRTL = lang === 'ar';
 
-  if (currentPage === 'charte') {
-    return (
-      <CharteInvestissement
-        lang={lang}
-        onBack={() => {
-          setCurrentPage('home');
-          window.scrollTo(0, 0);
-        }}
-      />
-    );
-  }
-
-  if (currentPage === 'gigafactory') {
-    return (
-      <GigaFactory
-        lang={lang}
-        onBack={() => {
-          setCurrentPage('home');
-          window.scrollTo(0, 0);
-        }}
-      />
-    );
-  }
-
-  if (currentPage === 'hydrogene') {
-    return (
-      <HydrogeneDakhla
-        lang={lang}
-        onBack={() => {
-          setCurrentPage('home');
-          window.scrollTo(0, 0);
-        }}
-      />
-    );
-  }
 
 
   return (
@@ -1039,7 +1004,7 @@ function App() {
           </>
         )}
 
-        {(currentPath === '/' || currentPath === '/insights') && (
+        {(currentPath === '/' || currentPath === '/insights') && currentPage === 'home' && (
           <section id="news" className="news-section">
             <div className="container">
               <div className="news-header">
@@ -1091,6 +1056,18 @@ function App() {
               </div>
             </div>
           </section>
+        )}
+
+        {(currentPath === '/' || currentPath === '/insights') && currentPage === 'charte' && (
+          <CharteInvestissement lang={lang} onBack={() => { setCurrentPage('home'); window.scrollTo(0, 0); }} />
+        )}
+
+        {(currentPath === '/' || currentPath === '/insights') && currentPage === 'gigafactory' && (
+          <GigaFactory lang={lang} onBack={() => { setCurrentPage('home'); window.scrollTo(0, 0); }} />
+        )}
+
+        {(currentPath === '/' || currentPath === '/insights') && currentPage === 'hydrogene' && (
+          <HydrogeneDakhla lang={lang} onBack={() => { setCurrentPage('home'); window.scrollTo(0, 0); }} />
         )}
 
         {(currentPath === '/' || currentPath === '/association') && (
