@@ -756,17 +756,6 @@ function App() {
     );
   }
 
-  if (currentPage === 'exchange') {
-    return (
-      <ProjectExchange
-        lang={lang}
-        onBack={() => {
-          setCurrentPage('home');
-          window.scrollTo(0, 0);
-        }}
-      />
-    );
-  }
 
   return (
     <>
@@ -799,7 +788,7 @@ function App() {
             <div className="nav-item">
               <a href="/opportunites" className="nav-link" onClick={(e) => { e.preventDefault(); navigateTo('/opportunites'); }}>{t.nav.opportunites} <ChevronDown size={14} /></a>
               <div className="dropdown-menu">
-                <a href="#" className="dropdown-link" onClick={(e) => { e.preventDefault(); setCurrentPage('exchange'); window.history.pushState({}, '', '/opportunites'); setCurrentPath('/opportunites'); window.scrollTo(0, 0); }}>{t.nav.exchange}</a>
+                <a href="#exchange" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/opportunites', 'exchange'); }}>{t.nav.exchange}</a>
               </div>
             </div>
 
@@ -844,7 +833,7 @@ function App() {
             <a href="#services" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/expertise', 'services'); }}>- {t.nav.services}</a>
 
             <div style={{ fontWeight: 800, color: 'var(--royal-blue)', padding: '0.5rem 0', marginTop: '0.5rem' }}>{t.nav.opportunites}</div>
-            <a href="#" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); setIsMenuOpen(false); setCurrentPage('exchange'); window.history.pushState({}, '', '/opportunites'); setCurrentPath('/opportunites'); window.scrollTo(0, 0); }}>- {t.nav.exchange}</a>
+            <a href="#exchange" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/opportunites', 'exchange'); setIsMenuOpen(false); }}>- {t.nav.exchange}</a>
 
             <div style={{ fontWeight: 800, color: 'var(--royal-blue)', padding: '0.5rem 0', marginTop: '0.5rem' }}>{t.nav.insightsMain}</div>
             <a href="#news" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/insights', 'news'); }}>- {t.nav.news}</a>
@@ -1034,6 +1023,10 @@ function App() {
               </div>
             </section>
           </>
+        )}
+
+        {(currentPath === '/' || currentPath === '/opportunites') && (
+          <ProjectExchange lang={lang} onBack={() => { }} />
         )}
 
         {(currentPath === '/' || currentPath === '/insights') && (

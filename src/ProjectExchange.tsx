@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from './lib/supabase';
-import { ArrowLeft, MapPin, Briefcase, Handshake, CircleDollarSign, Fingerprint } from 'lucide-react';
+import { MapPin, Briefcase, Handshake, CircleDollarSign, Fingerprint } from 'lucide-react';
 import './App.css';
 
 type ProjectExchangeProps = {
@@ -117,98 +117,85 @@ export default function ProjectExchange({ lang, onBack }: ProjectExchangeProps) 
     }, []);
 
     return (
-        <div className={`article-page ${isRTL ? 'arabic-text' : ''}`} dir={isRTL ? "rtl" : "ltr"}>
-            <nav className="article-nav">
-                <div className="container" style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                    <button onClick={onBack} className="back-btn" style={{
-                        background: 'none', border: 'none', color: 'var(--royal-blue)',
-                        cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px',
-                        fontWeight: 600, fontSize: '1rem', padding: 0
-                    }}>
-                        <ArrowLeft size={20} style={isRTL ? { transform: 'scaleX(-1)' } : {}} />
-                        {t.back}
-                    </button>
+        <section id="exchange" className="exchange-section bg-light" dir={isRTL ? "rtl" : "ltr"}>
+            <div className="container">
+                <div className="section-header text-center mb-5">
+                    <h2 className="section-title">{t.title}</h2>
+                    <p className="section-subtitle">{t.subtitle}</p>
                 </div>
-            </nav>
 
-            <header className="article-header" style={{ paddingTop: '8rem', paddingBottom: '4rem', background: 'var(--light-bg)' }}>
-                <div className="container">
-                    <h1 className="article-title" style={{ fontSize: '3rem', marginBottom: '1rem' }}>{t.title}</h1>
-                    <p className="article-intro" style={{ fontSize: '1.25rem', opacity: 0.8 }}>{t.subtitle}</p>
-                </div>
-            </header>
-
-            <main className="container" style={{ padding: '4rem 0', minHeight: '50vh' }}>
-                {loading ? (
-                    <div style={{ textAlign: 'center', padding: '4rem', fontSize: '1.5rem', color: 'var(--text-gray)' }}>
-                        {t.loading}
-                    </div>
-                ) : projects.length === 0 ? (
-                    <div style={{ textAlign: 'center', padding: '4rem', fontSize: '1.5rem', color: 'var(--text-gray)', border: '2px dashed var(--royal-blue)', borderRadius: '12px' }}>
-                        {t.noProjects}
-                    </div>
-                ) : (
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '2rem' }}>
-                        {projects.map(project => {
-                            const isPartial = project.display_mode === 'partial';
-                            return (
-                                <div key={project.id} className="shadow-form" style={{ background: 'white', padding: '2rem', borderRadius: '16px', borderTop: '4px solid var(--sand-gold)', display: 'flex', flexDirection: 'column' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
-                                        <h3 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0 }}>
-                                            {isPartial ? t.teaser : project.organization || 'Projet Anonyme'}
-                                        </h3>
-                                        <span style={{ fontSize: '0.8rem', padding: '4px 8px', borderRadius: '20px', background: isPartial ? '#f3f4f6' : 'var(--royal-blue)', color: isPartial ? '#4b5563' : 'white', fontWeight: 600 }}>
-                                            {isPartial ? 'Teaser' : 'Full'}
-                                        </span>
-                                    </div>
-
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.5rem', flex: 1 }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                            <Briefcase size={18} color="var(--royal-blue)" />
-                                            <strong>{t.sector}:</strong> {project.project_sector || '-'}
+                <div className="exchange-content" style={{ minHeight: '40vh' }}>
+                    {loading ? (
+                        <div style={{ textAlign: 'center', padding: '4rem', fontSize: '1.5rem', color: 'var(--text-gray)' }}>
+                            {t.loading}
+                        </div>
+                    ) : projects.length === 0 ? (
+                        <div style={{ textAlign: 'center', padding: '4rem', fontSize: '1.5rem', color: 'var(--text-gray)', border: '2px dashed var(--royal-blue)', borderRadius: '12px' }}>
+                            {t.noProjects}
+                        </div>
+                    ) : (
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '2rem' }}>
+                            {projects.map(project => {
+                                const isPartial = project.display_mode === 'partial';
+                                return (
+                                    <div key={project.id} className="shadow-form" style={{ background: 'white', padding: '2rem', borderRadius: '16px', borderTop: '4px solid var(--sand-gold)', display: 'flex', flexDirection: 'column' }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
+                                            <h3 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0 }}>
+                                                {isPartial ? t.teaser : project.organization || 'Projet Anonyme'}
+                                            </h3>
+                                            <span style={{ fontSize: '0.8rem', padding: '4px 8px', borderRadius: '20px', background: isPartial ? '#f3f4f6' : 'var(--royal-blue)', color: isPartial ? '#4b5563' : 'white', fontWeight: 600 }}>
+                                                {isPartial ? 'Teaser' : 'Full'}
+                                            </span>
                                         </div>
-                                        {project.location && (
+
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.5rem', flex: 1 }}>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                <MapPin size={18} color="var(--royal-blue)" />
-                                                <strong>{t.location}:</strong> {project.location}
+                                                <Briefcase size={18} color="var(--royal-blue)" />
+                                                <strong>{t.sector}:</strong> {project.project_sector || '-'}
                                             </div>
-                                        )}
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                            <Fingerprint size={18} color="var(--royal-blue)" />
-                                            <strong>{t.size}:</strong> {isPartial ? '***' : project.project_size || '-'}
+                                            {project.location && (
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <MapPin size={18} color="var(--royal-blue)" />
+                                                    <strong>{t.location}:</strong> {project.location}
+                                                </div>
+                                            )}
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                <Fingerprint size={18} color="var(--royal-blue)" />
+                                                <strong>{t.size}:</strong> {isPartial ? '***' : project.project_size || '-'}
+                                            </div>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                <CircleDollarSign size={18} color="var(--royal-blue)" />
+                                                <strong>{t.funding}:</strong> {project.funding_needed || '-'}
+                                            </div>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                <Handshake size={18} color="var(--royal-blue)" />
+                                                <strong>{t.partners}:</strong> {project.partner_needs || '-'}
+                                            </div>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                <strong>{t.yields}:</strong> {isPartial ? '***' : project.expected_yields || '-'}
+                                            </div>
                                         </div>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                            <CircleDollarSign size={18} color="var(--royal-blue)" />
-                                            <strong>{t.funding}:</strong> {project.funding_needed || '-'}
-                                        </div>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                            <Handshake size={18} color="var(--royal-blue)" />
-                                            <strong>{t.partners}:</strong> {project.partner_needs || '-'}
-                                        </div>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                            <strong>{t.yields}:</strong> {isPartial ? '***' : project.expected_yields || '-'}
-                                        </div>
-                                    </div>
 
-                                    <div style={{ borderTop: '1px solid #e5e7eb', paddingTop: '1.5rem', marginBottom: '1.5rem' }}>
-                                        <p style={{ margin: 0, fontStyle: isPartial ? 'italic' : 'normal', color: 'var(--text-gray)', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                                            {project.description}
-                                        </p>
-                                    </div>
+                                        <div style={{ borderTop: '1px solid #e5e7eb', paddingTop: '1.5rem', marginBottom: '1.5rem' }}>
+                                            <p style={{ margin: 0, fontStyle: isPartial ? 'italic' : 'normal', color: 'var(--text-gray)', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                                                {project.description}
+                                            </p>
+                                        </div>
 
-                                    <a href="#contact" onClick={(e) => {
-                                        e.preventDefault();
-                                        onBack();
-                                        setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                                    }} className="btn btn-outline" style={{ textAlign: 'center', marginTop: 'auto' }}>
-                                        {t.contact}
-                                    </a>
-                                </div>
-                            );
-                        })}
-                    </div>
-                )}
-            </main>
-        </div>
+                                        <a href="#contact" onClick={(e) => {
+                                            e.preventDefault();
+                                            onBack();
+                                            setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                                        }} className="btn btn-outline" style={{ textAlign: 'center', marginTop: 'auto' }}>
+                                            {t.contact}
+                                        </a>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
+                </div>
+            </div>
+        </section>
     );
 }
