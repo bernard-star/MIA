@@ -178,6 +178,7 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
                                 supabaseClient={supabase}
                                 appearance={{ theme: ThemeSupa, variables: { default: { colors: { brand: 'var(--royal-blue)', brandAccent: 'var(--royal-blue-dark)' } } } }}
                                 providers={['google']}
+                                redirectTo={typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}` : undefined}
                             />
                         </div>
                     ) : (
