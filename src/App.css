@@ -180,15 +180,61 @@ section {
   align-items: center;
 }
 
+.nav-item {
+  position: relative;
+}
+
 .nav-link {
   font-weight: 600;
   font-size: 0.9rem;
   color: var(--royal-blue);
   text-transform: uppercase;
   transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .nav-link:hover {
+  color: var(--sand-gold);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  min-width: 200px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 0.5rem 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-item:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-link {
+  padding: 0.75rem 1.5rem;
+  color: var(--royal-blue);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.dropdown-link:hover {
+  background: var(--bg-alt);
   color: var(--sand-gold);
 }
 

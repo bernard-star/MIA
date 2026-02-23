@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Menu, X, Fish, Sun, Sprout, Target, Quote,
   MapPin, Mail, ArrowRight, ShieldCheck,
   Building, Globe, BriefcaseBusiness, Map, TrendingUp, ArrowUpRight,
-  Linkedin, Download, CalendarCheck
+  Linkedin, Download, CalendarCheck, ChevronDown
 } from 'lucide-react';
 import './App.css';
 import CharteInvestissement from './CharteInvestissement';
@@ -18,14 +18,18 @@ type Region = 'tanger' | 'kenitra' | 'casablanca' | 'ouarzazate' | 'dakhla';
 const CONTENT = {
   fr: {
     nav: {
+      association: "L'Association",
       about: 'Notre Mission',
       team: "L'Équipe",
+      testimonials: 'Témoignages',
+      expertise: 'Notre Expertise',
       sectors: 'Secteurs',
       map: 'Écosystèmes',
       services: 'Services',
-      news: 'Insights',
+      opportunites: 'Opportunités',
       exchange: 'Bourse de Projets',
-      testimonials: 'Témoignages',
+      insightsMain: 'Insights',
+      news: 'Actualités',
       contact: 'Contact',
     },
     hero: {
@@ -173,14 +177,18 @@ const CONTENT = {
   },
   en: {
     nav: {
+      association: "The Association",
       about: 'About Us',
       team: 'Team',
+      testimonials: 'Testimonials',
+      expertise: 'Our Expertise',
       sectors: 'Sectors',
       map: 'Ecosystems',
       services: 'Services',
-      news: 'Insights',
+      opportunites: 'Opportunities',
       exchange: 'Project Exchange',
-      testimonials: 'Testimonials',
+      insightsMain: 'Insights',
+      news: 'News',
       contact: 'Contact',
     },
     hero: {
@@ -328,14 +336,18 @@ const CONTENT = {
   },
   es: {
     nav: {
+      association: "La Asociación",
       about: 'Nuestra Misión',
       team: 'Equipo',
+      testimonials: 'Testimonios',
+      expertise: 'Nuestra Experiencia',
       sectors: 'Sectores',
       map: 'Ecosistemas',
       services: 'Servicios',
-      news: 'Noticias',
+      opportunites: 'Oportunidades',
       exchange: 'Bolsa de Proyectos',
-      testimonials: 'Testimonios',
+      insightsMain: 'Insights',
+      news: 'Noticias',
       contact: 'Contacto',
     },
     hero: {
@@ -483,14 +495,18 @@ const CONTENT = {
   },
   ar: {
     nav: {
+      association: "الجمعية",
       about: 'مهمتنا',
       team: 'فريقنا',
+      testimonials: 'الشهادات',
+      expertise: 'خبراتنا',
       sectors: 'قطاعاتنا',
       map: 'الأنظمة البيئية',
       services: 'خدماتنا',
-      news: 'رؤى',
+      opportunites: 'فرص',
       exchange: 'بورصة المشاريع',
-      testimonials: 'الشهادات',
+      insightsMain: 'رؤى',
+      news: 'أخبار',
       contact: 'اتصل بنا',
     },
     hero: {
@@ -642,6 +658,13 @@ function App() {
   const [lang, setLang] = useState<Language>('fr');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeRegion, setActiveRegion] = useState<Region | null>(null);
+  const [currentPath, setCurrentPath] = useState(() => {
+    const p = typeof window !== 'undefined' ? window.location.pathname : '/';
+    if (['/', '/association', '/expertise', '/opportunites', '/insights', '/contact'].includes(p)) {
+      return p;
+    }
+    return '/';
+  });
   const [currentPage, setCurrentPage] = useState<'home' | 'charte' | 'gigafactory' | 'hydrogene' | 'exchange'>('home');
 
   const [formState, setFormState] = useState({
@@ -650,6 +673,27 @@ function App() {
     expected_yields: '', description: ''
   });
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  useEffect(() => {
+    const handlePop = () => {
+      const p = window.location.pathname;
+      setCurrentPath(['/', '/association', '/expertise', '/opportunites', '/insights', '/contact'].includes(p) ? p : '/');
+    };
+    window.addEventListener('popstate', handlePop);
+    return () => window.removeEventListener('popstate', handlePop);
+  }, []);
+
+  const navigateTo = (path: string, hash?: string) => {
+    window.history.pushState({}, '', path);
+    setCurrentPath(path);
+    setCurrentPage('home');
+    setIsMenuOpen(false);
+    if (hash) {
+      setTimeout(() => document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth' }), 100);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -734,35 +778,50 @@ function App() {
 
           {/* Desktop Menu */}
           <div className="nav-links">
-            <a href="#about" className="nav-link">{t.nav.about}</a>
-            <a href="#team" className="nav-link">{t.nav.team}</a>
-            <a href="#sectors" className="nav-link">{t.nav.sectors}</a>
-            <a href="#map" className="nav-link">{t.nav.map}</a>
-            <a href="#services" className="nav-link">{t.nav.services}</a>
-            <a href="#news" className="nav-link">{t.nav.news}</a>
-            <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); setCurrentPage('exchange'); window.scrollTo(0, 0); }}>{t.nav.exchange}</a>
-            <a href="#testimonial" className="nav-link">{t.nav.testimonials}</a>
-            <a href="#contact" className="nav-link">{t.nav.contact}</a>
+            <div className="nav-item">
+              <a href="/association" className="nav-link" onClick={(e) => { e.preventDefault(); navigateTo('/association'); }}>{t.nav.association} <ChevronDown size={14} /></a>
+              <div className="dropdown-menu">
+                <a href="#about" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/association', 'about'); }}>{t.nav.about}</a>
+                <a href="#team" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/association', 'team'); }}>{t.nav.team}</a>
+                <a href="#testimonial" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/association', 'testimonial'); }}>{t.nav.testimonials}</a>
+              </div>
+            </div>
+
+            <div className="nav-item">
+              <a href="/expertise" className="nav-link" onClick={(e) => { e.preventDefault(); navigateTo('/expertise'); }}>{t.nav.expertise} <ChevronDown size={14} /></a>
+              <div className="dropdown-menu">
+                <a href="#sectors" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/expertise', 'sectors'); }}>{t.nav.sectors}</a>
+                <a href="#map" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/expertise', 'map'); }}>{t.nav.map}</a>
+                <a href="#services" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/expertise', 'services'); }}>{t.nav.services}</a>
+              </div>
+            </div>
+
+            <div className="nav-item">
+              <a href="/opportunites" className="nav-link" onClick={(e) => { e.preventDefault(); navigateTo('/opportunites'); }}>{t.nav.opportunites} <ChevronDown size={14} /></a>
+              <div className="dropdown-menu">
+                <a href="#" className="dropdown-link" onClick={(e) => { e.preventDefault(); setCurrentPage('exchange'); window.history.pushState({}, '', '/opportunites'); setCurrentPath('/opportunites'); window.scrollTo(0, 0); }}>{t.nav.exchange}</a>
+              </div>
+            </div>
+
+            <div className="nav-item">
+              <a href="/insights" className="nav-link" onClick={(e) => { e.preventDefault(); navigateTo('/insights'); }}>{t.nav.insightsMain} <ChevronDown size={14} /></a>
+              <div className="dropdown-menu">
+                <a href="#news" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/insights', 'news'); }}>{t.nav.news}</a>
+              </div>
+            </div>
+
+            <div className="nav-item">
+              <a href="#contact" className="nav-link" onClick={(e) => { e.preventDefault(); navigateTo('/contact', 'contact'); }}>{t.nav.contact}</a>
+            </div>
+
             <div className="lang-switcher">
-              <span
-                className={`lang-switch ${lang === 'fr' ? 'active' : ''}`}
-                onClick={() => setLang('fr')}
-              >FR</span>
+              <span className={`lang-switch ${lang === 'fr' ? 'active' : ''}`} onClick={() => setLang('fr')}>FR</span>
               <span style={{ color: 'var(--text-muted)' }}>|</span>
-              <span
-                className={`lang-switch ${lang === 'en' ? 'active' : ''}`}
-                onClick={() => setLang('en')}
-              >EN</span>
+              <span className={`lang-switch ${lang === 'en' ? 'active' : ''}`} onClick={() => setLang('en')}>EN</span>
               <span style={{ color: 'var(--text-muted)' }}>|</span>
-              <span
-                className={`lang-switch ${lang === 'es' ? 'active' : ''}`}
-                onClick={() => setLang('es')}
-              >ES</span>
+              <span className={`lang-switch ${lang === 'es' ? 'active' : ''}`} onClick={() => setLang('es')}>ES</span>
               <span style={{ color: 'var(--text-muted)' }}>|</span>
-              <span
-                className={`lang-switch ${lang === 'ar' ? 'active' : ''}`}
-                onClick={() => setLang('ar')}
-              >AR</span>
+              <span className={`lang-switch ${lang === 'ar' ? 'active' : ''}`} onClick={() => setLang('ar')}>AR</span>
             </div>
           </div>
 
@@ -774,15 +833,25 @@ function App() {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="mobile-menu">
-            <a href="#about" onClick={() => setIsMenuOpen(false)}>{t.nav.about}</a>
-            <a href="#team" onClick={() => setIsMenuOpen(false)}>{t.nav.team}</a>
-            <a href="#sectors" onClick={() => setIsMenuOpen(false)}>{t.nav.sectors}</a>
-            <a href="#map" onClick={() => setIsMenuOpen(false)}>{t.nav.map}</a>
-            <a href="#services" onClick={() => setIsMenuOpen(false)}>{t.nav.services}</a>
-            <a href="#news" onClick={() => setIsMenuOpen(false)}>{t.nav.news}</a>
-            <a href="#" onClick={(e) => { e.preventDefault(); setIsMenuOpen(false); setCurrentPage('exchange'); window.scrollTo(0, 0); }}>{t.nav.exchange}</a>
-            <a href="#testimonial" onClick={() => setIsMenuOpen(false)}>{t.nav.testimonials}</a>
-            <a href="#contact" onClick={() => setIsMenuOpen(false)}>{t.nav.contact}</a>
+            <div style={{ fontWeight: 800, color: 'var(--royal-blue)', padding: '0.5rem 0', marginTop: '0.5rem' }}>{t.nav.association}</div>
+            <a href="#about" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/association', 'about'); }}>- {t.nav.about}</a>
+            <a href="#team" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/association', 'team'); }}>- {t.nav.team}</a>
+            <a href="#testimonial" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/association', 'testimonial'); }}>- {t.nav.testimonials}</a>
+
+            <div style={{ fontWeight: 800, color: 'var(--royal-blue)', padding: '0.5rem 0', marginTop: '0.5rem' }}>{t.nav.expertise}</div>
+            <a href="#sectors" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/expertise', 'sectors'); }}>- {t.nav.sectors}</a>
+            <a href="#map" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/expertise', 'map'); }}>- {t.nav.map}</a>
+            <a href="#services" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/expertise', 'services'); }}>- {t.nav.services}</a>
+
+            <div style={{ fontWeight: 800, color: 'var(--royal-blue)', padding: '0.5rem 0', marginTop: '0.5rem' }}>{t.nav.opportunites}</div>
+            <a href="#" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); setIsMenuOpen(false); setCurrentPage('exchange'); window.history.pushState({}, '', '/opportunites'); setCurrentPath('/opportunites'); window.scrollTo(0, 0); }}>- {t.nav.exchange}</a>
+
+            <div style={{ fontWeight: 800, color: 'var(--royal-blue)', padding: '0.5rem 0', marginTop: '0.5rem' }}>{t.nav.insightsMain}</div>
+            <a href="#news" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/insights', 'news'); }}>- {t.nav.news}</a>
+
+            <div style={{ fontWeight: 800, color: 'var(--royal-blue)', padding: '0.5rem 0', marginTop: '0.5rem' }}>{t.nav.contact}</div>
+            <a href="#contact" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/contact', 'contact'); }}>- {t.nav.contact}</a>
+
             <div className="mobile-lang">
               <span className={lang === 'fr' ? 'active' : ''} onClick={() => { setLang('fr'); setIsMenuOpen(false); }}>FR</span>
               <span>|</span>
@@ -797,333 +866,351 @@ function App() {
       </nav>
 
       <div dir={isRTL ? "rtl" : "ltr"} className={isRTL ? "arabic-text" : ""}>
-        <section id="hero" className="hero-section">
-          <div className="hero-overlay"></div>
-          <div className="container hero-content animate-fade-in">
-            <h1>{t.hero.title}</h1>
-            <p className="hero-subtitle">{t.hero.subtitle}</p>
-            <a href="#contact" className="btn btn-primary hero-btn">
-              {t.hero.cta} <ArrowRight className="ml-2" size={20} />
-            </a>
-          </div>
-        </section>
-
-        <section id="about" className="about-section bg-light">
-          <div className="container">
-            <div className="about-content">
-              <h2 className="section-title">{t.about.title}</h2>
-              <p className="about-desc">{t.about.desc}</p>
+        {(currentPath === '/') && (
+          <section id="hero" className="hero-section">
+            <div className="hero-overlay"></div>
+            <div className="container hero-content animate-fade-in">
+              <h1>{t.hero.title}</h1>
+              <p className="hero-subtitle">{t.hero.subtitle}</p>
+              <a href="#contact" className="btn btn-primary hero-btn">
+                {t.hero.cta} <ArrowRight className="ml-2" size={20} />
+              </a>
             </div>
+          </section>
+        )}
 
-            <div className="objective-banner">
-              <div className="objective-icon">
-                <Target size={48} color="var(--royal-blue-dark)" />
-              </div>
-              <div>
-                <h3>{t.objective2030.title}</h3>
-                <p>{t.objective2030.desc}</p>
-              </div>
-            </div>
-          </div>
-        </section>
+        {(currentPath === '/' || currentPath === '/association') && (
+          <>
+            <section id="about" className="about-section bg-light">
+              <div className="container">
+                <div className="about-content">
+                  <h2 className="section-title">{t.about.title}</h2>
+                  <p className="about-desc">{t.about.desc}</p>
+                </div>
 
-        <section id="team" className="team-section">
-          <div className="container">
-            <h2 className="section-title">{t.team.title}</h2>
-            <p className="section-subtitle">{t.team.subtitle}</p>
-
-            <div className="team-grid">
-              {t.team.members.map((member, idx) => (
-                <div className="team-card hover-card" key={idx}>
-                  <div className="team-avatar">
-                    {/* Placeholder for real headshot */}
+                <div className="objective-banner">
+                  <div className="objective-icon">
+                    <Target size={48} color="var(--royal-blue-dark)" />
                   </div>
-                  <div className="team-info">
-                    <h3>{member.name}</h3>
-                    <p className="team-role">{member.role}</p>
-                    <p className="team-exp">{member.exp}</p>
-                    <a href="#linkedin" className="team-social">
-                      <Linkedin size={20} /> LinkedIn
-                    </a>
+                  <div>
+                    <h3>{t.objective2030.title}</h3>
+                    <p>{t.objective2030.desc}</p>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
+              </div>
+            </section>
 
-        <section id="sectors" className="sectors-section">
-          <div className="container">
-            <h2 className="section-title">{t.sectors.title}</h2>
-            <p className="section-subtitle">{t.sectors.subtitle}</p>
+            <section id="team" className="team-section">
+              <div className="container">
+                <h2 className="section-title">{t.team.title}</h2>
+                <p className="section-subtitle">{t.team.subtitle}</p>
 
-            <div className="sectors-grid">
-              <div className="sector-card hover-card">
-                <Fish size={48} className="sector-icon" />
-                <div className="sector-content">
-                  <h3>{t.sectors.cards[0].title}</h3>
-                  <p>{t.sectors.cards[0].desc}</p>
+                <div className="team-grid">
+                  {t.team.members.map((member, idx) => (
+                    <div className="team-card hover-card" key={idx}>
+                      <div className="team-avatar">
+                        {/* Placeholder for real headshot */}
+                      </div>
+                      <div className="team-info">
+                        <h3>{member.name}</h3>
+                        <p className="team-role">{member.role}</p>
+                        <p className="team-exp">{member.exp}</p>
+                        <a href="#linkedin" className="team-social">
+                          <Linkedin size={20} /> LinkedIn
+                        </a>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-              <div className="sector-card hover-card">
-                <Sun size={48} className="sector-icon" />
-                <div className="sector-content">
-                  <h3>{t.sectors.cards[1].title}</h3>
-                  <p>{t.sectors.cards[1].desc}</p>
+            </section>
+          </>
+        )}
+
+        {(currentPath === '/' || currentPath === '/expertise') && (
+          <>
+            <section id="sectors" className="sectors-section">
+              <div className="container">
+                <h2 className="section-title">{t.sectors.title}</h2>
+                <p className="section-subtitle">{t.sectors.subtitle}</p>
+
+                <div className="sectors-grid">
+                  <div className="sector-card hover-card">
+                    <Fish size={48} className="sector-icon" />
+                    <div className="sector-content">
+                      <h3>{t.sectors.cards[0].title}</h3>
+                      <p>{t.sectors.cards[0].desc}</p>
+                    </div>
+                  </div>
+                  <div className="sector-card hover-card">
+                    <Sun size={48} className="sector-icon" />
+                    <div className="sector-content">
+                      <h3>{t.sectors.cards[1].title}</h3>
+                      <p>{t.sectors.cards[1].desc}</p>
+                    </div>
+                  </div>
+                  <div className="sector-card hover-card">
+                    <Sprout size={48} className="sector-icon" />
+                    <div className="sector-content">
+                      <h3>{t.sectors.cards[2].title}</h3>
+                      <p>{t.sectors.cards[2].desc}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="sector-card hover-card">
-                <Sprout size={48} className="sector-icon" />
-                <div className="sector-content">
-                  <h3>{t.sectors.cards[2].title}</h3>
-                  <p>{t.sectors.cards[2].desc}</p>
+            </section>
+
+            <section id="map" className="map-section">
+              <div className="container">
+                <h2 className="section-title text-light">{t.map.title}</h2>
+                <p className="section-subtitle text-light" style={{ opacity: 0.8 }}>{t.map.subtitle}</p>
+
+                <div className="map-container">
+                  <div className="map-visual">
+                    <div className="map-abstract-bg">
+                      <Map size={250} strokeWidth={1} />
+                    </div>
+
+                    {(Object.keys(t.map.regions) as Region[]).map((key) => (
+                      <div
+                        key={key}
+                        className={`map-pin pin-${key} ${activeRegion === key ? 'active' : ''}`}
+                        onClick={() => setActiveRegion(key)}
+                      >
+                        <div className="map-pin-icon"></div>
+                        <div className="map-pin-label">{t.map.regions[key].name}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="map-info">
+                    {activeRegion ? (
+                      <div className="map-info-card animate-fade-in" key={activeRegion}>
+                        <h3>{t.map.regions[activeRegion].name}</h3>
+                        <div className="map-info-focus">{t.map.regions[activeRegion].focus}</div>
+                        <p className="map-info-desc">{t.map.regions[activeRegion].desc}</p>
+                        <a href="#contact" className="btn btn-outline" style={{ width: '100%' }}>
+                          {t.map.btnIncentives}
+                        </a>
+                      </div>
+                    ) : (
+                      <div className="map-empty-state">
+                        <MapPin size={48} color="var(--royal-blue-light)" opacity={0.3} />
+                        <p>{t.map.selectPrompt}</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
+            </section>
 
-        <section id="map" className="map-section">
-          <div className="container">
-            <h2 className="section-title text-light">{t.map.title}</h2>
-            <p className="section-subtitle text-light" style={{ opacity: 0.8 }}>{t.map.subtitle}</p>
+            <section id="services" className="services-section bg-alt">
+              <div className="container">
+                <h2 className="section-title text-center">{t.services.title}</h2>
+                <p className="section-subtitle text-center mb-5">{t.services.subtitle}</p>
 
-            <div className="map-container">
-              <div className="map-visual">
-                <div className="map-abstract-bg">
-                  <Map size={250} strokeWidth={1} />
+                <div className="services-grid">
+                  <div className="service-card hover-card">
+                    <div className="service-icon"><Building /></div>
+                    <h4>{t.services.list[0].title}</h4>
+                    <p>{t.services.list[0].desc}</p>
+                  </div>
+                  <div className="service-card hover-card">
+                    <div className="service-icon"><ShieldCheck /></div>
+                    <h4>{t.services.list[1].title}</h4>
+                    <p>{t.services.list[1].desc}</p>
+                  </div>
+                  <div className="service-card hover-card">
+                    <div className="service-icon"><BriefcaseBusiness /></div>
+                    <h4>{t.services.list[2].title}</h4>
+                    <p>{t.services.list[2].desc}</p>
+                  </div>
+                  <div className="service-card hover-card">
+                    <div className="service-icon"><Globe /></div>
+                    <h4>{t.services.list[3].title}</h4>
+                    <p>{t.services.list[3].desc}</p>
+                  </div>
                 </div>
+              </div>
+            </section>
+          </>
+        )}
 
-                {(Object.keys(t.map.regions) as Region[]).map((key) => (
-                  <div
-                    key={key}
-                    className={`map-pin pin-${key} ${activeRegion === key ? 'active' : ''}`}
-                    onClick={() => setActiveRegion(key)}
+        {(currentPath === '/' || currentPath === '/insights') && (
+          <section id="news" className="news-section">
+            <div className="container">
+              <div className="news-header">
+                <div>
+                  <h2 className="section-title text-left">{t.news.title}</h2>
+                  <p className="section-subtitle text-left mb-5" style={{ marginInline: 0 }}>{t.news.subtitle}</p>
+                </div>
+                <a href="#contact" className="btn btn-outline desk-only">{t.news.btnSub}</a>
+              </div>
+
+              <div className="news-grid">
+                {t.news.articles.map((article, idx) => (
+                  <a
+                    href="#news"
+                    className="news-card hover-card"
+                    key={idx}
+                    onClick={(e) => {
+                      if (idx === 0) { // First article is the charter
+                        e.preventDefault();
+                        setCurrentPage('charte');
+                        window.scrollTo(0, 0);
+                      } else if (idx === 1) { // Second article is the GigaFactory
+                        e.preventDefault();
+                        setCurrentPage('gigafactory');
+                        window.scrollTo(0, 0);
+                      } else if (idx === 2) { // Third article is Hydrogen
+                        e.preventDefault();
+                        setCurrentPage('hydrogene');
+                        window.scrollTo(0, 0);
+                      }
+                    }}
                   >
-                    <div className="map-pin-icon"></div>
-                    <div className="map-pin-label">{t.map.regions[key].name}</div>
-                  </div>
+                    <div className="news-image-placeholder">
+                      <TrendingUp size={40} color="var(--royal-blue-light)" opacity={0.5} />
+                    </div>
+                    <div className="news-content">
+                      <div className="news-meta">
+                        <span className="news-category">{article.category}</span>
+                        <span className="news-date">{article.date}</span>
+                      </div>
+                      <h3 className="news-title">{article.title}</h3>
+                      <div className="news-read-more">
+                        <span>{article.readTime}</span>
+                        <ArrowUpRight size={20} className="arrow-icon" />
+                      </div>
+                    </div>
+                  </a>
                 ))}
               </div>
+            </div>
+          </section>
+        )}
 
-              <div className="map-info">
-                {activeRegion ? (
-                  <div className="map-info-card animate-fade-in" key={activeRegion}>
-                    <h3>{t.map.regions[activeRegion].name}</h3>
-                    <div className="map-info-focus">{t.map.regions[activeRegion].focus}</div>
-                    <p className="map-info-desc">{t.map.regions[activeRegion].desc}</p>
-                    <a href="#contact" className="btn btn-outline" style={{ width: '100%' }}>
-                      {t.map.btnIncentives}
-                    </a>
+        {(currentPath === '/' || currentPath === '/association') && (
+          <section id="testimonial" className="testimonial-section">
+            <div className="container testimonial-container">
+              <h2 className="section-title text-light">{t.testimonial.title}</h2>
+              <Quote size={60} className="quote-icon mx-auto" />
+              <p className="testimonial-quote">"{t.testimonial.quote}"</p>
+              <div className="testimonial-author">{t.testimonial.author}</div>
+              <div className="testimonial-role">{t.testimonial.role}</div>
+            </div>
+          </section>
+        )}
+
+        {(currentPath === '/' || currentPath === '/contact') && (
+          <>
+            <section id="lead-magnet" className="lead-magnet-section">
+              <div className="container">
+                <div className="lead-magnet-box">
+                  <div className="lead-magnet-content">
+                    <h2>{t.leadMagnet.title}</h2>
+                    <p>{t.leadMagnet.subtitle}</p>
+                    <form className="lead-magnet-form" onSubmit={(e) => e.preventDefault()}>
+                      <input type="email" placeholder={t.leadMagnet.placeholder} required />
+                      <button type="submit" className="btn btn-primary">
+                        <Download size={18} className="mr-2" style={{ marginRight: '8px' }} /> {t.leadMagnet.button}
+                      </button>
+                    </form>
                   </div>
-                ) : (
-                  <div className="map-empty-state">
-                    <MapPin size={48} color="var(--royal-blue-light)" opacity={0.3} />
-                    <p>{t.map.selectPrompt}</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="services" className="services-section bg-alt">
-          <div className="container">
-            <h2 className="section-title text-center">{t.services.title}</h2>
-            <p className="section-subtitle text-center mb-5">{t.services.subtitle}</p>
-
-            <div className="services-grid">
-              <div className="service-card hover-card">
-                <div className="service-icon"><Building /></div>
-                <h4>{t.services.list[0].title}</h4>
-                <p>{t.services.list[0].desc}</p>
-              </div>
-              <div className="service-card hover-card">
-                <div className="service-icon"><ShieldCheck /></div>
-                <h4>{t.services.list[1].title}</h4>
-                <p>{t.services.list[1].desc}</p>
-              </div>
-              <div className="service-card hover-card">
-                <div className="service-icon"><BriefcaseBusiness /></div>
-                <h4>{t.services.list[2].title}</h4>
-                <p>{t.services.list[2].desc}</p>
-              </div>
-              <div className="service-card hover-card">
-                <div className="service-icon"><Globe /></div>
-                <h4>{t.services.list[3].title}</h4>
-                <p>{t.services.list[3].desc}</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="news" className="news-section">
-          <div className="container">
-            <div className="news-header">
-              <div>
-                <h2 className="section-title text-left">{t.news.title}</h2>
-                <p className="section-subtitle text-left mb-5" style={{ marginInline: 0 }}>{t.news.subtitle}</p>
-              </div>
-              <a href="#contact" className="btn btn-outline desk-only">{t.news.btnSub}</a>
-            </div>
-
-            <div className="news-grid">
-              {t.news.articles.map((article, idx) => (
-                <a
-                  href="#news"
-                  className="news-card hover-card"
-                  key={idx}
-                  onClick={(e) => {
-                    if (idx === 0) { // First article is the charter
-                      e.preventDefault();
-                      setCurrentPage('charte');
-                      window.scrollTo(0, 0);
-                    } else if (idx === 1) { // Second article is the GigaFactory
-                      e.preventDefault();
-                      setCurrentPage('gigafactory');
-                      window.scrollTo(0, 0);
-                    } else if (idx === 2) { // Third article is Hydrogen
-                      e.preventDefault();
-                      setCurrentPage('hydrogene');
-                      window.scrollTo(0, 0);
-                    }
-                  }}
-                >
-                  <div className="news-image-placeholder">
-                    <TrendingUp size={40} color="var(--royal-blue-light)" opacity={0.5} />
-                  </div>
-                  <div className="news-content">
-                    <div className="news-meta">
-                      <span className="news-category">{article.category}</span>
-                      <span className="news-date">{article.date}</span>
-                    </div>
-                    <h3 className="news-title">{article.title}</h3>
-                    <div className="news-read-more">
-                      <span>{article.readTime}</span>
-                      <ArrowUpRight size={20} className="arrow-icon" />
-                    </div>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="testimonial" className="testimonial-section">
-          <div className="container testimonial-container">
-            <h2 className="section-title text-light">{t.testimonial.title}</h2>
-            <Quote size={60} className="quote-icon mx-auto" />
-            <p className="testimonial-quote">"{t.testimonial.quote}"</p>
-            <div className="testimonial-author">{t.testimonial.author}</div>
-            <div className="testimonial-role">{t.testimonial.role}</div>
-          </div>
-        </section>
-
-        <section id="lead-magnet" className="lead-magnet-section">
-          <div className="container">
-            <div className="lead-magnet-box">
-              <div className="lead-magnet-content">
-                <h2>{t.leadMagnet.title}</h2>
-                <p>{t.leadMagnet.subtitle}</p>
-                <form className="lead-magnet-form" onSubmit={(e) => e.preventDefault()}>
-                  <input type="email" placeholder={t.leadMagnet.placeholder} required />
-                  <button type="submit" className="btn btn-primary">
-                    <Download size={18} className="mr-2" style={{ marginRight: '8px' }} /> {t.leadMagnet.button}
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="contact" className="contact-section">
-          <div className="container contact-container">
-            <div className="contact-form-wrapper">
-              <div className="contact-header">
-                <h2 className="section-title text-left">{t.contact.title}</h2>
-                <p className="section-subtitle text-left mb-5" style={{ marginInline: 0 }}>{t.contact.subtitle}</p>
-              </div>
-
-              <div className="contact-split">
-                {/* Calendly booking CTA mock */}
-                <div className="calendly-box">
-                  <CalendarCheck size={48} color="var(--sand-gold)" style={{ marginBottom: '1rem' }} />
-                  <h3>Fast Track</h3>
-                  <p>Gagnez du temps et discutez directement de vos enjeux avec nos experts locaux.</p>
-                  <a href="#calendly" className="btn btn-primary w-full mt-4" style={{ marginTop: '1.5rem' }}>
-                    {t.contact.calendlyBtn}
-                  </a>
                 </div>
-
-                {/* Standard Form */}
-                <form className="contact-form shadow-form" onSubmit={handleFormSubmit}>
-                  {formStatus === 'success' && <div style={{ color: 'green', marginBottom: '1rem', fontWeight: 600 }}>{t.contact.success || 'Success!'}</div>}
-                  {formStatus === 'error' && <div style={{ color: 'red', marginBottom: '1rem', fontWeight: 600 }}>{t.contact.error || 'Error!'}</div>}
-
-                  <div className="form-group">
-                    <label>{t.contact.name}</label>
-                    <input type="text" placeholder={t.contact.name} required value={formState.contact_name} onChange={(e) => setFormState({ ...formState, contact_name: e.target.value })} />
-                  </div>
-                  <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                    <div>
-                      <label>{t.contact.email}</label>
-                      <input type="email" placeholder={t.contact.email} required value={formState.contact_email} onChange={(e) => setFormState({ ...formState, contact_email: e.target.value })} />
-                    </div>
-                    <div>
-                      <label>{t.contact.phone}</label>
-                      <input type="text" placeholder={t.contact.phone || 'Phone'} value={formState.contact_phone} onChange={(e) => setFormState({ ...formState, contact_phone: e.target.value })} />
-                    </div>
-                  </div>
-                  <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                    <div>
-                      <label>{t.contact.organization}</label>
-                      <input type="text" placeholder={t.contact.organization || 'Company'} value={formState.organization} onChange={(e) => setFormState({ ...formState, organization: e.target.value })} />
-                    </div>
-                    <div>
-                      <label>{t.contact.project_size}</label>
-                      <input type="text" placeholder="ex: 50M MAD" value={formState.project_size} onChange={(e) => setFormState({ ...formState, project_size: e.target.value })} />
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <label>{t.contact.sector}</label>
-                    <select required value={formState.project_sector} onChange={(e) => setFormState({ ...formState, project_sector: e.target.value })}>
-                      <option value="">Sélectionnez / Select</option>
-                      <option value="energie">Énergies Renouvelables</option>
-                      <option value="peche">Économie Bleue & Pêche</option>
-                      <option value="agritech">AgriTech & Industrie</option>
-                      <option value="autre">Autre / Other</option>
-                    </select>
-                  </div>
-
-                  <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
-                    <div>
-                      <label>{t.contact.funding}</label>
-                      <input type="text" placeholder="ex: 80%" value={formState.funding_needed} onChange={(e) => setFormState({ ...formState, funding_needed: e.target.value })} />
-                    </div>
-                    <div>
-                      <label>{t.contact.partners}</label>
-                      <input type="text" placeholder="ex: Joint venture" value={formState.partner_needs} onChange={(e) => setFormState({ ...formState, partner_needs: e.target.value })} />
-                    </div>
-                    <div>
-                      <label>{t.contact.yields}</label>
-                      <input type="text" placeholder="ex: 12% IRR" value={formState.expected_yields} onChange={(e) => setFormState({ ...formState, expected_yields: e.target.value })} />
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <label>{t.contact.message}</label>
-                    <textarea rows={4} required placeholder={t.contact.message} value={formState.description} onChange={(e) => setFormState({ ...formState, description: e.target.value })}></textarea>
-                  </div>
-
-                  <button className="btn btn-primary w-full" type="submit" disabled={formStatus === 'loading'}>
-                    <Mail size={18} className="mr-2" style={{ marginRight: '8px' }} /> {formStatus === 'loading' ? '...' : t.contact.submit}
-                  </button>
-                </form>
               </div>
-            </div>
-          </div>
-        </section>
+            </section>
+
+            <section id="contact" className="contact-section">
+              <div className="container contact-container">
+                <div className="contact-form-wrapper">
+                  <div className="contact-header">
+                    <h2 className="section-title text-left">{t.contact.title}</h2>
+                    <p className="section-subtitle text-left mb-5" style={{ marginInline: 0 }}>{t.contact.subtitle}</p>
+                  </div>
+
+                  <div className="contact-split">
+                    {/* Calendly booking CTA mock */}
+                    <div className="calendly-box">
+                      <CalendarCheck size={48} color="var(--sand-gold)" style={{ marginBottom: '1rem' }} />
+                      <h3>Fast Track</h3>
+                      <p>Gagnez du temps et discutez directement de vos enjeux avec nos experts locaux.</p>
+                      <a href="#calendly" className="btn btn-primary w-full mt-4" style={{ marginTop: '1.5rem' }}>
+                        {t.contact.calendlyBtn}
+                      </a>
+                    </div>
+
+                    {/* Standard Form */}
+                    <form className="contact-form shadow-form" onSubmit={handleFormSubmit}>
+                      {formStatus === 'success' && <div style={{ color: 'green', marginBottom: '1rem', fontWeight: 600 }}>{t.contact.success || 'Success!'}</div>}
+                      {formStatus === 'error' && <div style={{ color: 'red', marginBottom: '1rem', fontWeight: 600 }}>{t.contact.error || 'Error!'}</div>}
+
+                      <div className="form-group">
+                        <label>{t.contact.name}</label>
+                        <input type="text" placeholder={t.contact.name} required value={formState.contact_name} onChange={(e) => setFormState({ ...formState, contact_name: e.target.value })} />
+                      </div>
+                      <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                        <div>
+                          <label>{t.contact.email}</label>
+                          <input type="email" placeholder={t.contact.email} required value={formState.contact_email} onChange={(e) => setFormState({ ...formState, contact_email: e.target.value })} />
+                        </div>
+                        <div>
+                          <label>{t.contact.phone}</label>
+                          <input type="text" placeholder={t.contact.phone || 'Phone'} value={formState.contact_phone} onChange={(e) => setFormState({ ...formState, contact_phone: e.target.value })} />
+                        </div>
+                      </div>
+                      <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                        <div>
+                          <label>{t.contact.organization}</label>
+                          <input type="text" placeholder={t.contact.organization || 'Company'} value={formState.organization} onChange={(e) => setFormState({ ...formState, organization: e.target.value })} />
+                        </div>
+                        <div>
+                          <label>{t.contact.project_size}</label>
+                          <input type="text" placeholder="ex: 50M MAD" value={formState.project_size} onChange={(e) => setFormState({ ...formState, project_size: e.target.value })} />
+                        </div>
+                      </div>
+
+                      <div className="form-group">
+                        <label>{t.contact.sector}</label>
+                        <select required value={formState.project_sector} onChange={(e) => setFormState({ ...formState, project_sector: e.target.value })}>
+                          <option value="">Sélectionnez / Select</option>
+                          <option value="energie">Énergies Renouvelables</option>
+                          <option value="peche">Économie Bleue & Pêche</option>
+                          <option value="agritech">AgriTech & Industrie</option>
+                          <option value="autre">Autre / Other</option>
+                        </select>
+                      </div>
+
+                      <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
+                        <div>
+                          <label>{t.contact.funding}</label>
+                          <input type="text" placeholder="ex: 80%" value={formState.funding_needed} onChange={(e) => setFormState({ ...formState, funding_needed: e.target.value })} />
+                        </div>
+                        <div>
+                          <label>{t.contact.partners}</label>
+                          <input type="text" placeholder="ex: Joint venture" value={formState.partner_needs} onChange={(e) => setFormState({ ...formState, partner_needs: e.target.value })} />
+                        </div>
+                        <div>
+                          <label>{t.contact.yields}</label>
+                          <input type="text" placeholder="ex: 12% IRR" value={formState.expected_yields} onChange={(e) => setFormState({ ...formState, expected_yields: e.target.value })} />
+                        </div>
+                      </div>
+
+                      <div className="form-group">
+                        <label>{t.contact.message}</label>
+                        <textarea rows={4} required placeholder={t.contact.message} value={formState.description} onChange={(e) => setFormState({ ...formState, description: e.target.value })}></textarea>
+                      </div>
+
+                      <button className="btn btn-primary w-full" type="submit" disabled={formStatus === 'loading'}>
+                        <Mail size={18} className="mr-2" style={{ marginRight: '8px' }} /> {formStatus === 'loading' ? '...' : t.contact.submit}
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </>
+        )}
 
         <footer className="footer">
           <div className="container">
