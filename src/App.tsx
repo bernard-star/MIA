@@ -825,7 +825,7 @@ function App() {
                   </a>
                 </>
               ) : (
-                <button className="btn btn-outline" style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }} onClick={() => supabase.auth.signOut()}>
+                <button className="btn btn-outline" style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }} onClick={async () => { await supabase.auth.signOut(); window.location.reload(); }}>
                   {t.nav.logout}
                 </button>
               )}

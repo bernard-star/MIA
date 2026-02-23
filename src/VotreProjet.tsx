@@ -690,9 +690,11 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
                                         </div>
                                     </div>
                                 ) : (
-                                    <div style={{ textAlign: 'center', marginTop: '1rem', marginBottom: '2rem' }}>
-                                        <button type="button" onClick={() => setShowMoreDetails(true)} style={{ background: 'transparent', border: '2px solid var(--royal-blue)', color: 'var(--royal-blue)', padding: '0.6rem 1.5rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, transition: 'all 0.2s', width: '100%' }} className="hover-bg-light">
-                                            {t.moreDetails}
+                                    <div style={{ textAlign: 'center', marginTop: '2rem', marginBottom: '2rem', padding: '2rem', background: '#f8f9fa', borderRadius: '12px', border: '2px dashed var(--royal-blue)' }}>
+                                        <h4 style={{ color: 'var(--royal-blue)', marginBottom: '1rem', fontWeight: 700 }}>{t.moreDetailsTitle}</h4>
+                                        <p style={{ color: '#666', marginBottom: '1.5rem', fontSize: '0.95rem' }}>Fournissez des informations supplémentaires sur votre besoin en financement pour un meilleur retour (Optionnel mais recommandé).</p>
+                                        <button type="button" onClick={() => setShowMoreDetails(true)} style={{ background: 'var(--royal-blue)', color: 'white', border: 'none', padding: '0.8rem 2rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, transition: 'all 0.2s', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '1.1rem', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }} className="hover-opacity">
+                                            <PlusCircle size={20} /> {t.moreDetails}
                                         </button>
                                     </div>
                                 )}
