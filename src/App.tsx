@@ -749,7 +749,9 @@ function App() {
       setTimeout(() => setFormStatus('idle'), 5000); // Reset after 5s
     }
   };
-  const handleLogout = async () => {
+  const handleLogout = async (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    setSession(null); // Optimistic UI update immediately hides the button
     try {
       await supabase.auth.signOut();
     } catch (err) {
