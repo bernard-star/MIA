@@ -10,6 +10,7 @@ import CharteInvestissement from './CharteInvestissement';
 import GigaFactory from './GigaFactory';
 import HydrogeneDakhla from './HydrogeneDakhla';
 import ProjectExchange from './ProjectExchange';
+import VotreProjet from './VotreProjet';
 import { supabase } from './lib/supabase';
 
 type Language = 'fr' | 'en' | 'es' | 'ar';
@@ -28,6 +29,7 @@ const CONTENT = {
       services: 'Services',
       opportunites: 'Opportunités',
       exchange: 'Bourse de Projets',
+      votreProjet: 'Votre Projet',
       insightsMain: 'Insights',
       news: 'Actualités',
       contact: 'Contact',
@@ -187,6 +189,7 @@ const CONTENT = {
       services: 'Services',
       opportunites: 'Opportunities',
       exchange: 'Project Exchange',
+      votreProjet: 'Your Project',
       insightsMain: 'Insights',
       news: 'News',
       contact: 'Contact',
@@ -345,7 +348,8 @@ const CONTENT = {
       map: 'Ecosistemas',
       services: 'Servicios',
       opportunites: 'Oportunidades',
-      exchange: 'Bolsa de Proyectos',
+      exchange: 'Intercambio de Proyectos',
+      votreProjet: 'Tu Proyecto',
       insightsMain: 'Insights',
       news: 'Noticias',
       contact: 'Contacto',
@@ -503,8 +507,9 @@ const CONTENT = {
       sectors: 'قطاعاتنا',
       map: 'الأنظمة البيئية',
       services: 'خدماتنا',
-      opportunites: 'فرص',
+      opportunites: 'الفرص',
       exchange: 'بورصة المشاريع',
+      votreProjet: 'مشروعك',
       insightsMain: 'رؤى',
       news: 'أخبار',
       contact: 'اتصل بنا',
@@ -789,6 +794,7 @@ function App() {
               <a href="/opportunites" className="nav-link" onClick={(e) => { e.preventDefault(); navigateTo('/opportunites'); }}>{t.nav.opportunites} <ChevronDown size={14} /></a>
               <div className="dropdown-menu">
                 <a href="#exchange" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/opportunites', 'exchange'); }}>{t.nav.exchange}</a>
+                <a href="#votreprojet" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigateTo('/opportunites', 'votreprojet'); }}>{t.nav.votreProjet}</a>
               </div>
             </div>
 
@@ -834,6 +840,7 @@ function App() {
 
             <div style={{ fontWeight: 800, color: 'var(--royal-blue)', padding: '0.5rem 0', marginTop: '0.5rem' }}>{t.nav.opportunites}</div>
             <a href="#exchange" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/opportunites', 'exchange'); setIsMenuOpen(false); }}>- {t.nav.exchange}</a>
+            <a href="#votreprojet" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/opportunites', 'votreprojet'); setIsMenuOpen(false); }}>- {t.nav.votreProjet}</a>
 
             <div style={{ fontWeight: 800, color: 'var(--royal-blue)', padding: '0.5rem 0', marginTop: '0.5rem' }}>{t.nav.insightsMain}</div>
             <a href="#news" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/insights', 'news'); }}>- {t.nav.news}</a>
@@ -1026,7 +1033,10 @@ function App() {
         )}
 
         {(currentPath === '/' || currentPath === '/opportunites') && (
-          <ProjectExchange lang={lang} onBack={() => { }} />
+          <>
+            <ProjectExchange lang={lang} onBack={() => { }} />
+            <VotreProjet lang={lang} />
+          </>
         )}
 
         {(currentPath === '/' || currentPath === '/insights') && (
@@ -1152,41 +1162,9 @@ function App() {
                           <input type="text" placeholder={t.contact.phone || 'Phone'} value={formState.contact_phone} onChange={(e) => setFormState({ ...formState, contact_phone: e.target.value })} />
                         </div>
                       </div>
-                      <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                        <div>
-                          <label>{t.contact.organization}</label>
-                          <input type="text" placeholder={t.contact.organization || 'Company'} value={formState.organization} onChange={(e) => setFormState({ ...formState, organization: e.target.value })} />
-                        </div>
-                        <div>
-                          <label>{t.contact.project_size}</label>
-                          <input type="text" placeholder="ex: 50M MAD" value={formState.project_size} onChange={(e) => setFormState({ ...formState, project_size: e.target.value })} />
-                        </div>
-                      </div>
-
                       <div className="form-group">
-                        <label>{t.contact.sector}</label>
-                        <select required value={formState.project_sector} onChange={(e) => setFormState({ ...formState, project_sector: e.target.value })}>
-                          <option value="">Sélectionnez / Select</option>
-                          <option value="energie">Énergies Renouvelables</option>
-                          <option value="peche">Économie Bleue & Pêche</option>
-                          <option value="agritech">AgriTech & Industrie</option>
-                          <option value="autre">Autre / Other</option>
-                        </select>
-                      </div>
-
-                      <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
-                        <div>
-                          <label>{t.contact.funding}</label>
-                          <input type="text" placeholder="ex: 80%" value={formState.funding_needed} onChange={(e) => setFormState({ ...formState, funding_needed: e.target.value })} />
-                        </div>
-                        <div>
-                          <label>{t.contact.partners}</label>
-                          <input type="text" placeholder="ex: Joint venture" value={formState.partner_needs} onChange={(e) => setFormState({ ...formState, partner_needs: e.target.value })} />
-                        </div>
-                        <div>
-                          <label>{t.contact.yields}</label>
-                          <input type="text" placeholder="ex: 12% IRR" value={formState.expected_yields} onChange={(e) => setFormState({ ...formState, expected_yields: e.target.value })} />
-                        </div>
+                        <label>{t.contact.organization}</label>
+                        <input type="text" placeholder={t.contact.organization || 'Company'} value={formState.organization} onChange={(e) => setFormState({ ...formState, organization: e.target.value })} />
                       </div>
 
                       <div className="form-group">
