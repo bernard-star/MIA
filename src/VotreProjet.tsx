@@ -3,6 +3,7 @@ import { supabase } from './lib/supabase';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { Rocket, FolderPlus } from 'lucide-react';
+import CurrencyInput from 'react-currency-input-field';
 import './App.css';
 
 type VotreProjetProps = {
@@ -206,7 +207,15 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
                                     </div>
                                     <div>
                                         <label>{t.project_size}</label>
-                                        <input type="text" placeholder="ex: 50M MAD" required value={formState.project_size} onChange={(e) => setFormState({ ...formState, project_size: e.target.value })} />
+                                        <CurrencyInput
+                                            id="project_size"
+                                            name="project_size"
+                                            placeholder="ex: 50,000,000 MAD"
+                                            defaultValue={formState.project_size}
+                                            decimalsLimit={2}
+                                            onValueChange={(value) => setFormState({ ...formState, project_size: value || '' })}
+                                            style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #ccc' }}
+                                        />
                                     </div>
                                 </div>
 
