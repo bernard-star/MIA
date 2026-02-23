@@ -110,6 +110,7 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
     const t = CONTENT[lang];
     const isRTL = lang === 'ar';
     const [session, setSession] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
+    const [sectors, setSectors] = useState<{ id: string, label_fr: string, label_en: string, label_ar: string }[]>([]);
 
     const [formState, setFormState] = useState({
         contact_email: '', contact_phone: '', organization: '', project_size: '', project_sector: '',
@@ -127,6 +128,10 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
             data: { subscription },
         } = supabase.auth.onAuthStateChange((_event, session) => {
             setSession(session);
+        });
+
+        supabase.from('project_sectors').select('*').then(({ data }) => {
+            if (data) setSectors(data);
         });
 
         return () => subscription.unsubscribe();
@@ -223,11 +228,11 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
                                     <label>{t.sector}</label>
                                     <select required value={formState.project_sector} onChange={(e) => setFormState({ ...formState, project_sector: e.target.value })}>
                                         <option value="">Sélectionnez / Select</option>
-                                        <option value="energie">Énergies Renouvelables</option>
-                                        <option value="peche">Économie Bleue & Pêche</option>
-                                        <option value="agritech">AgriTech & Industrie</option>
-                                        <option value="sante">Santé & BioTech</option>
-                                        <option value="autre">Autre / Other</option>
+                                        {sectors.map(s => (
+                                            <option key={s.id} value={s.id}>
+                                                {lang === 'fr' ? s.label_fr : lang === 'ar' ? s.label_ar : s.label_en}
+                                            </option>
+                                        ))}
                                     </select>
                                 </div>
 
