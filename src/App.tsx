@@ -718,7 +718,7 @@ function App() {
 
   const navigateTo = (path: string, hash?: string) => {
     window.history.pushState({}, '', path);
-    setCurrentPath(path);
+    setCurrentPath(path.split('?')[0]);
     setCurrentPage('home');
     setIsMenuOpen(false);
     if (hash) {
@@ -1211,7 +1211,7 @@ function App() {
         )}
 
         {(currentPath === '/inscription') && (
-          <Inscription lang={lang} onBack={() => { navigateTo('/opportunites/votreprojet'); }} />
+          <Inscription key={window.location.search} lang={lang} onBack={() => { navigateTo('/opportunites/votreprojet'); }} />
         )}
 
         <footer className="footer">
