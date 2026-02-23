@@ -749,6 +749,17 @@ function App() {
       setTimeout(() => setFormStatus('idle'), 5000); // Reset after 5s
     }
   };
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+    } catch (err) {
+      console.error('Logout error:', err);
+    } finally {
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.href = '/';
+    }
+  };
 
   const t = CONTENT[lang];
   const isRTL = lang === 'ar';
@@ -825,7 +836,7 @@ function App() {
                   </a>
                 </>
               ) : (
-                <button className="btn btn-outline" style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }} onClick={async () => { await supabase.auth.signOut(); window.location.reload(); }}>
+                <button className="btn btn-outline" style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }} onClick={handleLogout}>
                   {t.nav.logout}
                 </button>
               )}
@@ -859,6 +870,14 @@ function App() {
 
             <div style={{ fontWeight: 800, color: 'var(--royal-blue)', padding: '0.5rem 0', marginTop: '0.5rem' }}>{t.nav.contact}</div>
             <a href="/contact" style={{ paddingLeft: '1rem', textTransform: 'none', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); navigateTo('/contact'); }}>- {t.nav.contact}</a>
+
+            {session && (
+              <div style={{ marginTop: '1.5rem', paddingLeft: '1rem' }}>
+                <button onClick={handleLogout} className="btn btn-outline" style={{ fontSize: '0.9rem', width: '100%', padding: '0.5rem' }}>
+                  {t.nav.logout}
+                </button>
+              </div>
+            )}
 
             <div className="mobile-lang">
               <span className={lang === 'fr' ? 'active' : ''} onClick={() => { setLang('fr'); setIsMenuOpen(false); }}>FR</span>
