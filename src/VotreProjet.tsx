@@ -44,7 +44,31 @@ const CONTENT = {
         edit: "Modifier",
         delete: "Supprimer",
         confirmDelete: "Êtes-vous sûr de vouloir supprimer ce projet ?",
-        saveChanges: "Enregistrer les modifications"
+        saveChanges: "Enregistrer les modifications",
+        moreDetails: "Plus de précisions",
+        moreDetailsTitle: "Plus de précisions sur votre projet",
+        role_position: "Role/Position*",
+        moroccan_roots: "Do you or your co-founder have Moroccan roots?*",
+        how_did_you_learn: "How did you first learn about MIA?*",
+        project_name: "Project Name*",
+        website_url: "Website URL",
+        project_description: "Please Describe Your Project*",
+        loom_url: "Please Paste Your Loom Screencast URL Below If You Have Recorded a Presentation with Your Voice (Maximum Duration: 5 Minutes)",
+        pitch_deck: "Please Upload Your Pitch Deck & Business Plan*",
+        head_office: "Where is your head office located*",
+        additional_locations: "Additional locations",
+        business_info_title: "BUSINESS INFORMATION",
+        business_info_subtitle: "Please provide some key business information to help us assess your stage and investment readiness.",
+        founding_year: "Which Year was your company founded? (ie 2023)*",
+        main_country: "Main Country of Operation*",
+        business_stage: "Current stage of your business?",
+        current_arr: "Current Annual Recurring Revenues (ARR)*",
+        projected_arr: "Projected ARR in 3 years?*",
+        current_funding_round: "Current funding round (If applicable)?",
+        investment_seeking: "Amount of investment you're seeking (in EUR)*",
+        previously_raised: "Have you previously raised any funds?",
+        referred_by: "If you have been referred by a VC Fund, a Business Angel or a StartUp, please share their name",
+        yes: "Oui", no: "Non"
     },
     en: {
         back: "Back to Home",
@@ -78,7 +102,31 @@ const CONTENT = {
         edit: "Edit",
         delete: "Delete",
         confirmDelete: "Are you sure you want to delete this project?",
-        saveChanges: "Save Changes"
+        saveChanges: "Save Changes",
+        moreDetails: "More Details",
+        moreDetailsTitle: "More Details About Your Project",
+        role_position: "Role/Position*",
+        moroccan_roots: "Do you or your co-founder have Moroccan roots?*",
+        how_did_you_learn: "How did you first learn about MIA?*",
+        project_name: "Project Name*",
+        website_url: "Website URL",
+        project_description: "Please Describe Your Project*",
+        loom_url: "Please Paste Your Loom Screencast URL Below If You Have Recorded a Presentation with Your Voice (Maximum Duration: 5 Minutes)",
+        pitch_deck: "Please Upload Your Pitch Deck & Business Plan*",
+        head_office: "Where is your head office located*",
+        additional_locations: "Additional locations",
+        business_info_title: "BUSINESS INFORMATION",
+        business_info_subtitle: "Please provide some key business information to help us assess your stage and investment readiness.",
+        founding_year: "Which Year was your company founded? (ie 2023)*",
+        main_country: "Main Country of Operation*",
+        business_stage: "Current stage of your business?",
+        current_arr: "Current Annual Recurring Revenues (ARR)*",
+        projected_arr: "Projected ARR in 3 years?*",
+        current_funding_round: "Current funding round (If applicable)?",
+        investment_seeking: "Amount of investment you're seeking (in EUR)*",
+        previously_raised: "Have you previously raised any funds?",
+        referred_by: "If you have been referred by a VC Fund, a Business Angel or a StartUp, please share their name",
+        yes: "Yes", no: "No"
     },
     es: {
         back: "Volver al inicio",
@@ -112,7 +160,31 @@ const CONTENT = {
         edit: "Editar",
         delete: "Eliminar",
         confirmDelete: "¿Estás seguro de que quieres eliminar este proyecto?",
-        saveChanges: "Guardar Cambios"
+        saveChanges: "Guardar Cambios",
+        moreDetails: "Más Detalles",
+        moreDetailsTitle: "Más Detalles Sobre Tu Proyecto",
+        role_position: "Role/Position*",
+        moroccan_roots: "Do you or your co-founder have Moroccan roots?*",
+        how_did_you_learn: "How did you first learn about MIA?*",
+        project_name: "Project Name*",
+        website_url: "Website URL",
+        project_description: "Please Describe Your Project*",
+        loom_url: "Please Paste Your Loom Screencast URL Below If You Have Recorded a Presentation with Your Voice (Maximum Duration: 5 Minutes)",
+        pitch_deck: "Please Upload Your Pitch Deck & Business Plan*",
+        head_office: "Where is your head office located*",
+        additional_locations: "Additional locations",
+        business_info_title: "BUSINESS INFORMATION",
+        business_info_subtitle: "Please provide some key business information to help us assess your stage and investment readiness.",
+        founding_year: "Which Year was your company founded? (ie 2023)*",
+        main_country: "Main Country of Operation*",
+        business_stage: "Current stage of your business?",
+        current_arr: "Current Annual Recurring Revenues (ARR)*",
+        projected_arr: "Projected ARR in 3 years?*",
+        current_funding_round: "Current funding round (If applicable)?",
+        investment_seeking: "Amount of investment you're seeking (in EUR)*",
+        previously_raised: "Have you previously raised any funds?",
+        referred_by: "If you have been referred by a VC Fund, a Business Angel or a StartUp, please share their name",
+        yes: "Sí", no: "No"
     },
     ar: {
         back: "العودة إلى الرئيسية",
@@ -146,7 +218,31 @@ const CONTENT = {
         edit: "تعديل",
         delete: "حذف",
         confirmDelete: "هل أنت متأكد أنك تريد حذف هذا المشروع؟",
-        saveChanges: "حفظ التغييرات"
+        saveChanges: "حفظ التغييرات",
+        moreDetails: "المزيد من التفاصيل",
+        moreDetailsTitle: "المزيد من التفاصيل حول مشروعك",
+        role_position: "Role/Position*",
+        moroccan_roots: "Do you or your co-founder have Moroccan roots?*",
+        how_did_you_learn: "How did you first learn about MIA?*",
+        project_name: "Project Name*",
+        website_url: "Website URL",
+        project_description: "Please Describe Your Project*",
+        loom_url: "Please Paste Your Loom Screencast URL Below If You Have Recorded a Presentation with Your Voice (Maximum Duration: 5 Minutes)",
+        pitch_deck: "Please Upload Your Pitch Deck & Business Plan*",
+        head_office: "Where is your head office located*",
+        additional_locations: "Additional locations",
+        business_info_title: "BUSINESS INFORMATION",
+        business_info_subtitle: "Please provide some key business information to help us assess your stage and investment readiness.",
+        founding_year: "Which Year was your company founded? (ie 2023)*",
+        main_country: "Main Country of Operation*",
+        business_stage: "Current stage of your business?",
+        current_arr: "Current Annual Recurring Revenues (ARR)*",
+        projected_arr: "Projected ARR in 3 years?*",
+        current_funding_round: "Current funding round (If applicable)?",
+        investment_seeking: "Amount of investment you're seeking (in EUR)*",
+        previously_raised: "Have you previously raised any funds?",
+        referred_by: "If you have been referred by a VC Fund, a Business Angel or a StartUp, please share their name",
+        yes: "نعم", no: "لا"
     }
 };
 
@@ -156,13 +252,20 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
     const [session, setSession] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
     const [sectors, setSectors] = useState<{ id: string, label_fr: string, label_en: string, label_ar: string }[]>([]);
     const [view, setView] = useState<'list' | 'form'>('list');
+    const [showMoreDetails, setShowMoreDetails] = useState(false);
     const [userProjects, setUserProjects] = useState<any[]>([]);
     const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
-    const [formState, setFormState] = useState({
+
+    const initialFormState = {
         contact_email: '', contact_phone: '', organization: '', project_size: '', project_sector: '',
         funding_needed: '', partner_needs: '', expected_yields: '', description: '', location: '',
-        visibility: 'public', display_mode: 'full'
-    });
+        visibility: 'public', display_mode: 'full',
+        role_position: '', moroccan_roots: '', how_did_you_learn: '', project_name: '', website_url: '',
+        detailed_description: '', loom_url: '', pitch_deck_url: '', head_office: '', additional_locations: '',
+        founding_year: '', main_country: '', business_stage: '', current_arr: '', projected_arr: '',
+        current_funding_round: '', investment_seeking_eur: '', previously_raised_funds: '', referred_by: ''
+    };
+    const [formState, setFormState] = useState(initialFormState);
     const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
     useEffect(() => {
@@ -207,9 +310,29 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
             description: project.description || '',
             location: project.location || '',
             visibility: project.visibility || 'public',
-            display_mode: project.display_mode || 'full'
+            display_mode: project.display_mode || 'full',
+            role_position: project.role_position || '',
+            moroccan_roots: project.moroccan_roots || '',
+            how_did_you_learn: project.how_did_you_learn || '',
+            project_name: project.project_name || '',
+            website_url: project.website_url || '',
+            detailed_description: project.detailed_description || '',
+            loom_url: project.loom_url || '',
+            pitch_deck_url: project.pitch_deck_url || '',
+            head_office: project.head_office || '',
+            additional_locations: project.additional_locations || '',
+            founding_year: project.founding_year || '',
+            main_country: project.main_country || '',
+            business_stage: project.business_stage || '',
+            current_arr: project.current_arr || '',
+            projected_arr: project.projected_arr || '',
+            current_funding_round: project.current_funding_round || '',
+            investment_seeking_eur: project.investment_seeking_eur || '',
+            previously_raised_funds: project.previously_raised_funds || '',
+            referred_by: project.referred_by || ''
         });
         setEditingProjectId(project.id);
+        setShowMoreDetails(false);
         setView('form');
     };
 
@@ -246,11 +369,8 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
                 setFormStatus('error');
             } else {
                 setFormStatus('success');
-                setFormState({
-                    contact_email: '', contact_phone: '', organization: '', project_size: '', project_sector: '',
-                    funding_needed: '', partner_needs: '', expected_yields: '', description: '', location: '',
-                    visibility: 'public', display_mode: 'full'
-                });
+                setFormState(initialFormState);
+                setShowMoreDetails(false);
                 setEditingProjectId(null);
                 if (session?.user?.email) fetchUserProjects(session.user.email);
                 setTimeout(() => setView('list'), 2000);
@@ -436,7 +556,148 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
                                     <textarea rows={6} required placeholder={t.message} value={formState.description} onChange={(e) => setFormState({ ...formState, description: e.target.value })}></textarea>
                                 </div>
 
-                                <button className="btn btn-primary w-full" type="submit" disabled={formStatus === 'loading'} style={{ marginTop: '2rem' }}>
+                                {showMoreDetails ? (
+                                    <div className="more-details-section" style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '2px dashed #ddd' }}>
+                                        <h3 style={{ marginBottom: '1.5rem', color: 'var(--royal-blue)' }}>{t.moreDetailsTitle}</h3>
+
+                                        <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                                            <div>
+                                                <label>{t.role_position}</label>
+                                                <input type="text" value={formState.role_position} onChange={(e) => setFormState({ ...formState, role_position: e.target.value })} required />
+                                            </div>
+                                            <div>
+                                                <label>{t.moroccan_roots}</label>
+                                                <select value={formState.moroccan_roots} onChange={(e) => setFormState({ ...formState, moroccan_roots: e.target.value })} required>
+                                                    <option value="">Sélectionnez / Select</option>
+                                                    <option value="yes">{t.yes}</option>
+                                                    <option value="no">{t.no}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+                                            <label>{t.how_did_you_learn}</label>
+                                            <input type="text" value={formState.how_did_you_learn} onChange={(e) => setFormState({ ...formState, how_did_you_learn: e.target.value })} required />
+                                        </div>
+
+                                        <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                                            <div>
+                                                <label>{t.project_name}</label>
+                                                <input type="text" value={formState.project_name} onChange={(e) => setFormState({ ...formState, project_name: e.target.value })} required />
+                                            </div>
+                                            <div>
+                                                <label>{t.website_url}</label>
+                                                <input type="url" placeholder="https://" value={formState.website_url} onChange={(e) => setFormState({ ...formState, website_url: e.target.value })} />
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+                                            <label>{t.project_description}</label>
+                                            <textarea rows={4} value={formState.detailed_description} onChange={(e) => setFormState({ ...formState, detailed_description: e.target.value })} required></textarea>
+                                        </div>
+
+                                        <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+                                            <label>{t.loom_url}</label>
+                                            <input type="url" placeholder="https://loom.com/share/..." value={formState.loom_url} onChange={(e) => setFormState({ ...formState, loom_url: e.target.value })} />
+                                        </div>
+
+                                        <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+                                            <label>{t.pitch_deck}</label>
+                                            <input type="text" placeholder="URL link to Pitch Deck or File Drive..." value={formState.pitch_deck_url} onChange={(e) => setFormState({ ...formState, pitch_deck_url: e.target.value })} required />
+                                            <small style={{ color: '#888', display: 'block', margin: '4px 0 0 2px' }}>Veuillez coller un lien vers votre document (Google Drive, Dropbox, un site...).</small>
+                                        </div>
+
+                                        <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                                            <div>
+                                                <label>{t.head_office}</label>
+                                                <input type="text" value={formState.head_office} onChange={(e) => setFormState({ ...formState, head_office: e.target.value })} required />
+                                            </div>
+                                            <div>
+                                                <label>{t.additional_locations}</label>
+                                                <input type="text" value={formState.additional_locations} onChange={(e) => setFormState({ ...formState, additional_locations: e.target.value })} />
+                                            </div>
+                                        </div>
+
+                                        <div style={{ marginTop: '2.5rem', marginBottom: '1.5rem' }}>
+                                            <h4 style={{ color: 'var(--charcoal)', fontWeight: 600, margin: 0 }}>{t.business_info_title}</h4>
+                                            <p style={{ color: '#666', fontSize: '0.9rem', marginTop: '0.5rem' }}>{t.business_info_subtitle}</p>
+                                        </div>
+
+                                        <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                                            <div>
+                                                <label>{t.founding_year}</label>
+                                                <input type="text" placeholder="ex: 2023" value={formState.founding_year} onChange={(e) => setFormState({ ...formState, founding_year: e.target.value })} required />
+                                            </div>
+                                            <div>
+                                                <label>{t.main_country}</label>
+                                                <input type="text" value={formState.main_country} onChange={(e) => setFormState({ ...formState, main_country: e.target.value })} required />
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                                            <div>
+                                                <label>{t.business_stage}</label>
+                                                <select value={formState.business_stage} onChange={(e) => setFormState({ ...formState, business_stage: e.target.value })}>
+                                                    <option value="">Sélectionnez / Select</option>
+                                                    <option value="Idea">Idea</option>
+                                                    <option value="MVP">MVP</option>
+                                                    <option value="Early Revenue">Early Revenue</option>
+                                                    <option value="Growth">Growth</option>
+                                                    <option value="Profitable">Profitable</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label>{t.current_funding_round}</label>
+                                                <select value={formState.current_funding_round} onChange={(e) => setFormState({ ...formState, current_funding_round: e.target.value })}>
+                                                    <option value="">Sélectionnez / Select</option>
+                                                    <option value="Pre-seed">Pre-seed</option>
+                                                    <option value="Seed">Seed</option>
+                                                    <option value="Series A">Series A</option>
+                                                    <option value="Series B+">Series B+</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                                            <div>
+                                                <label>{t.current_arr}</label>
+                                                <input type="text" value={formState.current_arr} onChange={(e) => setFormState({ ...formState, current_arr: e.target.value })} required />
+                                            </div>
+                                            <div>
+                                                <label>{t.projected_arr}</label>
+                                                <input type="text" value={formState.projected_arr} onChange={(e) => setFormState({ ...formState, projected_arr: e.target.value })} required />
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                                            <div>
+                                                <label>{t.investment_seeking}</label>
+                                                <input type="text" value={formState.investment_seeking_eur} onChange={(e) => setFormState({ ...formState, investment_seeking_eur: e.target.value })} required />
+                                            </div>
+                                            <div>
+                                                <label>{t.previously_raised}</label>
+                                                <select value={formState.previously_raised_funds} onChange={(e) => setFormState({ ...formState, previously_raised_funds: e.target.value })}>
+                                                    <option value="">Sélectionnez / Select</option>
+                                                    <option value="yes">{t.yes}</option>
+                                                    <option value="no">{t.no}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+                                            <label>{t.referred_by}</label>
+                                            <input type="text" value={formState.referred_by} onChange={(e) => setFormState({ ...formState, referred_by: e.target.value })} />
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div style={{ textAlign: 'center', marginTop: '1rem', marginBottom: '2rem' }}>
+                                        <button type="button" onClick={() => setShowMoreDetails(true)} style={{ background: 'transparent', border: '2px solid var(--royal-blue)', color: 'var(--royal-blue)', padding: '0.6rem 1.5rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, transition: 'all 0.2s', width: '100%' }} className="hover-bg-light">
+                                            {t.moreDetails}
+                                        </button>
+                                    </div>
+                                )}
+
+                                <button className="btn btn-primary w-full" type="submit" disabled={formStatus === 'loading'} style={{ marginTop: '1rem' }}>
                                     <Rocket size={20} className="mr-2" style={{ marginRight: '8px' }} /> {formStatus === 'loading' ? '...' : editingProjectId ? t.saveChanges : t.submit}
                                 </button>
                             </form>
