@@ -9,6 +9,7 @@ import './App.css';
 import CharteInvestissement from './CharteInvestissement';
 import GigaFactory from './GigaFactory';
 import HydrogeneDakhla from './HydrogeneDakhla';
+import ProjectExchange from './ProjectExchange';
 import { supabase } from './lib/supabase';
 
 type Language = 'fr' | 'en' | 'es' | 'ar';
@@ -23,6 +24,7 @@ const CONTENT = {
       map: 'Écosystèmes',
       services: 'Services',
       news: 'Insights',
+      exchange: 'Bourse de Projets',
       testimonials: 'Témoignages',
       contact: 'Contact',
     },
@@ -140,11 +142,16 @@ const CONTENT = {
       email: "Adresse Email",
       phone: "Téléphone",
       organization: "Organisation / Entreprise",
+      location: "Localisation (Ville / Région)",
       sector: "Secteur d'activité",
       project_size: "Taille du projet (Investissement)",
       funding: "Besoins de financement",
       partners: "Partenaires recherchés",
       yields: "Rendement attendu",
+      visibility: "Visibilité de la demande",
+      visibilityOptions: { public: "Public (Apparaître sur la Bourse de Projets)", private: "Privé (Réservé à MIA)" },
+      display_mode: "Mode d'affichage",
+      displayModeOptions: { full: "Projet complet", partial: "Teaser partiel (informations masquées)" },
       message: "Description du projet",
       submit: "Soumettre le projet",
       success: "Demande envoyée avec succès !",
@@ -172,6 +179,7 @@ const CONTENT = {
       map: 'Ecosystems',
       services: 'Services',
       news: 'Insights',
+      exchange: 'Project Exchange',
       testimonials: 'Testimonials',
       contact: 'Contact',
     },
@@ -289,11 +297,16 @@ const CONTENT = {
       email: "Email Address",
       phone: "Phone Number",
       organization: "Organization / Company",
+      location: "Location (City / Region)",
       sector: "Business Sector",
       project_size: "Project Size (Investment)",
       funding: "Funding Needed",
       partners: "Partner Requirements",
       yields: "Expected Yields",
+      visibility: "Request Visibility",
+      visibilityOptions: { public: "Public (Appear on the Project Exchange)", private: "Private (MIA Team only)" },
+      display_mode: "Display Mode",
+      displayModeOptions: { full: "Full Project", partial: "Partial Teaser (keep identity hidden)" },
       message: "Project Description",
       submit: "Submit Project",
       success: "Request successfully sent!",
@@ -321,6 +334,7 @@ const CONTENT = {
       map: 'Ecosistemas',
       services: 'Servicios',
       news: 'Noticias',
+      exchange: 'Bolsa de Proyectos',
       testimonials: 'Testimonios',
       contact: 'Contacto',
     },
@@ -438,11 +452,16 @@ const CONTENT = {
       email: "Correo Electrónico",
       phone: "Teléfono",
       organization: "Organización / Empresa",
+      location: "Ubicación (Ciudad / Región)",
       sector: "Sector de Actividad",
       project_size: "Tamaño del proyecto",
       funding: "Necesidad de financiamiento",
       partners: "Socios requeridos",
       yields: "Rendimiento esperado",
+      visibility: "Visibilidad de la solicitud",
+      visibilityOptions: { public: "Público (Aparecer en la Bolsa de Proyectos)", private: "Privado (Solo para MIA)" },
+      display_mode: "Modo de visualización",
+      displayModeOptions: { full: "Proyecto completo", partial: "Teaser parcial (ocultar detalles)" },
       message: "Descripción del proyecto",
       submit: "Enviar Solicitud",
       success: "¡Solicitud enviada con éxito!",
@@ -470,6 +489,7 @@ const CONTENT = {
       map: 'الأنظمة البيئية',
       services: 'خدماتنا',
       news: 'رؤى',
+      exchange: 'بورصة المشاريع',
       testimonials: 'الشهادات',
       contact: 'اتصل بنا',
     },
@@ -587,11 +607,16 @@ const CONTENT = {
       email: "البريد الإلكتروني",
       phone: "الهاتف",
       organization: "المنظمة / الشركة",
+      location: "الموقع (المدينة / المنطقة)",
       sector: "قطاع الأعمال",
       project_size: "حجم المشروع (الاستثمار)",
       funding: "التمويل المطلوب",
       partners: "الشركاء المطلوبون",
       yields: "العائد المتوقع",
+      visibility: "رؤية الطلب",
+      visibilityOptions: { public: "عام (الظهور في بورصة المشاريع)", private: "خاص (لفريق MIA فقط)" },
+      display_mode: "وضع العرض",
+      displayModeOptions: { full: "مشروع كامل", partial: "إعلان تشويقي جزئي (إخفاء الهوية)" },
       message: "وصف المشروع",
       submit: "إرسال الطلب",
       success: "تم إرسال الطلب بنجاح!",
@@ -617,11 +642,11 @@ function App() {
   const [lang, setLang] = useState<Language>('fr');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeRegion, setActiveRegion] = useState<Region | null>(null);
-  const [currentPage, setCurrentPage] = useState<'home' | 'charte' | 'gigafactory' | 'hydrogene'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'charte' | 'gigafactory' | 'hydrogene' | 'exchange'>('home');
 
   const [formState, setFormState] = useState({
-    contact_name: '', contact_email: '', contact_phone: '', organization: '',
-    project_size: '', project_sector: '', funding_needed: '', partner_needs: '',
+    contact_name: '', contact_email: '', contact_phone: '', organization: '', location: '',
+    project_size: '', project_sector: '', funding_needed: '', partner_needs: '', visibility: 'private', display_mode: 'full',
     expected_yields: '', description: ''
   });
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -640,8 +665,8 @@ function App() {
     } else {
       setFormStatus('success');
       setFormState({
-        contact_name: '', contact_email: '', contact_phone: '', organization: '',
-        project_size: '', project_sector: '', funding_needed: '', partner_needs: '',
+        contact_name: '', contact_email: '', contact_phone: '', organization: '', location: '',
+        project_size: '', project_sector: '', funding_needed: '', partner_needs: '', visibility: 'private', display_mode: 'full',
         expected_yields: '', description: ''
       });
       setTimeout(() => setFormStatus('idle'), 5000); // Reset after 5s
@@ -687,6 +712,18 @@ function App() {
     );
   }
 
+  if (currentPage === 'exchange') {
+    return (
+      <ProjectExchange
+        lang={lang}
+        onBack={() => {
+          setCurrentPage('home');
+          window.scrollTo(0, 0);
+        }}
+      />
+    );
+  }
+
   return (
     <>
       <nav className="navbar">
@@ -703,6 +740,7 @@ function App() {
             <a href="#map" className="nav-link">{t.nav.map}</a>
             <a href="#services" className="nav-link">{t.nav.services}</a>
             <a href="#news" className="nav-link">{t.nav.news}</a>
+            <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); setCurrentPage('exchange'); window.scrollTo(0, 0); }}>{t.nav.exchange}</a>
             <a href="#testimonial" className="nav-link">{t.nav.testimonials}</a>
             <a href="#contact" className="nav-link">{t.nav.contact}</a>
             <div className="lang-switcher">
@@ -742,6 +780,7 @@ function App() {
             <a href="#map" onClick={() => setIsMenuOpen(false)}>{t.nav.map}</a>
             <a href="#services" onClick={() => setIsMenuOpen(false)}>{t.nav.services}</a>
             <a href="#news" onClick={() => setIsMenuOpen(false)}>{t.nav.news}</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); setIsMenuOpen(false); setCurrentPage('exchange'); window.scrollTo(0, 0); }}>{t.nav.exchange}</a>
             <a href="#testimonial" onClick={() => setIsMenuOpen(false)}>{t.nav.testimonials}</a>
             <a href="#contact" onClick={() => setIsMenuOpen(false)}>{t.nav.contact}</a>
             <div className="mobile-lang">
