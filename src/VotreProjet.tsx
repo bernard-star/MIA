@@ -169,9 +169,9 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
     return (
         <section id="votreprojet" className="votreprojet-section bg-alt" dir={isRTL ? "rtl" : "ltr"}>
             <div className="container">
-                <div className="section-header text-center mb-5" style={{ paddingBottom: '2rem' }}>
+                <div className="section-header text-center mb-2" style={{ paddingBottom: '0.5rem' }}>
                     <h2 className="section-title">{t.title}</h2>
-                    <p className="section-subtitle">{t.subtitle}</p>
+                    <p className="section-subtitle mb-0">{t.subtitle}</p>
                 </div>
 
                 <div className="votreprojet-content" style={{ minHeight: '40vh', maxWidth: '800px', margin: '0 auto' }}>
