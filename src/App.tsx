@@ -801,14 +801,16 @@ function App() {
               <a href="#contact" className="nav-link" onClick={(e) => { e.preventDefault(); navigateTo('/contact', 'contact'); }}>{t.nav.contact}</a>
             </div>
 
-            <div className="lang-switcher">
-              <span className={`lang-switch ${lang === 'fr' ? 'active' : ''}`} onClick={() => setLang('fr')}>FR</span>
-              <span style={{ color: 'var(--text-muted)' }}>|</span>
-              <span className={`lang-switch ${lang === 'en' ? 'active' : ''}`} onClick={() => setLang('en')}>EN</span>
-              <span style={{ color: 'var(--text-muted)' }}>|</span>
-              <span className={`lang-switch ${lang === 'es' ? 'active' : ''}`} onClick={() => setLang('es')}>ES</span>
-              <span style={{ color: 'var(--text-muted)' }}>|</span>
-              <span className={`lang-switch ${lang === 'ar' ? 'active' : ''}`} onClick={() => setLang('ar')}>AR</span>
+            <div className="nav-item lang-switcher" style={{ cursor: 'pointer' }}>
+              <span className="nav-link">
+                <Globe size={16} /> {lang.toUpperCase()} <ChevronDown size={14} />
+              </span>
+              <div className="dropdown-menu" style={{ minWidth: '120px' }}>
+                <a href="#" className="dropdown-link" onClick={(e) => { e.preventDefault(); setLang('fr'); }}>Français (FR)</a>
+                <a href="#" className="dropdown-link" onClick={(e) => { e.preventDefault(); setLang('en'); }}>English (EN)</a>
+                <a href="#" className="dropdown-link" onClick={(e) => { e.preventDefault(); setLang('es'); }}>Español (ES)</a>
+                <a href="#" className="dropdown-link" onClick={(e) => { e.preventDefault(); setLang('ar'); }}>العربية (AR)</a>
+              </div>
             </div>
 
             <div className="nav-item" style={{ marginLeft: '1rem', display: 'flex', gap: '0.5rem' }}>
