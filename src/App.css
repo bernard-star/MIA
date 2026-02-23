@@ -186,7 +186,7 @@ section {
 
 .nav-link {
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: var(--royal-blue);
   text-transform: uppercase;
   transition: color 0.3s ease;
@@ -229,7 +229,7 @@ section {
   color: var(--royal-blue);
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   transition: all 0.2s ease;
 }
 
