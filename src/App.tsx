@@ -3,7 +3,7 @@ import {
   Menu, X, Fish, Sun, Sprout, Target, Quote,
   MapPin, Mail, ArrowRight, ShieldCheck,
   Building, Globe, BriefcaseBusiness, Map, TrendingUp, ArrowUpRight,
-  Linkedin, Download, CalendarCheck, ChevronDown
+  Linkedin, Download, CalendarCheck, ChevronDown, LogIn, UserPlus
 } from 'lucide-react';
 import './App.css';
 import CharteInvestissement from './CharteInvestissement';
@@ -33,6 +33,9 @@ const CONTENT = {
       insightsMain: 'Insights',
       news: 'Actualités',
       contact: 'Contact',
+      login: 'Connexion',
+      signup: 'Inscription',
+      logout: 'Déconnexion',
     },
     hero: {
       title: "Investir au Maroc : Votre vision, notre ancrage.",
@@ -193,6 +196,9 @@ const CONTENT = {
       insightsMain: 'Insights',
       news: 'News',
       contact: 'Contact',
+      login: 'Login',
+      signup: 'Sign Up',
+      logout: 'Logout',
     },
     hero: {
       title: "Investing in Morocco: Your vision, our foundation.",
@@ -353,6 +359,9 @@ const CONTENT = {
       insightsMain: 'Insights',
       news: 'Noticias',
       contact: 'Contacto',
+      login: 'Iniciar sesión',
+      signup: 'Regístrate',
+      logout: 'Cerrar sesión',
     },
     hero: {
       title: "Invertir en Marruecos: Su visión, nuestro arraigo.",
@@ -513,6 +522,9 @@ const CONTENT = {
       insightsMain: 'رؤى',
       news: 'أخبار',
       contact: 'اتصل بنا',
+      login: 'تسجيل الدخول',
+      signup: 'اشتراك',
+      logout: 'تسجيل خروج',
     },
     hero: {
       title: "الاستثمار في المغرب: رؤيتكم، انطلاقتنا.",
@@ -678,6 +690,21 @@ function App() {
     expected_yields: '', description: ''
   });
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [session, setSession] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   useEffect(() => {
     const handlePop = () => {
@@ -782,6 +809,23 @@ function App() {
               <span className={`lang-switch ${lang === 'es' ? 'active' : ''}`} onClick={() => setLang('es')}>ES</span>
               <span style={{ color: 'var(--text-muted)' }}>|</span>
               <span className={`lang-switch ${lang === 'ar' ? 'active' : ''}`} onClick={() => setLang('ar')}>AR</span>
+            </div>
+
+            <div className="nav-item" style={{ marginLeft: '1rem', display: 'flex', gap: '0.5rem' }}>
+              {!session ? (
+                <>
+                  <a href="#" className="btn btn-outline" style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }} onClick={(e) => { e.preventDefault(); navigateTo('/opportunites', 'votreprojet'); }}>
+                    <LogIn size={14} className="mr-1" style={{ marginRight: '4px' }} /> {t.nav.login}
+                  </a>
+                  <a href="#" className="btn btn-primary" style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }} onClick={(e) => { e.preventDefault(); navigateTo('/opportunites', 'votreprojet'); }}>
+                    <UserPlus size={14} className="mr-1" style={{ marginRight: '4px' }} /> {t.nav.signup}
+                  </a>
+                </>
+              ) : (
+                <button className="btn btn-outline" style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }} onClick={() => supabase.auth.signOut()}>
+                  {t.nav.logout}
+                </button>
+              )}
             </div>
           </div>
 
