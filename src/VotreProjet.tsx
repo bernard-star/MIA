@@ -140,6 +140,7 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
                 ...formState,
                 // Assign to user if they are logged in. (Or link email if wanted)
                 contact_email: session?.user?.email || formState.contact_email,
+                contact_name: formState.organization || 'Contact', // Added default to bypass NOT NULL constraint
             });
 
             if (error) {
