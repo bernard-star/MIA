@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Menu, X, Fish, Sun, Sprout, Target, Quote,
   MapPin, Mail, ArrowRight, ShieldCheck,
@@ -692,6 +692,7 @@ function App() {
   });
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [session, setSession] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
+  const authSubscriptionRef = useRef<{ unsubscribe: () => void } | null>(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -704,6 +705,7 @@ function App() {
       setSession(session);
     });
 
+    authSubscriptionRef.current = subscription;
     return () => subscription.unsubscribe();
   }, []);
 
@@ -751,19 +753,23 @@ function App() {
   };
   const handleLogout = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
+
+    // Unsubscribe FIRST so the auth listener cannot fight us
+    authSubscriptionRef.current?.unsubscribe();
+    authSubscriptionRef.current = null;
+
     setSession(null); // Optimistic UI update
 
-    // Fire and forget, do not wait for the network request (which could hang)
+    // Fire and forget
     supabase.auth.signOut().catch((err) => console.error('Logout error:', err));
 
-    // Aggressive local clearance
+    // Wipe all Supabase keys from local storage
     Object.keys(localStorage).forEach(k => {
       if (k.startsWith('sb-')) localStorage.removeItem(k);
     });
     localStorage.clear();
     sessionStorage.clear();
 
-    // Fast navigation delay to ensure storage is cleared and UI is updated
     setTimeout(() => {
       window.location.href = '/';
     }, 150);
