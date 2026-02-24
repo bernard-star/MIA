@@ -749,18 +749,24 @@ function App() {
       setTimeout(() => setFormStatus('idle'), 5000); // Reset after 5s
     }
   };
-  const handleLogout = async (e?: React.MouseEvent) => {
+  const handleLogout = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
-    setSession(null); // Optimistic UI update immediately hides the button
-    try {
-      await supabase.auth.signOut();
-    } catch (err) {
-      console.error('Logout error:', err);
-    } finally {
-      localStorage.clear();
-      sessionStorage.clear();
+    setSession(null); // Optimistic UI update
+
+    // Fire and forget, do not wait for the network request (which could hang)
+    supabase.auth.signOut().catch((err) => console.error('Logout error:', err));
+
+    // Aggressive local clearance
+    Object.keys(localStorage).forEach(k => {
+      if (k.startsWith('sb-')) localStorage.removeItem(k);
+    });
+    localStorage.clear();
+    sessionStorage.clear();
+
+    // Fast navigation delay to ensure storage is cleared and UI is updated
+    setTimeout(() => {
       window.location.href = '/';
-    }
+    }, 150);
   };
 
   const t = CONTENT[lang];
