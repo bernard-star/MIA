@@ -252,7 +252,7 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
     const [session, setSession] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
     const [sectors, setSectors] = useState<{ id: string, label_fr: string, label_en: string, label_ar: string }[]>([]);
     const [view, setView] = useState<'list' | 'form'>('list');
-    const [showMoreDetails, setShowMoreDetails] = useState(false);
+
     const [userProjects, setUserProjects] = useState<any[]>([]);
     const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
 
@@ -332,7 +332,7 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
             referred_by: project.referred_by || ''
         });
         setEditingProjectId(project.id);
-        setShowMoreDetails(false);
+
         setView('form');
     };
 
@@ -370,7 +370,7 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
             } else {
                 setFormStatus('success');
                 setFormState(initialFormState);
-                setShowMoreDetails(false);
+
                 setEditingProjectId(null);
                 if (session?.user?.email) fetchUserProjects(session.user.email);
                 setTimeout(() => setView('list'), 2000);
@@ -458,11 +458,7 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
                             <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
                                 <button onClick={() => {
                                     setEditingProjectId(null);
-                                    setFormState({
-                                        contact_email: '', contact_phone: '', organization: '', project_size: '', project_sector: '',
-                                        funding_needed: '', partner_needs: '', expected_yields: '', description: '', location: '',
-                                        visibility: 'public', display_mode: 'full'
-                                    });
+                                    setFormState(initialFormState);
                                     setView('list');
                                 }} style={{ background: 'none', border: 'none', color: '#666', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
                                     {t.cancel}
@@ -556,148 +552,141 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
                                     <textarea rows={6} required placeholder={t.message} value={formState.description} onChange={(e) => setFormState({ ...formState, description: e.target.value })}></textarea>
                                 </div>
 
-                                {showMoreDetails ? (
-                                    <div className="more-details-section" style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '2px dashed #ddd' }}>
-                                        <h3 style={{ marginBottom: '1.5rem', color: 'var(--royal-blue)' }}>{t.moreDetailsTitle}</h3>
+                                <div className="more-details-section" style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '2px dashed #ddd' }}>
+                                    <h3 style={{ marginBottom: '0.5rem', color: 'var(--royal-blue)' }}>{t.moreDetailsTitle}</h3>
+                                    <p style={{ color: '#888', fontSize: '0.9rem', marginBottom: '1.5rem' }}>Optionnel mais recommandé.</p>
 
-                                        <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
-                                            <div>
-                                                <label>{t.role_position}</label>
-                                                <input type="text" value={formState.role_position} onChange={(e) => setFormState({ ...formState, role_position: e.target.value })} required />
-                                            </div>
-                                            <div>
-                                                <label>{t.moroccan_roots}</label>
-                                                <select value={formState.moroccan_roots} onChange={(e) => setFormState({ ...formState, moroccan_roots: e.target.value })} required>
-                                                    <option value="">Sélectionnez / Select</option>
-                                                    <option value="yes">{t.yes}</option>
-                                                    <option value="no">{t.no}</option>
-                                                </select>
-                                            </div>
+                                    <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                                        <div>
+                                            <label>{t.role_position}</label>
+                                            <input type="text" value={formState.role_position} onChange={(e) => setFormState({ ...formState, role_position: e.target.value })} required />
                                         </div>
-
-                                        <div className="form-group" style={{ marginBottom: '1.5rem' }}>
-                                            <label>{t.how_did_you_learn}</label>
-                                            <input type="text" value={formState.how_did_you_learn} onChange={(e) => setFormState({ ...formState, how_did_you_learn: e.target.value })} required />
-                                        </div>
-
-                                        <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
-                                            <div>
-                                                <label>{t.project_name}</label>
-                                                <input type="text" value={formState.project_name} onChange={(e) => setFormState({ ...formState, project_name: e.target.value })} required />
-                                            </div>
-                                            <div>
-                                                <label>{t.website_url}</label>
-                                                <input type="url" placeholder="https://" value={formState.website_url} onChange={(e) => setFormState({ ...formState, website_url: e.target.value })} />
-                                            </div>
-                                        </div>
-
-                                        <div className="form-group" style={{ marginBottom: '1.5rem' }}>
-                                            <label>{t.project_description}</label>
-                                            <textarea rows={4} value={formState.detailed_description} onChange={(e) => setFormState({ ...formState, detailed_description: e.target.value })} required></textarea>
-                                        </div>
-
-                                        <div className="form-group" style={{ marginBottom: '1.5rem' }}>
-                                            <label>{t.loom_url}</label>
-                                            <input type="url" placeholder="https://loom.com/share/..." value={formState.loom_url} onChange={(e) => setFormState({ ...formState, loom_url: e.target.value })} />
-                                        </div>
-
-                                        <div className="form-group" style={{ marginBottom: '1.5rem' }}>
-                                            <label>{t.pitch_deck}</label>
-                                            <input type="text" placeholder="URL link to Pitch Deck or File Drive..." value={formState.pitch_deck_url} onChange={(e) => setFormState({ ...formState, pitch_deck_url: e.target.value })} required />
-                                            <small style={{ color: '#888', display: 'block', margin: '4px 0 0 2px' }}>Veuillez coller un lien vers votre document (Google Drive, Dropbox, un site...).</small>
-                                        </div>
-
-                                        <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
-                                            <div>
-                                                <label>{t.head_office}</label>
-                                                <input type="text" value={formState.head_office} onChange={(e) => setFormState({ ...formState, head_office: e.target.value })} required />
-                                            </div>
-                                            <div>
-                                                <label>{t.additional_locations}</label>
-                                                <input type="text" value={formState.additional_locations} onChange={(e) => setFormState({ ...formState, additional_locations: e.target.value })} />
-                                            </div>
-                                        </div>
-
-                                        <div style={{ marginTop: '2.5rem', marginBottom: '1.5rem' }}>
-                                            <h4 style={{ color: 'var(--charcoal)', fontWeight: 600, margin: 0 }}>{t.business_info_title}</h4>
-                                            <p style={{ color: '#666', fontSize: '0.9rem', marginTop: '0.5rem' }}>{t.business_info_subtitle}</p>
-                                        </div>
-
-                                        <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
-                                            <div>
-                                                <label>{t.founding_year}</label>
-                                                <input type="text" placeholder="ex: 2023" value={formState.founding_year} onChange={(e) => setFormState({ ...formState, founding_year: e.target.value })} required />
-                                            </div>
-                                            <div>
-                                                <label>{t.main_country}</label>
-                                                <input type="text" value={formState.main_country} onChange={(e) => setFormState({ ...formState, main_country: e.target.value })} required />
-                                            </div>
-                                        </div>
-
-                                        <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
-                                            <div>
-                                                <label>{t.business_stage}</label>
-                                                <select value={formState.business_stage} onChange={(e) => setFormState({ ...formState, business_stage: e.target.value })}>
-                                                    <option value="">Sélectionnez / Select</option>
-                                                    <option value="Idea">Idea</option>
-                                                    <option value="MVP">MVP</option>
-                                                    <option value="Early Revenue">Early Revenue</option>
-                                                    <option value="Growth">Growth</option>
-                                                    <option value="Profitable">Profitable</option>
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <label>{t.current_funding_round}</label>
-                                                <select value={formState.current_funding_round} onChange={(e) => setFormState({ ...formState, current_funding_round: e.target.value })}>
-                                                    <option value="">Sélectionnez / Select</option>
-                                                    <option value="Pre-seed">Pre-seed</option>
-                                                    <option value="Seed">Seed</option>
-                                                    <option value="Series A">Series A</option>
-                                                    <option value="Series B+">Series B+</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
-                                            <div>
-                                                <label>{t.current_arr}</label>
-                                                <input type="text" value={formState.current_arr} onChange={(e) => setFormState({ ...formState, current_arr: e.target.value })} required />
-                                            </div>
-                                            <div>
-                                                <label>{t.projected_arr}</label>
-                                                <input type="text" value={formState.projected_arr} onChange={(e) => setFormState({ ...formState, projected_arr: e.target.value })} required />
-                                            </div>
-                                        </div>
-
-                                        <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
-                                            <div>
-                                                <label>{t.investment_seeking}</label>
-                                                <input type="text" value={formState.investment_seeking_eur} onChange={(e) => setFormState({ ...formState, investment_seeking_eur: e.target.value })} required />
-                                            </div>
-                                            <div>
-                                                <label>{t.previously_raised}</label>
-                                                <select value={formState.previously_raised_funds} onChange={(e) => setFormState({ ...formState, previously_raised_funds: e.target.value })}>
-                                                    <option value="">Sélectionnez / Select</option>
-                                                    <option value="yes">{t.yes}</option>
-                                                    <option value="no">{t.no}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div className="form-group" style={{ marginBottom: '1.5rem' }}>
-                                            <label>{t.referred_by}</label>
-                                            <input type="text" value={formState.referred_by} onChange={(e) => setFormState({ ...formState, referred_by: e.target.value })} />
+                                        <div>
+                                            <label>{t.moroccan_roots}</label>
+                                            <select value={formState.moroccan_roots} onChange={(e) => setFormState({ ...formState, moroccan_roots: e.target.value })} required>
+                                                <option value="">Sélectionnez / Select</option>
+                                                <option value="yes">{t.yes}</option>
+                                                <option value="no">{t.no}</option>
+                                            </select>
                                         </div>
                                     </div>
-                                ) : (
-                                    <div style={{ textAlign: 'center', marginTop: '2rem', marginBottom: '2rem', padding: '2rem', background: '#f8f9fa', borderRadius: '12px', border: '2px dashed var(--royal-blue)' }}>
-                                        <h4 style={{ color: 'var(--royal-blue)', marginBottom: '1rem', fontWeight: 700 }}>{t.moreDetailsTitle}</h4>
-                                        <p style={{ color: '#666', marginBottom: '1.5rem', fontSize: '0.95rem' }}>Fournissez des informations supplémentaires sur votre besoin en financement pour un meilleur retour (Optionnel mais recommandé).</p>
-                                        <button type="button" onClick={() => setShowMoreDetails(true)} style={{ background: 'var(--royal-blue)', color: 'white', border: 'none', padding: '0.8rem 2rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, transition: 'all 0.2s', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '1.1rem', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }} className="hover-opacity">
-                                            <PlusCircle size={20} /> {t.moreDetails}
-                                        </button>
+
+                                    <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+                                        <label>{t.how_did_you_learn}</label>
+                                        <input type="text" value={formState.how_did_you_learn} onChange={(e) => setFormState({ ...formState, how_did_you_learn: e.target.value })} required />
                                     </div>
-                                )}
+
+                                    <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                                        <div>
+                                            <label>{t.project_name}</label>
+                                            <input type="text" value={formState.project_name} onChange={(e) => setFormState({ ...formState, project_name: e.target.value })} required />
+                                        </div>
+                                        <div>
+                                            <label>{t.website_url}</label>
+                                            <input type="url" placeholder="https://" value={formState.website_url} onChange={(e) => setFormState({ ...formState, website_url: e.target.value })} />
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+                                        <label>{t.project_description}</label>
+                                        <textarea rows={4} value={formState.detailed_description} onChange={(e) => setFormState({ ...formState, detailed_description: e.target.value })} required></textarea>
+                                    </div>
+
+                                    <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+                                        <label>{t.loom_url}</label>
+                                        <input type="url" placeholder="https://loom.com/share/..." value={formState.loom_url} onChange={(e) => setFormState({ ...formState, loom_url: e.target.value })} />
+                                    </div>
+
+                                    <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+                                        <label>{t.pitch_deck}</label>
+                                        <input type="text" placeholder="URL link to Pitch Deck or File Drive..." value={formState.pitch_deck_url} onChange={(e) => setFormState({ ...formState, pitch_deck_url: e.target.value })} required />
+                                        <small style={{ color: '#888', display: 'block', margin: '4px 0 0 2px' }}>Veuillez coller un lien vers votre document (Google Drive, Dropbox, un site...).</small>
+                                    </div>
+
+                                    <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                                        <div>
+                                            <label>{t.head_office}</label>
+                                            <input type="text" value={formState.head_office} onChange={(e) => setFormState({ ...formState, head_office: e.target.value })} required />
+                                        </div>
+                                        <div>
+                                            <label>{t.additional_locations}</label>
+                                            <input type="text" value={formState.additional_locations} onChange={(e) => setFormState({ ...formState, additional_locations: e.target.value })} />
+                                        </div>
+                                    </div>
+
+                                    <div style={{ marginTop: '2.5rem', marginBottom: '1.5rem' }}>
+                                        <h4 style={{ color: 'var(--charcoal)', fontWeight: 600, margin: 0 }}>{t.business_info_title}</h4>
+                                        <p style={{ color: '#666', fontSize: '0.9rem', marginTop: '0.5rem' }}>{t.business_info_subtitle}</p>
+                                    </div>
+
+                                    <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                                        <div>
+                                            <label>{t.founding_year}</label>
+                                            <input type="text" placeholder="ex: 2023" value={formState.founding_year} onChange={(e) => setFormState({ ...formState, founding_year: e.target.value })} required />
+                                        </div>
+                                        <div>
+                                            <label>{t.main_country}</label>
+                                            <input type="text" value={formState.main_country} onChange={(e) => setFormState({ ...formState, main_country: e.target.value })} required />
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                                        <div>
+                                            <label>{t.business_stage}</label>
+                                            <select value={formState.business_stage} onChange={(e) => setFormState({ ...formState, business_stage: e.target.value })}>
+                                                <option value="">Sélectionnez / Select</option>
+                                                <option value="Idea">Idea</option>
+                                                <option value="MVP">MVP</option>
+                                                <option value="Early Revenue">Early Revenue</option>
+                                                <option value="Growth">Growth</option>
+                                                <option value="Profitable">Profitable</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label>{t.current_funding_round}</label>
+                                            <select value={formState.current_funding_round} onChange={(e) => setFormState({ ...formState, current_funding_round: e.target.value })}>
+                                                <option value="">Sélectionnez / Select</option>
+                                                <option value="Pre-seed">Pre-seed</option>
+                                                <option value="Seed">Seed</option>
+                                                <option value="Series A">Series A</option>
+                                                <option value="Series B+">Series B+</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                                        <div>
+                                            <label>{t.current_arr}</label>
+                                            <input type="text" value={formState.current_arr} onChange={(e) => setFormState({ ...formState, current_arr: e.target.value })} required />
+                                        </div>
+                                        <div>
+                                            <label>{t.projected_arr}</label>
+                                            <input type="text" value={formState.projected_arr} onChange={(e) => setFormState({ ...formState, projected_arr: e.target.value })} required />
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                                        <div>
+                                            <label>{t.investment_seeking}</label>
+                                            <input type="text" value={formState.investment_seeking_eur} onChange={(e) => setFormState({ ...formState, investment_seeking_eur: e.target.value })} required />
+                                        </div>
+                                        <div>
+                                            <label>{t.previously_raised}</label>
+                                            <select value={formState.previously_raised_funds} onChange={(e) => setFormState({ ...formState, previously_raised_funds: e.target.value })}>
+                                                <option value="">Sélectionnez / Select</option>
+                                                <option value="yes">{t.yes}</option>
+                                                <option value="no">{t.no}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+                                        <label>{t.referred_by}</label>
+                                        <input type="text" value={formState.referred_by} onChange={(e) => setFormState({ ...formState, referred_by: e.target.value })} />
+                                    </div>
+                                </div>
+
+
 
                                 <button className="btn btn-primary w-full" type="submit" disabled={formStatus === 'loading'} style={{ marginTop: '1rem' }}>
                                     <Rocket size={20} className="mr-2" style={{ marginRight: '8px' }} /> {formStatus === 'loading' ? '...' : editingProjectId ? t.saveChanges : t.submit}
