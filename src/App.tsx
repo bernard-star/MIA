@@ -693,6 +693,7 @@ function App() {
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [session, setSession] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
   const authSubscriptionRef = useRef<{ unsubscribe: () => void } | null>(null);
+  const isLoggingOut = useRef(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -751,28 +752,27 @@ function App() {
       setTimeout(() => setFormStatus('idle'), 5000); // Reset after 5s
     }
   };
-  const handleLogout = (e?: React.MouseEvent) => {
+  const handleLogout = async (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
-
-    // Unsubscribe FIRST so the auth listener cannot fight us
-    authSubscriptionRef.current?.unsubscribe();
-    authSubscriptionRef.current = null;
+    if (isLoggingOut.current) return; // Prevent double-clicks
+    isLoggingOut.current = true;
 
     setSession(null); // Optimistic UI update
 
-    // Fire and forget
-    supabase.auth.signOut().catch((err) => console.error('Logout error:', err));
+    try {
+      // Await signOut so the token is fully invalidated before we redirect
+      await supabase.auth.signOut();
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
 
-    // Wipe all Supabase keys from local storage
+    // Wipe all Supabase keys from local storage AFTER sign-out completes
     Object.keys(localStorage).forEach(k => {
       if (k.startsWith('sb-')) localStorage.removeItem(k);
     });
-    localStorage.clear();
     sessionStorage.clear();
 
-    setTimeout(() => {
-      window.location.href = '/';
-    }, 150);
+    window.location.href = '/';
   };
 
   const t = CONTENT[lang];
