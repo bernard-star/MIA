@@ -752,27 +752,23 @@ function App() {
       setTimeout(() => setFormStatus('idle'), 5000); // Reset after 5s
     }
   };
-  const handleLogout = async (e?: React.MouseEvent) => {
+  const handleLogout = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
     if (isLoggingOut.current) return; // Prevent double-clicks
     isLoggingOut.current = true;
 
-    setSession(null); // Optimistic UI update
-
-    try {
-      // Await signOut so the token is fully invalidated before we redirect
-      await supabase.auth.signOut();
-    } catch (err) {
-      console.error('Logout error:', err);
-    }
-
-    // Wipe all Supabase keys from local storage AFTER sign-out completes
-    Object.keys(localStorage).forEach(k => {
-      if (k.startsWith('sb-')) localStorage.removeItem(k);
-    });
+    // 1. Vider le storage EN PREMIER — la session ne peut pas être restaurée sans token
+    localStorage.clear();
     sessionStorage.clear();
 
-    window.location.href = '/';
+    // 2. Mise à jour UI instantanée
+    setSession(null);
+
+    // 3. Signaler à Supabase (en arrière-plan, on n'attend pas)
+    supabase.auth.signOut().catch(() => { });
+
+    // 4. Redirection immédiate — pas besoin d'attendre le réseau
+    window.location.replace('/');
   };
 
   const t = CONTENT[lang];
