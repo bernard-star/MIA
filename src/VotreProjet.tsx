@@ -268,6 +268,7 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
     const [formState, setFormState] = useState(initialFormState);
     const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
+    // Auth listener — runs ONCE only (no session in deps to avoid listener leaks)
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
             setSession(session);
@@ -283,11 +284,14 @@ export default function VotreProjet({ lang }: Omit<VotreProjetProps, 'onBack'>) 
             if (data) setSectors(data);
         });
 
-        if (session) {
+        return () => subscription.unsubscribe();
+    }, []); // ← empty deps: register listener only once
+
+    // Fetch user projects whenever session changes
+    useEffect(() => {
+        if (session?.user?.email) {
             fetchUserProjects(session.user.email);
         }
-
-        return () => subscription.unsubscribe();
     }, [session]);
 
     const fetchUserProjects = async (email: string) => {
